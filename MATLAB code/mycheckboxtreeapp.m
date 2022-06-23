@@ -1,3 +1,5 @@
+function mycheckboxtreeapp
+
     fig = uifigure;
     cbt = uitree(fig,'Position',[20 20 150 150], 'Multiselect', 'on');
 
@@ -12,12 +14,16 @@
     p2 = uitreenode(category1,'Text','Carrot','NodeData',11:2:21);
 
 function graph(src, event)
-    cn = event.SelectedNodes;
-        if ~isempty(cn)
-            disp(cn)
-            x = cn.NodeData
-            plot(x, x)
+    sn = event.SelectedNodes;
+        if ~isempty(sn)
+            x = sn.NodeData;
+            h = plot(x, x);
+            psn = event.PreviousSelectedNodes;
+                if isempty(psn)
+                delete(h)
+            end
+   
         end
 end
 
-
+end

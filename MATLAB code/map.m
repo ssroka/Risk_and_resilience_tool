@@ -23,7 +23,7 @@ gx = geoaxes(fig, 'Basemap','darkwater'); % initial gray scale map with longitud
     geolimits(gx, [-15 80], [-190 60]); % map shows entirety of the USA
 
 %% create legend
-% gx.Legend = legend({'Point Source', 'CCUS Infrastructure', 'Carbon Sink', 'Environmental Risk', 'Power Sector Carbon Intensity', 'Social Impact', 'eGRID Subregion', 'Company Facilities'});
+% gx.Legend = legend({'Point Source', 'CCUS Infrastructure', 'Environmental Risk', 'Power Sector Carbon Intensity', 'Social Impact', 'eGRID Subregion', 'Company Facilities'});
 
 %% tree nodes
 t = uitree(fig, 'checkbox');
@@ -88,67 +88,6 @@ n8= uitreenode(t,'Text','Company Facilities');
     n815 = uitreenode(n8, 'Text', 'Verizon');
     n816 = uitreenode(n8, 'Text', 'Vontier');
 
-t.Visible = 'on'
-
-t.CheckedNodesChangedFcn = @graph;
-
-function graph(src, event)
-    cn = event.CheckedNodes;
-        if ~isempty(cn)
-            disp(cn)
-            plot(cn.NodeData)
-        end
-end
-
-
-            
-            
-
-
-
-
-%% check box tree callback function
-function mycheckboxtreeapp
-    fig = uifigure;
-    cbt = uitree(fig,'checkbox','Position',[20 20 150 150]);
-    
-    % Assign callbacks in response to node check and selection
-    cbt.CheckedNodesChangedFcn = @checkchange;
-    cbt.SelectionChangedFcn = @selectchange;
-    
-    % First level nodes
-    category1 = uitreenode(cbt,'Text','Vegetables','NodeData',[]);
-    category2 = uitreenode(cbt,'Text','Fruits','NodeData',[]);
-
-    % Second level nodes.
-    % Node data is the weight of the food item (in grams)
-    p1 = uitreenode(category1,'Text','Cucumber','NodeData',400);
-    p2 = uitreenode(category1,'Text','Carrot','NodeData',65);
-    p3 = uitreenode(category2,'Text','Apple','NodeData',183);
-    p4 = uitreenode(category2,'Text','Banana','NodeData',120);
-
-    % Expand the tree
-    expand(cbt);
-    
-    % Create the function for the CheckedNodesChangedFcn callback
-    % When this function is executed, it displays the total weight
-    % of all checked items
-    function checkchange(src,event)
-        nodes = event.LeafCheckedNodes;
-        if ~isempty(nodes)
-            data = [nodes.NodeData];
-            display(sum(data));
-        end
-    end
-
-    % Create the function for the SelectedNodesChangedFcn callback
-    % When this function is executed, it displays the name
-    % of the selected item
-    function selectchange(src,event)
-        node = event.SelectedNodes;
-        display(node.Text);
-    end
-end
 %% pointer behavior
 iptPointerManager(fig, 'enable');
 pb.enterFcn = @(fig, currentPoint) set(fig, 'Pointer', 'fleur');
