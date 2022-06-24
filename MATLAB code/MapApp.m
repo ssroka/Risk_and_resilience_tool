@@ -58,6 +58,35 @@ classdef MapApp < matlab.apps.AppBase
 
     % Callbacks with handle components
     methods (Access = private)
+        
+        function startupFcn(app)
+            gx = geoaxes(app.RightPanel, 'Basemap','darkwater');
+            gx.Title.String = 'Map'; % display label, come up with better name
+            gx.Subtitle.String = 'An interactive, user friendly map to display relevant power sector data and support better business decisions regarding CCUS and resiliency retrofitting';
+            gx.Subtitle.FontAngle = 'italic';
+            gx.Scalebar.Visible = 'on'; % display scale bar
+            gx.Grid = "off"; % no grid (may be distracting)
+            % add option to turn grid on    
+            set(gx, 'fontname', 'Open Sans'); % use open sans font
+            tlbr = axtoolbar(gx, {'export', 'datacursor', 'stepzoomin', 'stepzoomout', 'restoreview'}); % add differfent options to map toolbar
+            addToolbarMapButton(tlbr, "basemap"); % allow user to choose different basemaps for personalized visualization
+            geolimits(gx, [-15 80], [-190 60]); % map shows entirety of the USA
+        end
+
+        function checkBox1ValueChanged(app, event)
+            value = event.Value
+            if value == 1
+                file1_1 = 'EPA_flight_GHG_powerplants_data.xls';
+                pwrplnt_data = readtable(file1_1);
+                GT1_1 = table2geotable(pwrplnt_data);
+                lat = GT1_1.('LATITUDE');
+                lon = GT1_1.('LONGITUDE');
+                geoplot(gx, lat, lon);
+                hold(gx, 'on')
+            end
+        end
+
+
     end
 
     % Component initialization
@@ -108,6 +137,9 @@ classdef MapApp < matlab.apps.AppBase
                 % Node 1 children
                 app.Node1_1 = uitreenode(app.Node1);
                     app.Node1_1.Text = 'Power Plant';
+                    app.Node1_1.CheckedNodesChangedFcn = createCallbackFcn(app, @checkBox1ValueChanged, true);
+
+
                 app.Node1_2 = uitreenode(app.Node1);
                     app.Node1_2.Text = 'Cement Plant';
                 app.Node1_3 = uitreenode(app.Node1);
@@ -229,6 +261,9 @@ classdef MapApp < matlab.apps.AppBase
 
             % Create UIFigure and components
             createComponents(app)
+
+            % Execute startup function
+            runStartupFcn(app, @startupFcn)
 
         end
 
