@@ -97,7 +97,4 @@ iptSetPointerBehavior(gx, pb);
 
 % pb.enterFcn = @(fig, currentPoint) set('Pointer', 'hand');
 % pb.exitFcn = @(fig, currentPoint) set('Pointer', 'fleur');
-% pb.traverseFcn = [];
-% iptSetPointerBehavior( ,pb);
-% iptPointerManager(gcf);
 
