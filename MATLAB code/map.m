@@ -149,16 +149,16 @@ function mycheckboxtreeapp
         display(node.Text);
     end
 end
-%% pointer behavior
-iptPointerManager(fig, 'enable');
-pb.enterFcn = @(fig, currentPoint) set(fig, 'Pointer', 'fleur');
-pb.exitFcn = @(fig, currentPoint) set(fig, 'Pointer', 'arrow');
-pb.traverseFcn = [];
-iptSetPointerBehavior(gx, pb);
-
-% pb.enterFcn = @(fig, currentPoint) set('Pointer', 'hand');
-% pb.exitFcn = @(fig, currentPoint) set('Pointer', 'fleur');
+% %% pointer behavior
+% iptPointerManager(fig, 'enable');
+% pb.enterFcn = @(fig, currentPoint) set(fig, 'Pointer', 'fleur');
+% pb.exitFcn = @(fig, currentPoint) set(fig, 'Pointer', 'arrow');
 % pb.traverseFcn = [];
-% iptSetPointerBehavior( ,pb);
-% iptPointerManager(gcf);
+% iptSetPointerBehavior(gx, pb);
+% 
+% % pb.enterFcn = @(fig, currentPoint) set('Pointer', 'hand');
+% % pb.exitFcn = @(fig, currentPoint) set('Pointer', 'fleur');
+% % pb.traverseFcn = [];
+% % iptSetPointerBehavior( ,pb);
+% % iptPointerManager(gcf);
 
