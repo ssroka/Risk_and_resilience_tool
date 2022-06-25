@@ -62,18 +62,6 @@ classdef MapApp_ss < matlab.apps.AppBase
 
         function startupFcn(app)
 
-%             gx = geoaxes(app.RightPanel, 'Basemap','darkwater');
-%             gx.Title.String = 'Map'; % display label, come up with better name
-%             gx.Subtitle.String = 'An interactive, user friendly map to display relevant power sector data and support better business decisions regarding CCUS and resiliency retrofitting';
-%             gx.Subtitle.FontAngle = 'italic';
-%             gx.Scalebar.Visible = 'on'; % display scale bar
-%             gx.Grid = "off"; % no grid (may be distracting)
-%             hold(gx,"on") % make sure plots can happen on top of this one
-%             % add option to turn grid on
-%             set(gx, 'fontname', 'Open Sans'); % use open sans font
-%             tlbr = axtoolbar(gx, {'export', 'datacursor', 'stepzoomin', 'stepzoomout', 'restoreview'}); % add differfent options to map toolbar
-%             addToolbarMapButton(tlbr, "basemap"); % allow user to choose different basemaps for personalized visualization
-%             geolimits(gx, [-15 80], [-190 60]); % map shows entirety of the USA
         end
 
         function checkBox1ValueChanged(app, event)
@@ -274,9 +262,28 @@ classdef MapApp_ss < matlab.apps.AppBase
             % of all checked items
             function checkchange(src,event,app,ax)
                 nodes = event.LeafCheckedNodes;
-                if ~isempty(nodes)
+                lines = findobj(ax,'Type','line'); % TODO: This will not be 'line' for all the plots
+                if ~isempty(nodes) % if there are checked boxes
+                    s = {nodes(:).Text};
+                    for jj = 1:length(lines)
+                        if ~ismember(lines(jj).Tag,s)
+                            disp(['to delete ' lines(jj).Tag])
+                            delete(lines(jj))
+                        end
+                    end
+                    % for each node (i.e. checked box) see if the line is
+                    % already plotted, and if not plot it
                     for ii = 1:length(nodes)
-                    plot(ax,nodes(ii).NodeData,nodes(ii).NodeData,'-^','LineWidth',10)
+                        fprintf('%s\n',nodes(ii).Text)
+                        h_2_plot = findobj(ax,'tag',nodes(ii).Text);
+                        if isempty(h_2_plot)
+                            plot(ax,nodes(ii).NodeData,nodes(ii).NodeData,'-^','LineWidth',10,'tag',nodes(ii).Text)
+                        end
+                    end
+                else % if there are checked boxes
+                    for jj = 1:length(lines)
+                        disp(['to delete ' lines(jj).Tag])
+                        delete(lines(jj))
                     end
                 end
             end
