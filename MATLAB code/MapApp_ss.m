@@ -264,25 +264,22 @@ classdef MapApp_ss < matlab.apps.AppBase
                 nodes = event.LeafCheckedNodes;
                 lines = findobj(ax,'Type','line'); % TODO: This will not be 'line' for all the plots
                 if ~isempty(nodes) % if there are checked boxes
-                    s = {nodes(:).Text};
-                    for jj = 1:length(lines)
-                        if ~ismember(lines(jj).Tag,s)
-                            disp(['to delete ' lines(jj).Tag])
+                    s = {nodes(:).Text}; % find the names of everything that is checked
+                    for jj = 1:length(lines) % loop through the lines
+                        if ~ismember(lines(jj).Tag,s) % if there is a line and the box of the same name isn't checked, delete the line
                             delete(lines(jj))
                         end
                     end
                     % for each node (i.e. checked box) see if the line is
                     % already plotted, and if not plot it
                     for ii = 1:length(nodes)
-                        fprintf('%s\n',nodes(ii).Text)
                         h_2_plot = findobj(ax,'tag',nodes(ii).Text);
                         if isempty(h_2_plot)
                             plot(ax,nodes(ii).NodeData,nodes(ii).NodeData,'-^','LineWidth',10,'tag',nodes(ii).Text)
                         end
                     end
-                else % if there are checked boxes
+                else % if there are not any checked boxes, delete all "lines"
                     for jj = 1:length(lines)
-                        disp(['to delete ' lines(jj).Tag])
                         delete(lines(jj))
                     end
                 end
