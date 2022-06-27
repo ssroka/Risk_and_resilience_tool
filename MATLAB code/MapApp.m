@@ -6,6 +6,7 @@ classdef MapApp < matlab.apps.AppBase
         GridLayout  matlab.ui.container.GridLayout
         LeftPanel matlab.ui.container.Panel
         RightPanel matlab.ui.container.Panel
+        BottomPanel matlab.ui.container.Panel
         Tree      matlab.ui.container.CheckBoxTree
         Node1      matlab.ui.container.TreeNode
         Node1_1      matlab.ui.container.TreeNode
@@ -63,7 +64,7 @@ classdef MapApp < matlab.apps.AppBase
             gx = geoaxes(app.RightPanel, 'Basemap','darkwater');
             gx.Title.String = 'Map'; % display label, come up with better name
             gx.Subtitle.String = 'An interactive, user friendly map to display relevant power sector data and support better business decisions regarding CCUS and resiliency retrofitting';
-            gx.Subtitle.FontAngle = 'italic';
+            gx.Subtitle.FontAngle = 'itaslic';
             gx.Scalebar.Visible = 'on'; % display scale bar
             gx.Grid = "off"; % no grid (may be distracting)
             % add option to turn grid on    
@@ -73,9 +74,10 @@ classdef MapApp < matlab.apps.AppBase
             geolimits(gx, [-15 80], [-190 60]); % map shows entirety of the USA
         end
 
-        function checkBox1ValueChanged(app, event)
-            value = event.Value
-            if value == 1
+        function checkchange(app, event)
+            nodes = event.LeafCheckedNodes;
+        
+            if ~isempty(nodes)
                 file1_1 = 'EPA_flight_GHG_powerplants_data.xls';
                 pwrplnt_data = readtable(file1_1);
                 GT1_1 = table2geotable(pwrplnt_data);
@@ -83,7 +85,9 @@ classdef MapApp < matlab.apps.AppBase
                 lon = GT1_1.('LONGITUDE');
                 geoplot(gx, lat, lon);
                 hold(gx, 'on')
+                if 
             end
+
         end
 
 
@@ -100,35 +104,23 @@ classdef MapApp < matlab.apps.AppBase
             app.UIFigure.Name = 'Map';
             app.UIFigure.WindowState = 'maximized';
 
-            % Create GridLayout
-            app.GridLayout = uigridlayout(app.UIFigure);
-            app.GridLayout.RowHeight = {'1x'};
-            app.GridLayout.ColumnWidth = {282, '1x'};
-            pp.GridLayout.ColumnSpacing = 0;
+            %Create GridLayout
+            app.GridLayout = uigridlayout(app.UIFigure, [4 4]);
+            app.GridLayout.ColumnSpacing = 0;
             app.GridLayout.RowSpacing = 0;
             app.GridLayout.Padding = [0 0 0 0];
-
 
             % Create LeftPanel
             app.LeftPanel = uipanel(app.GridLayout);
             app.LeftPanel.FontName = 'Open Sans';
             app.LeftPanel.Title = 'Layers';
-            app.LeftPanel.Layout.Row = 1;
+            app.LeftPanel.Layout.Row = [1 3];
             app.LeftPanel.Layout.Column = 1;
-            app.LeftPanel.Scrollable = 'on';
-
-            % Create RightPanel
-            app.RightPanel = uipanel(app.GridLayout);
-            app.RightPanel.FontName = 'Open Sans';
-            app.RightPanel.Title = 'Map';
-            app.RightPanel.Layout.Row = 1;
-            app.RightPanel.Layout.Column = 2;
-            app.RightPanel.Scrollable = 'on';
+            app.LeftPanel.Scrollable = 'on'; 
             
             % Create Tree
             app.Tree = uitree(app.LeftPanel, 'checkbox');
-            app.Tree.Position = [0 0 282 1504];
-
+            
             % Create nodes
             % Node 1 parent
             app.Node1 = uitreenode(app.Tree);
@@ -137,9 +129,8 @@ classdef MapApp < matlab.apps.AppBase
                 % Node 1 children
                 app.Node1_1 = uitreenode(app.Node1);
                     app.Node1_1.Text = 'Power Plant';
-                    app.Node1_1.CheckedNodesChangedFcn = createCallbackFcn(app, @checkBox1ValueChanged, true);
-
-
+                    app.Tree.Node1.Node1_1.CheckedNodesChangedFcn = @checkchange;
+                    
                 app.Node1_2 = uitreenode(app.Node1);
                     app.Node1_2.Text = 'Cement Plant';
                 app.Node1_3 = uitreenode(app.Node1);
@@ -249,7 +240,24 @@ classdef MapApp < matlab.apps.AppBase
                 app.Node7_16 = uitreenode(app.Node7);
                     app.Node7_16.Text = 'Vontier';
 
-                    app.UIFigure.Visible = 'on';
+            % Create RightPanel
+            app.RightPanel = uipanel(app.GridLayout);
+            app.RightPanel.FontName = 'Open Sans';
+            app.RightPanel.Title = 'Map';
+            app.RightPanel.Layout.Row = [1 4];
+            app.RightPanel.Layout.Column = [2 4];
+            app.RightPanel.Scrollable = 'on';
+
+            % Create BottomPanel
+            app.BottomPanel = uipanel(app.GridLayout);
+            app.BottomPanel.FontName = 'Open Sans';
+            app.BottomPanel.Title = 'Calculator';
+            app.BottomPanel.Layout.Row = 4;
+            app.BottomPanel.Layout.Column = 1;
+            app.BottomPanel.Scrollable = 'on';
+
+            app.UIFigure.Visible = 'on';
+
         end 
     end
     
