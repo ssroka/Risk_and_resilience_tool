@@ -156,8 +156,8 @@ classdef MapApp < matlab.apps.AppBase
             % Node 2 children
             app.Node2_1 = uitreenode(app.Node2);
             app.Node2_1.Text = 'Pipelines';
-%                 pplnes = shaperead('OHWVPA_PotentialCO2PipelineRoutes_051022.shp');
-%                 app.Node2_1.NodeData = pplnes;
+                 pplnes = shaperead('OHWVPA_PotentialCO2PipelineRoutes_051022.shp');
+                 app.Node2_1.NodeData = pplnes;
             
             app.Node2_2 = uitreenode(app.Node2);
             app.Node2_2.Text = 'Injection Sites';
