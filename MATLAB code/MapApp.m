@@ -303,8 +303,8 @@ classdef MapApp < matlab.apps.AppBase
                     end
                     % for each node (i.e. checked box) see if the object is already plotted, and if not plot it
                     for ii = 1:length(nodes)
-                        plot = findobj(ax, 'Tag', nodes(ii).Text);
-                        if isempty(plot)
+                        data2plot = findobj(ax, 'Tag', nodes(ii).Text);
+                        if isempty(data2plot)
                             geoplot(ax, nodes(ii).NodeData, nodes(ii).Text)
                         end
                     end
