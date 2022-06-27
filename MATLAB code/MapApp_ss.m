@@ -1,4 +1,4 @@
-classdef MapApp < matlab.apps.AppBase
+classdef MapApp_ss < matlab.apps.AppBase
     % MapApp This is the base class of an App which contains methods needed by Apps.
 
     properties(Access = public)
@@ -6,7 +6,7 @@ classdef MapApp < matlab.apps.AppBase
         GridLayout  matlab.ui.container.GridLayout
         LeftPanel matlab.ui.container.Panel
         RightPanel matlab.ui.container.Panel
-        BottomPanel matlab.ui.container.Panel
+        UIAxes      matlab.ui.control.UIAxes
         Tree      matlab.ui.container.CheckBoxTree
         Node1      matlab.ui.container.TreeNode
         Node1_1      matlab.ui.container.TreeNode
@@ -61,23 +61,12 @@ classdef MapApp < matlab.apps.AppBase
     methods (Access = private)
 
         function startupFcn(app)
-            gx = geoaxes(app.RightPanel, 'Basemap','darkwater');
-            gx.Title.String = 'Map'; % display label, come up with better name
-            gx.Subtitle.String = 'An interactive, user friendly map to display relevant power sector data and support better business decisions regarding CCUS and resiliency retrofitting';
-            gx.Subtitle.FontAngle = 'itaslic';
-            gx.Scalebar.Visible = 'on'; % display scale bar
-            gx.Grid = "off"; % no grid (may be distracting)
-            % add option to turn grid on
-            set(gx, 'fontname', 'Open Sans'); % use open sans font
-            tlbr = axtoolbar(gx, {'export', 'datacursor', 'stepzoomin', 'stepzoomout', 'restoreview'}); % add differfent options to map toolbar
-            addToolbarMapButton(tlbr, "basemap"); % allow user to choose different basemaps for personalized visualization
-            geolimits(gx, [-15 80], [-190 60]); % map shows entirety of the USA
+
         end
 
-        function checkchange(app, event)
-            nodes = event.LeafCheckedNodes;
-        
-            if ~isempty(nodes)
+        function checkBox1ValueChanged(app, event)
+            value = event.Value;
+            if value == 1
                 file1_1 = 'EPA_flight_GHG_powerplants_data.xls';
                 pwrplnt_data = readtable(file1_1);
                 GT1_1 = table2geotable(pwrplnt_data);
@@ -85,10 +74,10 @@ classdef MapApp < matlab.apps.AppBase
                 lon = GT1_1.('LONGITUDE');
                 geoplot(gx, lat, lon);
                 hold(gx, 'on')
-                if 
             end
-
         end
+
+
 
 
     end
@@ -104,22 +93,21 @@ classdef MapApp < matlab.apps.AppBase
             app.UIFigure.Name = 'Map';
             app.UIFigure.WindowState = 'maximized';
 
-            %Create GridLayout
-            app.GridLayout = uigridlayout(app.UIFigure, [4 4]);
-            app.GridLayout.ColumnSpacing = 0;
+            % Create GridLayout
+            app.GridLayout = uigridlayout(app.UIFigure);
+            app.GridLayout.RowHeight = {'1x'};
+            app.GridLayout.ColumnWidth = {282, '1x'};
+            pp.GridLayout.ColumnSpacing = 0;
             app.GridLayout.RowSpacing = 0;
             app.GridLayout.Padding = [0 0 0 0];
+
 
             % Create LeftPanel
             app.LeftPanel = uipanel(app.GridLayout);
             app.LeftPanel.FontName = 'Open Sans';
             app.LeftPanel.Title = 'Layers';
-            app.LeftPanel.Layout.Row = [1 3];
+            app.LeftPanel.Layout.Row = 1;
             app.LeftPanel.Layout.Column = 1;
-<<<<<<< HEAD
-            app.LeftPanel.Scrollable = 'on'; 
-            
-=======
             app.LeftPanel.Scrollable = 'on';
 
             % Create RightPanel
@@ -130,37 +118,37 @@ classdef MapApp < matlab.apps.AppBase
             app.RightPanel.Layout.Column = 2;
             app.RightPanel.Scrollable = 'on';
 
->>>>>>> 3d42f0e18f479d75711d297f0f90f3def5a88e58
+            gx = geoaxes(app.RightPanel, 'Basemap','darkwater');
+            gx.Title.String = 'Map'; % display label, come up with better name
+            gx.Subtitle.String = 'An interactive, user friendly map to display relevant power sector data and support better business decisions regarding CCUS and resiliency retrofitting';
+            gx.Subtitle.FontAngle = 'italic';
+            gx.Scalebar.Visible = 'on'; % display scale bar
+            gx.Grid = "off"; % no grid (may be distracting)
+            hold(gx,"on") % make sure plots can happen on top of this one
+            % add option to turn grid on
+            set(gx, 'fontname', 'Open Sans'); % use open sans font
+            tlbr = axtoolbar(gx, {'export', 'datacursor', 'stepzoomin', 'stepzoomout', 'restoreview'}); % add differfent options to map toolbar
+            addToolbarMapButton(tlbr, "basemap"); % allow user to choose different basemaps for personalized visualization
+            geolimits(gx, [-15 80], [-190 60]); % map shows entirety of the USA
+
             % Create Tree
             app.Tree = uitree(app.LeftPanel, 'checkbox');
-            
+            app.Tree.Position = [0 0 282 1504];
+            app.Tree.CheckedNodesChangedFcn = @(src,event) checkchange(src,event,app,gx);
+
             % Create nodes
             % Node 1 parent
             app.Node1 = uitreenode(app.Tree);
             app.Node1.Text = 'Point Source';
 
-<<<<<<< HEAD
-                % Node 1 children
-                app.Node1_1 = uitreenode(app.Node1);
-                    app.Node1_1.Text = 'Power Plant';
-                    app.Tree.Node1.Node1_1.CheckedNodesChangedFcn = @checkchange;
-                    
-                app.Node1_2 = uitreenode(app.Node1);
-                    app.Node1_2.Text = 'Cement Plant';
-                app.Node1_3 = uitreenode(app.Node1);
-                    app.Node1_3.Text = 'Ethanol Plant';
-=======
             % Node 1 children
             app.Node1_1 = uitreenode(app.Node1);
             app.Node1_1.Text = 'Power Plant';
-            %                     app.Node1_1.CheckedNodesChangedFcn = createCallbackFcn(app, @checkBox1ValueChanged, true);
-
 
             app.Node1_2 = uitreenode(app.Node1);
             app.Node1_2.Text = 'Cement Plant';
             app.Node1_3 = uitreenode(app.Node1);
             app.Node1_3.Text = 'Ethanol Plant';
->>>>>>> 3d42f0e18f479d75711d297f0f90f3def5a88e58
 
             % Node 2 Parent
             app.Node2 = uitreenode(app.Tree);
@@ -169,8 +157,10 @@ classdef MapApp < matlab.apps.AppBase
             % Node 2 children
             app.Node2_1 = uitreenode(app.Node2);
             app.Node2_1.Text = 'Pipelines';
+            app.Node2_1.NodeData = [0 100];
             app.Node2_2 = uitreenode(app.Node2);
             app.Node2_2.Text = 'Injection Sites';
+            app.Node2_2.NodeData = [-50 50];
             app.Node2_3 = uitreenode(app.Node2);
             app.Node2_3.Text = 'Sequestration Resevouir';
 
@@ -266,37 +256,44 @@ classdef MapApp < matlab.apps.AppBase
             app.Node7_16 = uitreenode(app.Node7);
             app.Node7_16.Text = 'Vontier';
 
-<<<<<<< HEAD
-            % Create RightPanel
-            app.RightPanel = uipanel(app.GridLayout);
-            app.RightPanel.FontName = 'Open Sans';
-            app.RightPanel.Title = 'Map';
-            app.RightPanel.Layout.Row = [1 4];
-            app.RightPanel.Layout.Column = [2 4];
-            app.RightPanel.Scrollable = 'on';
 
-            % Create BottomPanel
-            app.BottomPanel = uipanel(app.GridLayout);
-            app.BottomPanel.FontName = 'Open Sans';
-            app.BottomPanel.Title = 'Calculator';
-            app.BottomPanel.Layout.Row = 4;
-            app.BottomPanel.Layout.Column = 1;
-            app.BottomPanel.Scrollable = 'on';
+            % Create the function for the CheckedNodesChangedFcn callback
+            % When this function is executed, it displays the total weight
+            % of all checked items
+            function checkchange(src,event,app,ax)
+                nodes = event.LeafCheckedNodes;
+                lines = findobj(ax,'Type','line'); % TODO: This will not be 'line' for all the plots
+                if ~isempty(nodes) % if there are checked boxes
+                    s = {nodes(:).Text}; % find the names of everything that is checked
+                    for jj = 1:length(lines) % loop through the lines
+                        if ~ismember(lines(jj).Tag,s) % if there is a line and the box of the same name isn't checked, delete the line
+                            delete(lines(jj))
+                        end
+                    end
+                    % for each node (i.e. checked box) see if the line is
+                    % already plotted, and if not plot it
+                    for ii = 1:length(nodes)
+                        h_2_plot = findobj(ax,'tag',nodes(ii).Text);
+                        if isempty(h_2_plot)
+                            plot(ax,nodes(ii).NodeData,nodes(ii).NodeData,'-^','LineWidth',10,'tag',nodes(ii).Text)
+                        end
+                    end
+                else % if there are not any checked boxes, delete all "lines"
+                    for jj = 1:length(lines)
+                        delete(lines(jj))
+                    end
+                end
+            end
 
-            app.UIFigure.Visible = 'on';
-
-        end 
-=======
             app.UIFigure.Visible = 'on';
         end
->>>>>>> 3d42f0e18f479d75711d297f0f90f3def5a88e58
     end
 
     % App creation and deletion
     methods (Access = public)
 
         % Construct app
-        function app = MapApp
+        function app = MapApp_ss
 
             % Create UIFigure and components
             createComponents(app)
@@ -314,7 +311,7 @@ classdef MapApp < matlab.apps.AppBase
         end
     end
 
-    
+
 
 end
 
