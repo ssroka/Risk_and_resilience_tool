@@ -100,7 +100,7 @@ classdef MapApp < matlab.apps.AppBase
             app.RightPanel.Scrollable = 'on';
 
             % Create GeoAxes
-            gx = geoaxes(app.RightPanel, 'Basemap','darkwater');
+            gx = geoaxes(app.RightPanel, 'Basemap', 'darkwater', 'NextPlot', 'add');
             gx.Title.String = 'Map'; % display label, come up with better name
             gx.Subtitle.String = 'An interactive, user friendly map to display relevant power sector data and support better business decisions regarding CCUS and resiliency retrofitting';
             gx.Subtitle.FontAngle = 'italic';
@@ -134,21 +134,21 @@ classdef MapApp < matlab.apps.AppBase
             % Node 1 children
             app.Node1_1 = uitreenode(app.Node1);
             app.Node1_1.Text = 'Power Plant';
-            pwrplnt = readtable("EPA_flight_GHG_powerplants_data.xls");
-            pwrplnt_GT = table2geotable(pwrplnt);
-            app.Node1_1.NodeData = pwrplnt_GT;
+                pwrplnt = readtable("EPA_flight_GHG_powerplants_data.xls");
+                pwrplnt_GT = table2geotable(pwrplnt);
+                app.Node1_1.NodeData = pwrplnt_GT;
 
             app.Node1_2 = uitreenode(app.Node1);
             app.Node1_2.Text = 'Cement Plant';
-            cmntplnt = readtable("EPA_flight_GHG_cementplants_data.xls");
-            cmntplnt_GT = table2geotable(cmntplnt);
-            app.Node1_2.NodeData = cmntplnt_GT;
+                cmntplnt = readtable("EPA_flight_GHG_cementplants_data.xls");
+                cmntplnt_GT = table2geotable(cmntplnt);
+                app.Node1_2.NodeData = cmntplnt_GT;
 
             app.Node1_3 = uitreenode(app.Node1);
             app.Node1_3.Text = 'Ethanol Plant';
-            ethnlplnt = readtable("EPA_flight_GHG_ethanolplants_data.xls");
-            ethnlplnt_GT = table2geotable(ethnlplnt);
-            app.Node1_3.NodeData = ethnlplnt_GT;
+                ethnlplnt = readtable("EPA_flight_GHG_ethanolplants_data.xls");
+                ethnlplnt_GT = table2geotable(ethnlplnt);
+                app.Node1_3.NodeData = ethnlplnt_GT;
 
             % Node 2 Parent
             app.Node2 = uitreenode(app.Tree);
@@ -294,24 +294,24 @@ classdef MapApp < matlab.apps.AppBase
 
              function checkchange(src, event, app, ax)
                 nodes = event.LeafCheckedNodes;
-                objs =  get(ax,'children');
+                objs = get(ax, 'Children')
                 if ~isempty(nodes) % if there are checked boxes
                     names = {nodes(:).Text}; % find the names of everything that is checked
-                    for jj = 1:length(objs) % loop through the children
-                        if ~ismember(objs(jj).Tag, names) % if a child and the box of the same name isn't checked, delete the object
-                            delete(objs(jj))
+                    for jj = 1:length(graphics) % loop through the children
+                        if ~ismember(graphics(jj).Tag, names) % if a child and the box of the same name isn't checked, delete the object
+                            delete(graphics(jj))
                         end
                     end
                     % for each node (i.e. checked box) see if the object is already plotted, and if not plot it
                     for ii = 1:length(nodes)
                         data2plot = findobj(ax, 'Tag', nodes(ii).Text);
                         if isempty(data2plot)
-                            geoplot(ax, nodes(ii).NodeData,'marker','^','markersize',10, 'Tag',nodes(ii).Text)
+                            geoplot(ax, nodes(ii).NodeData, 'Tag', nodes(ii).Text)
                         end
                     end
                 else % if there are not any checked boxes, delete all "lines"
-                    for kk = 1:length(objs)
-                        delete(objs(kk))
+                    for kk = 1:length(graphics)
+                        delete(graphics(kk))
                     end
                 end
             end
