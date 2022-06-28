@@ -111,6 +111,7 @@ classdef MapApp < matlab.apps.AppBase
             tlbr = axtoolbar(gx, {'export', 'datacursor', 'stepzoomin', 'stepzoomout', 'restoreview'}); % add differfent options to map toolbar
             addToolbarMapButton(tlbr, "basemap"); % allow user to choose different basemaps for personalized visualization
             geolimits(gx, [-15 80], [-190 60]); % map shows entirety of the USA
+            hold(gx,'on')
 
             % Create BottomPanel
             app.BottomPanel = uipanel(app.GridLayout);
@@ -133,24 +134,21 @@ classdef MapApp < matlab.apps.AppBase
             % Node 1 children
             app.Node1_1 = uitreenode(app.Node1);
             app.Node1_1.Text = 'Power Plant';
-                  app.Node1_1.NodeData = [0.5*[1:80];[1:80]];
-%                 pwrplnt = readtable("EPA_flight_GHG_powerplants_data.xls");
-%                 pwrplnt_GT = table2geotable(pwrplnt);
-%                 app.Node1_1.NodeData = pwrplnt_GT;
+            pwrplnt = readtable("EPA_flight_GHG_powerplants_data.xls");
+            pwrplnt_GT = table2geotable(pwrplnt);
+            app.Node1_1.NodeData = pwrplnt_GT;
 
             app.Node1_2 = uitreenode(app.Node1);
             app.Node1_2.Text = 'Cement Plant';
-                  app.Node1_2.NodeData = [0.5*[-50:-1:0];[-50:-1:0]];
-%                 cmntplnt = readtable("EPA_flight_GHG_cementplants_data.xls");
-%                 cmntplnt_GT = table2geotable(pwrplnt);
-%                 app.Node1_2.NodeData = cmntplnt_GT;
+            cmntplnt = readtable("EPA_flight_GHG_cementplants_data.xls");
+            cmntplnt_GT = table2geotable(cmntplnt);
+            app.Node1_2.NodeData = cmntplnt_GT;
 
             app.Node1_3 = uitreenode(app.Node1);
             app.Node1_3.Text = 'Ethanol Plant';
-%                 ethnlplnt = readtable("EPA_flight_GHG_ethanolplants_data.xls");
-%                 ethnlplnt_GT = table2geotable(ethnlplnt);
-                  ethnlplnt_GT = readgeotable('myfile.shp');
-                  app.Node1_3.NodeData = ethnlplnt_GT;
+            ethnlplnt = readtable("EPA_flight_GHG_ethanolplants_data.xls");
+            ethnlplnt_GT = table2geotable(ethnlplnt);
+            app.Node1_3.NodeData = ethnlplnt_GT;
 
             % Node 2 Parent
             app.Node2 = uitreenode(app.Tree);
@@ -159,8 +157,8 @@ classdef MapApp < matlab.apps.AppBase
             % Node 2 children
             app.Node2_1 = uitreenode(app.Node2);
             app.Node2_1.Text = 'Pipelines';
-                 pplnes = shaperead('OHWVPA_PotentialCO2PipelineRoutes_051022.shp');
-                 app.Node2_1.NodeData = pplnes;
+%                  pplnes = shaperead('OHWVPA_PotentialCO2PipelineRoutes_051022.shp');
+%                  app.Node2_1.NodeData = pplnes;
             
             app.Node2_2 = uitreenode(app.Node2);
             app.Node2_2.Text = 'Injection Sites';
@@ -296,7 +294,7 @@ classdef MapApp < matlab.apps.AppBase
 
              function checkchange(src, event, app, ax)
                 nodes = event.LeafCheckedNodes;
-                objs = findobj(ax, 'Type', 'line'); 
+                objs =  get(ax,'children');
                 if ~isempty(nodes) % if there are checked boxes
                     names = {nodes(:).Text}; % find the names of everything that is checked
                     for jj = 1:length(objs) % loop through the children
@@ -308,7 +306,7 @@ classdef MapApp < matlab.apps.AppBase
                     for ii = 1:length(nodes)
                         data2plot = findobj(ax, 'Tag', nodes(ii).Text);
                         if isempty(data2plot)
-                            geoplot(ax, nodes(ii).NodeData, 'Tag',nodes(ii).Text)
+                            geoplot(ax, nodes(ii).NodeData,'marker','^','markersize',10, 'Tag',nodes(ii).Text)
                         end
                     end
                 else % if there are not any checked boxes, delete all "lines"
