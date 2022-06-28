@@ -297,9 +297,9 @@ classdef MapApp < matlab.apps.AppBase
                 objs = get(ax, 'Children')
                 if ~isempty(nodes) % if there are checked boxes
                     names = {nodes(:).Text}; % find the names of everything that is checked
-                    for jj = 1:length(graphics) % loop through the children
-                        if ~ismember(graphics(jj).Tag, names) % if a child and the box of the same name isn't checked, delete the object
-                            delete(graphics(jj))
+                    for jj = 1:length(objs) % loop through the children
+                        if ~ismember(objs(jj).Tag, names) % if a child and the box of the same name isn't checked, delete the object
+                            delete(objs(jj))
                         end
                     end
                     % for each node (i.e. checked box) see if the object is already plotted, and if not plot it
@@ -310,8 +310,8 @@ classdef MapApp < matlab.apps.AppBase
                         end
                     end
                 else % if there are not any checked boxes, delete all "lines"
-                    for kk = 1:length(graphics)
-                        delete(graphics(kk))
+                    for kk = 1:length(objs)
+                        delete(objs(kk))
                     end
                 end
             end
