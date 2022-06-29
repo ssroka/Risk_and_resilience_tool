@@ -10,3 +10,10 @@
 *.mlx
 *.txt
 *.shp
+*.cpg
+*.dbf
+*.prj
+*.sbn
+*.sbx
+*.shx
+*.xml
