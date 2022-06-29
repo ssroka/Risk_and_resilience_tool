@@ -62,8 +62,8 @@ classdef MapApp < matlab.apps.AppBase
     methods (Access = private)
 
         function startupFcn(app)
+            addpath("MATLAB_code\")
             add_rm_custom_paths('add')
-            which README_CO2_storage_data.txt
         end
 
     end
@@ -159,9 +159,8 @@ classdef MapApp < matlab.apps.AppBase
             % Node 2 children
             app.Node2_1 = uitreenode(app.Node2);
             app.Node2_1.Text = 'Pipelines';
-                addpath('../Data/pipelines')
-                pplnes = readgeotable(OHWVPA_PotentialCO2PipelineRoutes_051022.shp');
-                app.Node2_1.NodeData = pplnes;
+                pplns = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
+                app.Node2_1.NodeData = pplns;
             
             app.Node2_2 = uitreenode(app.Node2);
             app.Node2_2.Text = 'Injection Sites';
@@ -339,7 +338,6 @@ classdef MapApp < matlab.apps.AppBase
         % Code that executes before app deletion
         function delete(app)
             add_rm_custom_paths('remove') % does not work if you just close the App window
-            which README_CO2_storage_data.txt  % does not work if you just close the App window
             % Delete UIFigure when app is deleted
             delete(app.UIFigure)
         end
