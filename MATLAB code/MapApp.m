@@ -61,8 +61,10 @@ classdef MapApp < matlab.apps.AppBase
     % Callbacks with handle components
     methods (Access = private)
 
-%         function startupFcn(app)
-%         end
+        function startupFcn(app)
+            add_rm_custom_paths('add')
+            which README_CO2_storage_data.txt
+        end
 
     end
 
@@ -330,13 +332,13 @@ classdef MapApp < matlab.apps.AppBase
             createComponents(app)
 
             % Execute startup function
-            % runStartupFcn(app, @startupFcn)
-
+            runStartupFcn(app, @startupFcn)
         end
 
         % Code that executes before app deletion
         function delete(app)
-
+            add_rm_custom_paths('remove') % does not work if you just close the App window
+            which README_CO2_storage_data.txt  % does not work if you just close the App window
             % Delete UIFigure when app is deleted
             delete(app.UIFigure)
         end
