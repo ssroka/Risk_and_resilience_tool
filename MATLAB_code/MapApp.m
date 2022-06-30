@@ -7,6 +7,7 @@ classdef MapApp < matlab.apps.AppBase
         LeftPanel matlab.ui.container.Panel
         RightPanel matlab.ui.container.Panel
         BottomPanel matlab.ui.container.Panel
+        MiddlePanel matlab.ui.container.Panel
         UIAxes      matlab.ui.control.UIAxes
         Tree      matlab.ui.container.CheckBoxTree
         Node1      matlab.ui.container.TreeNode
@@ -63,7 +64,7 @@ classdef MapApp < matlab.apps.AppBase
     methods (Access = private)
 
         function startupFcn(app)
-            addpath("MATLAB_code\")
+            addpath(".\MATLAB_code\")
             add_rm_custom_paths('add')
         end
 
@@ -81,7 +82,7 @@ classdef MapApp < matlab.apps.AppBase
             app.UIFigure.WindowState = 'maximized';
 
             % Create GridLayout
-            app.GridLayout = uigridlayout(app.UIFigure, [4 4]);
+            app.GridLayout = uigridlayout(app.UIFigure, [5 4]);
             app.GridLayout.ColumnSpacing = 0;
             app.GridLayout.RowSpacing = 0;
             app.GridLayout.Padding = [0 0 0 0];
@@ -98,7 +99,7 @@ classdef MapApp < matlab.apps.AppBase
             app.RightPanel = uipanel(app.GridLayout);
             app.RightPanel.FontName = 'Open Sans';
             app.RightPanel.Title = 'Map';
-            app.RightPanel.Layout.Row = [1 4];
+            app.RightPanel.Layout.Row = [1 5];
             app.RightPanel.Layout.Column = [2 4];
             app.RightPanel.Scrollable = 'on';
 
@@ -113,16 +114,24 @@ classdef MapApp < matlab.apps.AppBase
             set(gx, 'fontname', 'Open Sans'); % use open sans font
             tlbr = axtoolbar(gx, {'export', 'datacursor', 'stepzoomin', 'stepzoomout', 'restoreview'}); % add differfent options to map toolbar
             addToolbarMapButton(tlbr, "basemap"); % allow user to choose different basemaps for personalized visualization
-            geolimits(gx, [-15 80], [-190 60]); % map shows entirety of the USA
+            geolimits(gx, [10 70], [-180 -30]); % map shows entirety of the USA
             hold(gx,'on')
 
             % Create BottomPanel
             app.BottomPanel = uipanel(app.GridLayout);
             app.BottomPanel.FontName = 'Open Sans';
             app.BottomPanel.Title = 'Calculator';
-            app.BottomPanel.Layout.Row = 4;
+            app.BottomPanel.Layout.Row = 5;
             app.BottomPanel.Layout.Column = 1;
             app.BottomPanel.Scrollable = 'on';
+
+            % Create MiddlePanel
+            app.MiddlePanel = uipanel(app.GridLayout);
+            app.MiddlePanel.FontName = 'Open Sans';
+            app.MiddlePanel.Title = 'Filter';
+            app.MiddlePanel.Layout.Row = 4;
+            app.MiddlePanel.Layout.Column = 1;
+            app.MiddlePanel.Scrollable = 'on';
 
             % Create Tree
             app.Tree = uitree(app.LeftPanel, 'checkbox');
@@ -345,11 +354,18 @@ classdef MapApp < matlab.apps.AppBase
         end
 
         % Code that executes before app deletion
-        function delete(app)
-            add_rm_custom_paths('remove') % does not work if you just close the App window
-            % Delete UIFigure when app is deleted
-            delete(app.UIFigure)
-        end
+
+%         function ExitButtonPushed(app, event)
+%                add_rm_custom_paths('remove')
+%                app.delete % Shut down the entire app
+%         end
+        
+%         function delete(app)
+%             add_rm_custom_paths('remove') % does not work if you just close the App window
+%             % Delete UIFigure when app is deleted
+%             delete(app.UIFigure)
+%         end
+
     end
 
     
