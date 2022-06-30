@@ -1,5 +1,5 @@
 function add_rm_custom_paths(add_rm_string)
-pwd
+
 custom_paths = {
     ".\Data\point_sources\",
     ".\Data\point_sources\PowerPlants_US_EIA\",

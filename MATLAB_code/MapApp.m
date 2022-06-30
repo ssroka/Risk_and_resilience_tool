@@ -56,6 +56,7 @@ classdef MapApp < matlab.apps.AppBase
         Node7_14     matlab.ui.container.TreeNode
         Node7_15     matlab.ui.container.TreeNode
         Node7_16     matlab.ui.container.TreeNode
+        Node8     matlab.ui.container.TreeNode
     end
 
     % Callbacks with handle components
@@ -159,8 +160,8 @@ classdef MapApp < matlab.apps.AppBase
             % Node 2 children
             app.Node2_1 = uitreenode(app.Node2);
             app.Node2_1.Text = 'Pipelines';
-                pplns = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
-                app.Node2_1.NodeData = pplns;
+%                 pplns = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
+%                 app.Node2_1.NodeData = pplns;
             
             app.Node2_2 = uitreenode(app.Node2);
             app.Node2_2.Text = 'Injection Sites';
@@ -171,6 +172,8 @@ classdef MapApp < matlab.apps.AppBase
             % Node 3 Parent
             app.Node3 = uitreenode(app.Tree);
             app.Node3.Text = 'Environmental Risk';
+%                 nri = shaperead("NRI_Shapefile_States.shp");
+%                 app.Node2_1.NodeData = nri;
 
             % Node 3 children
             app.Node3_1 = uitreenode(app.Node3);
@@ -241,7 +244,7 @@ classdef MapApp < matlab.apps.AppBase
 
             % Node 7 Parent
             app.Node7 = uitreenode(app.Tree);
-            app.Node7.Text = 'Comapny Facilities';
+            app.Node7.Text = 'Company Facilities';
 
             % Node 7 children
             app.Node7_1 = uitreenode(app.Node7);
@@ -291,6 +294,12 @@ classdef MapApp < matlab.apps.AppBase
             
             app.Node7_16 = uitreenode(app.Node7);
             app.Node7_16.Text = 'Vontier';
+
+            % Node 8 Parent
+            app.Node8 = uitreenode(app.Tree);
+            app.Node8.Text = 'Climate Zones';
+%                 clmtzns = readgeotable("ClimateZones.shp");
+%                 app.Node2_1.NodeData = clmtzns;
 
             app.UIFigure.Visible = 'on';
 
