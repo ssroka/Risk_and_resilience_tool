@@ -8,7 +8,6 @@ classdef MapApp < matlab.apps.AppBase
         RightPanel matlab.ui.container.Panel
         BottomPanel matlab.ui.container.Panel
         MiddlePanel matlab.ui.container.Panel
-        UIAxes      matlab.ui.control.UIAxes
         Tree      matlab.ui.container.CheckBoxTree
         Node1      matlab.ui.container.TreeNode
         Node1_1      matlab.ui.container.TreeNode
@@ -64,7 +63,7 @@ classdef MapApp < matlab.apps.AppBase
     methods (Access = private)
 
         function startupFcn(app)
-            addpath(".\MATLAB_code\")
+            addpath("MATLAB_code\")
             add_rm_custom_paths('add')
         end
 
@@ -169,14 +168,19 @@ classdef MapApp < matlab.apps.AppBase
             % Node 2 children
             app.Node2_1 = uitreenode(app.Node2);
             app.Node2_1.Text = 'Pipelines';
-%                 pplns = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
-%                 app.Node2_1.NodeData = pplns;
+                pplns = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
+                app.Node2_1.NodeData = pplns;
             
             app.Node2_2 = uitreenode(app.Node2);
             app.Node2_2.Text = 'Injection Sites';
+%                 njctn = readtable("CATF_CCUS_database.xlsx");
+%                 njctn_GT = table2geotable(njctn);
+%                 app.Node2_1.NodeData = njctn_GT;
 
             app.Node2_3 = uitreenode(app.Node2);
             app.Node2_3.Text = 'Sequestration Resevouir';
+%                 pplns = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
+%                 app.Node2_1.NodeData = pplns;
 
             % Node 3 Parent
             app.Node3 = uitreenode(app.Tree);
@@ -346,24 +350,23 @@ classdef MapApp < matlab.apps.AppBase
         % Construct app
         function app = MapApp
 
+            % Execute startup function
+            runStartupFcn(app, @startupFcn)
+
             % Create UIFigure and components
             createComponents(app)
 
-            % Execute startup function
-            runStartupFcn(app, @startupFcn)
         end
 
         % Code that executes before app deletion
-
-%         function ExitButtonPushed(app, event)
-%                add_rm_custom_paths('remove')
-%                app.delete % Shut down the entire app
-%         end
         
 %         function delete(app)
-%             add_rm_custom_paths('remove') % does not work if you just close the App window
-%             % Delete UIFigure when app is deleted
-%             delete(app.UIFigure)
+%             add_rm_custom_paths('remove');
+%             delete(app.UIFigure);
+%             % deletes immediately after creating the figure, but can still
+%             % plot the data
+%             % no need to delete figure to delete paths
+%             disp('path removed')
 %         end
 
     end
