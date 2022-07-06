@@ -127,7 +127,7 @@ classdef MapApp < matlab.apps.AppBase
             % Create MiddlePanel
             app.MiddlePanel = uipanel(app.GridLayout);
             app.MiddlePanel.FontName = 'Open Sans';
-            app.MiddlePanel.Title = 'Filter';
+            app.MiddlePanel.Title = 'Filter point sources by ...';
             app.MiddlePanel.Layout.Row = 4;
             app.MiddlePanel.Layout.Column = 1;
             app.MiddlePanel.Scrollable = 'on';
@@ -137,7 +137,6 @@ classdef MapApp < matlab.apps.AppBase
             app.Tree.CheckedNodesChangedFcn = @(src,event) checkchange(src, event, app, gx);
             
             % Create nodes
-
             % Node 1 parent
             app.Node1 = uitreenode(app.Tree);
             app.Node1.Text = 'Point Source';
@@ -168,8 +167,8 @@ classdef MapApp < matlab.apps.AppBase
             % Node 2 children
             app.Node2_1 = uitreenode(app.Node2);
             app.Node2_1.Text = 'Pipelines';
-                pplns = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
-                app.Node2_1.NodeData = pplns;
+                pplns_GT = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
+                app.Node2_1.NodeData = pplns_GT;
             
             app.Node2_2 = uitreenode(app.Node2);
             app.Node2_2.Text = 'Injection Sites';
@@ -314,11 +313,38 @@ classdef MapApp < matlab.apps.AppBase
 %                 clmtzns = readgeotable("ClimateZones.shp");
 %                 app.Node2_1.NodeData = clmtzns;
 
+            expand(app.Tree);
+
+            % Middle panel grid
+            gl = uigridlayout(app.MiddlePanel, [4 5]);
+            gl.ColumnSpacing = 0;
+            gl.RowSpacing = 0;
+            gl.Padding = [1 1 1 1];
+
+            % Create DropDown and label
+            lbl_1 = uilabel(gl);
+            lbl_1.Text = 'Distance from CCUS infrastructure (miles):';
+            lbl_1.Layout.Row = 1;
+            lbl_1.Layout.Column = [1 2];
+            nef = uieditfield(gl, 'numeric', 'Limits', [0 100], 'Editable', 'on', 'Value', 0);
+            nef.Layout.Row = 1;
+            nef.Layout.Column = [3 5];
+            
+            % Make button
+            b = uibutton(gl);
+            b.Text = 'Update';
+            b.Layout.Row = 2;
+            b.Layout.Column = [3 5];
+            b.ButtonPushedFcn =  @(src,event) updateMap(src, event, gx);
+            
+            % Display figure only when all components have been created
             app.UIFigure.Visible = 'on';
 
-             function checkchange(src, event, app, ax)
+            % Function that plots/deletes when checkbox is
+            % selected/deselected
+            function checkchange(src, event, app, ax)
                 nodes = event.LeafCheckedNodes;
-                objs = get(ax, 'Children')
+                objs = get(ax, 'Children');
                 if ~isempty(nodes) % if there are checked boxes
                     names = {nodes(:).Text}; % find the names of everything that is checked
                     for jj = 1:length(objs) % loop through the children
@@ -338,10 +364,85 @@ classdef MapApp < matlab.apps.AppBase
                         delete(objs(kk))
                     end
                 end
+            end     
+
+
+
+            % Push button to update the map
+            function updateMap(~, event, ax)
+
+                % Check if the value changed
+                nef.ValueChangedFcn = @(src,event) distanceChange(src, event, ax);
+
             end
 
-        end 
+            function distanceChange(~, event, ax)
+                
+                % variable distance is the number user puts in the field
+                % textbox
+                newValue = event.Value;
+                oldValue = event.PreviousValue;
+               
+                if newValue ~= oldValue
 
+                    % define all point sources                 
+                    T_1 = pwrplnt(:, 5:6);
+                    T_2 = cmntplnt(:, 5:6);
+                    T_3 = ethnlplnt(:, 5:6);
+
+                    % combine all point source points into one table
+                    T = [T_1; T_2; T_3];
+
+                    % select all lat and lons for every point and make a
+                    % new variable
+                    xy = [T(:, 'LATITUDE') T(:, 'LONGITUDE')];
+                    
+
+                    % select all lat and lon for specific point and assign to variables
+                    % lat and lon
+                    for ii = 1:size(xy)
+                        latp = table2array(xy(ii, 1));
+                        lonp = table2array(xy(ii, 2));
+                        r = newValue;
+
+                        % create circle using lat and lon for the specific point
+                        % change radius from degrees to miles
+                        [latc, lonc] = scircle1(latp, lonp, r);
+
+                        % select each line from the pipeline geotable
+                        for jj = 1:size(pplns_GT)
+                            
+                            % get lines
+                            shape = pplns_GT.Shape;
+
+                            % select specific line
+                            line = shape(jj, :);                       
+
+                            % make GT a table and get latitude and longitudes
+                            T_4 = geotable2table(pplns_GT, ["Latitude","Longitude"]);
+                            
+                            % get latitude and longitude for specific line
+                            T2 = T_4(jj, :);
+                            
+                            % separate lat and lon, make them into rows,
+                            % and then assign lat to x and lon to y
+                            [latl, lonl] = polyjoin(T2.Latitude', T2.Longitude');
+
+                            % if any x, y pair is in the circle, plot the
+                            % circle and the point
+                            if inpolygon(latl, lonl, latc, lonc)
+                                
+                                geoplot(ax, latp, lonp)
+                                geoplot(ax, latc, lonc);
+                                geoplot(ax, line);
+                            
+                            end
+                      
+                        end
+                    end
+                end
+            end
+        end
     end
 
     % App creation and deletion
@@ -374,5 +475,3 @@ classdef MapApp < matlab.apps.AppBase
     
 
 end
-
-
