@@ -2,89 +2,89 @@ function add_rm_custom_paths(add_rm_string)
 
 custom_paths = {
 
-    ".\Data\point_sources\",
+    ['.' filesep 'Data' filesep 'point_sources' filesep ],
 
-    ".\Data\point_sources\PowerPlants_US_EIA\",
+    ['.' filesep 'Data' filesep 'point_sources' filesep 'PowerPlants_US_EIA' filesep ],
     
-    ".\Data\pipelines\",
-    ".\Data\pipelines\Newest_pipelines_data",
-    ".\Data\pipelines\OHWVPA_potential_pipelines_data\",
-    ".\Data\pipelines\PetroleumProduct_Pipelines_US_EIA\",
-    ".\Data\pipelines\NaturalGas_InterIntrastate_Pipelines_US_EIA\"
-    ".\Data\pipelines\HGL_Pipelines_US_EIA\"
-    ".\Data\CrudeOil_Pipelines_US_EIA\"
+    ['.' filesep 'Data' filesep 'pipelines' filesep ],
+    ['.' filesep 'Data' filesep 'pipelines' filesep 'Newest_pipelines_data' filesep ],
+    ['.' filesep 'Data' filesep 'pipelines' filesep 'OHWVPA_potential_pipelines_data' filesep ],
+    ['.' filesep 'Data' filesep 'pipelines' filesep 'PetroleumProduct_Pipelines_US_EIA' filesep ],
+    ['.' filesep 'Data' filesep 'pipelines' filesep 'NaturalGas_InterIntrastate_Pipelines_US_EIA' filesep ],
+    ['.' filesep 'Data' filesep 'pipelines' filesep 'HGL_Pipelines_US_EIA' filesep ],
+    ['.' filesep 'Data' filesep 'CrudeOil_Pipelines_US_EIA' filesep ],
     
-    ".\Data\member_facilities\",
+    ['.' filesep 'Data' filesep 'member_facilities' filesep ],
     
-    ".\Data\grid_greeness\",
+    ['.' filesep 'Data' filesep 'grid_greeness' filesep ],
     
-    ".\Data\environmental_social_risks\",
-    ".\Data\environmental_social_risks\NRI_Shapefile_States\",
-    ".\Data\environmental_social_risks\NRI_Shapefile_Counties\",
-    ".\Data\environmental_social_risks\NationalRiskIndex_Metadata\",
-    ".\Data\environmental_social_risks\ClimateZones_US_EIA\",
+    ['.' filesep 'Data' filesep 'environmental_social_risks' filesep ],
+    ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'NRI_Shapefile_States' filesep ],
+    ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'NRI_Shapefile_Counties' filesep ],
+    ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'NationalRiskIndex_Metadata' filesep ],
+    ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'ClimateZones_US_EIA' filesep ],
     
-    ".\Data\eGRID_subregions\",
+    ['.' filesep 'Data' filesep 'eGRID_subregions' filesep ],
     
-    ".\Data\CO2_basins\",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep ],
     
-    ".\Data\CO2_basins\SedimentaryBasins_US_EIA",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'SedimentaryBasins_US_EIA' filesep ],
     
-    ".\Data\CO2_basins\firecracker_sedimentary_basin_data",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'firecracker_sedimentary_basin_data' filesep ],
     
-    ".\Data\CO2_basins\Powder_river_basin_boundaries",
-        ".\Data\CO2_basins\Powder_river_basin_density",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Powder_river_basin_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Powder_river_basin_density' filesep ],
     
-    ".\Data\CO2_basins\Permian_palo_basin_boundaries",
-        ".\Data\CO2_basins\Permian_palo_basin_density",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Permian_palo_basin_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Permian_palo_basin_density' filesep ],
         
-    ".\Data\CO2_basins\Hanna_laramie_shirley_basin_boundaries",
-        ".\Data\CO2_basins\Hanna_laramie_shirley_basin_density",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Hanna_laramie_shirley_basin_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Hanna_laramie_shirley_basin_density' filesep ],
 
-    ".\Data\CO2_basins\Gulf_basin_boundaries",
-        ".\Data\CO2_basins\Gulf_basin_density",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Gulf_basin_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Gulf_basin_density' filesep ],
 
-    ".\Data\CO2_basins\Greater_green_river_basin_boundaries",
-        ".\Data\CO2_basins\Greater_green_river_basin_density",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Greater_green_river_basin_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Greater_green_river_basin_density' filesep ],
         
-    ".\Data\CO2_basins\Eastern_mesozoic_basin_boundaries",
-        ".\Data\CO2_basins\Eastern_mesozoic_basin_density",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Eastern_mesozoic_basin_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Eastern_mesozoic_basin_density' filesep ],
 
-    ".\Data\CO2_basins\Denver_basin_boundaries",
-        ".\Data\CO2_basins\Denver_basin_density",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Denver_basin_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Denver_basin_density' filesep ],
 
-    ".\Data\CO2_basins\Columbia_basin_boundaries",
-        ".\Data\CO2_basins\Columbia_basin_density",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Columbia_basin_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Columbia_basin_density' filesep ],
 
-    ".\Data\CO2_basins\Bighorn_basin_boundaries",
-        ".\Data\CO2_basins\Bighorn_basin_density",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Bighorn_basin_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Bighorn_basin_density' filesep ],
 
-    ".\Data\CO2_basins\Atlantic_coastal_plain_boundaries",
-        ".\Data\CO2_basins\Atlantic_coastal_plain_density",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Atlantic_coastal_plain_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Atlantic_coastal_plain_density' filesep ],
 
-    ".\Data\CO2_basins\Arkoma_kansas_midcontinent_basin_boundaries",
-        ".\Data\CO2_basins\Arkoma_kansas_midcontinent_basin_density",
-        ".\Data\CO2_basins\Arkoma_kansas_midcontinent_basin_density\Cell_C5062",
-        ".\Data\CO2_basins\Arkoma_kansas_midcontinent_basin_density\Cell_C5056",
-        ".\Data\CO2_basins\Arkoma_kansas_midcontinent_basin_boundaries\SAU_C5062",
-        ".\Data\CO2_basins\Arkoma_kansas_midcontinent_basin_boundaries\SAU_C5056",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Arkoma_kansas_midcontinent_basin_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Arkoma_kansas_midcontinent_basin_density' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Arkoma_kansas_midcontinent_basin_density' filesep 'Cell_C5062' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Arkoma_kansas_midcontinent_basin_density' filesep 'Cell_C5056' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Arkoma_kansas_midcontinent_basin_boundaries' filesep 'SAU_C5062' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Arkoma_kansas_midcontinent_basin_boundaries' filesep 'SAU_C5056' filesep ],
 
-    ".\Data\CO2_basins\Alaska_north_slope_kandik_basin_boundaries",
-        ".\Data\CO2_basins\Alaska_north_slope_kandik_basin_density",
-        ".\Data\CO2_basins\Alaska_north_slope_kandik_basin_boundaries\SAU_C5002_Final",
-        ".\Data\CO2_basins\Alaska_north_slope_kandik_basin_boundaries\SAU_C5001_Final",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Alaska_north_slope_kandik_basin_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Alaska_north_slope_kandik_basin_density' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Alaska_north_slope_kandik_basin_boundaries' filesep 'SAU_C5002_Final' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Alaska_north_slope_kandik_basin_boundaries' filesep 'SAU_C5001_Final' filesep ],
 
-    ".\Data\CO2_basins\South_florida_basin_boundaries",
-        ".\Data\CO2_basins\South_florida_basin_density",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'South_florida_basin_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'South_florida_basin_density' filesep ],
 
-    ".\Data\CO2_basins\Southern_rocky_basin_boundaries",
-        ".\Data\CO2_basins\Southern_rocky_basin_density",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Southern_rocky_basin_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Southern_rocky_basin_density' filesep ],
 
-    ".\Data\CO2_basins\Williston_basin_boundaries",
-        ".\Data\CO2_basins\Williston_basin_density",
+    ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Williston_basin_boundaries' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Williston_basin_density' filesep ],
 
-    ".\Data\CCUS_infrastructure\",
-    ".\Data\CCUS_infrastructure\National_carbon_capture_technology_data",
+    ['.' filesep 'Data' filesep 'CCUS_infrastructure' filesep ],
+    ['.' filesep 'Data' filesep 'CCUS_infrastructure' filesep 'National_carbon_capture_technology_data' filesep ],
         
     };
 

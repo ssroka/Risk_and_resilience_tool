@@ -63,8 +63,10 @@ classdef MapApp < matlab.apps.AppBase
     methods (Access = private)
 
         function startupFcn(app)
-            addpath("MATLAB_code\")
+            cd('..')
+            addpath(['.' filesep 'MATLAB_code' filesep])
             add_rm_custom_paths('add')
+            cd('MATLAB_code')
         end
 
     end
@@ -408,7 +410,7 @@ classdef MapApp < matlab.apps.AppBase
                         % create circle using lat and lon for the specific point
                         % change radius from degrees to miles
                         [latc, lonc] = scircle1(latp, lonp, r);
-                        circle = [latc, lonc]
+%                         circle = [latc, lonc]
 
                         % select each line from the pipeline geotable
                         for jj = 1:size(pplns_GT)
