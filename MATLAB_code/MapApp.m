@@ -369,10 +369,10 @@ classdef MapApp < matlab.apps.AppBase
 
 
             % Push button to update the map
-            function updateMap(~, event, ax)
+            function updateMap(~, event, gx)
 
                 % Check if the value changed
-                nef.ValueChangedFcn = @(src,event) distanceChange(src, event, ax);
+                nef.ValueChangedFcn = @(src,event) distanceChange(src, event, gx);
 
             end
 
@@ -408,6 +408,7 @@ classdef MapApp < matlab.apps.AppBase
                         % create circle using lat and lon for the specific point
                         % change radius from degrees to miles
                         [latc, lonc] = scircle1(latp, lonp, r);
+                        circle = [latc, lonc]
 
                         % select each line from the pipeline geotable
                         for jj = 1:size(pplns_GT)
@@ -430,12 +431,15 @@ classdef MapApp < matlab.apps.AppBase
 
                             % if any x, y pair is in the circle, plot the
                             % circle and the point
-                            if inpolygon(latl, lonl, latc, lonc)
-                                
-                                geoplot(ax, latp, lonp)
-                                geoplot(ax, latc, lonc);
-                                geoplot(ax, line);
-                            
+
+                            h1 = geoplot(gx, latp, lonp, "om", MarkerFaceColor = "m")
+                            h2 = geoplot(gx, latc, lonc)
+                            h3 = geoplot(gx, line)
+                            disp('point')
+
+                            if any(inpolygon(latl, lonl, latc, lonc))
+                                disp('true')
+
                             end
                       
                         end
