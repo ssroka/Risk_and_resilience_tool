@@ -107,12 +107,12 @@ classdef MapApp < matlab.apps.AppBase
             % Create GeoAxes
             gx = geoaxes(app.RightPanel, 'Basemap', 'darkwater', 'NextPlot', 'add');
             gx.Title.String = 'Map'; % display label, come up with better name
-            gx.Subtitle.String = 'An interactive, user friendly map to display relevant power sector data and support better business decisions regarding CCUS and resiliency retrofitting';
+            gx.Subtitle.String = sprintf('An interactive, user friendly map to display relevant power sector data\n and support better business decisions regarding CCUS and resiliency retrofitting');
             gx.Subtitle.FontAngle = 'italic';
             gx.Scalebar.Visible = 'on'; % display scale bar
             gx.Grid = "off"; % no grid (may be distracting)
             % add option to turn grid on
-            set(gx, 'fontname', 'Open Sans'); % use open sans font
+            set(gx, 'fontname', 'Open Sans','fontsize',24); % use open sans font
             tlbr = axtoolbar(gx, {'export', 'datacursor', 'stepzoomin', 'stepzoomout', 'restoreview'}); % add differfent options to map toolbar
             addToolbarMapButton(tlbr, "basemap"); % allow user to choose different basemaps for personalized visualization
             geolimits(gx, [10 70], [-180 -30]); % map shows entirety of the USA
@@ -358,7 +358,11 @@ classdef MapApp < matlab.apps.AppBase
                     for ii = 1:length(nodes)
                         data2plot = findobj(ax, 'Tag', nodes(ii).Text);
                         if isempty(data2plot)
-                            geoplot(ax, nodes(ii).NodeData, 'Tag', nodes(ii).Text)
+                            if strcmp(nodes(ii).NodeData.Shape.Geometry,"point")
+                                geoplot(ax, nodes(ii).NodeData,'markersize',25, 'Tag', nodes(ii).Text)
+                            else
+                                geoplot(ax, nodes(ii).NodeData,'linewidth',3, 'Tag', nodes(ii).Text)
+                            end
                         end
                     end
                 else % if there are not any checked boxes, delete all "lines"
@@ -374,7 +378,7 @@ classdef MapApp < matlab.apps.AppBase
             function updateMap(~, event, gx)
 
                 % Check if the value changed
-                nef.ValueChangedFcn = @(src,event) distanceChange(src, event, gx);
+%                 nef.ValueChangedFcn = @(src,event) distanceChange(src, event, gx);
 
             end
 
