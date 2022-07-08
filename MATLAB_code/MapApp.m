@@ -67,6 +67,9 @@ classdef MapApp < matlab.apps.AppBase
             addpath(['.' filesep 'MATLAB_code' filesep])
             add_rm_custom_paths('add')
             cd('MATLAB_code')
+
+            % TURNING OFF POLYLINEZ UNSUPPORTED WARNING
+            warning('off','map:shapefile:unsupportedType')
         end
 
     end
@@ -94,7 +97,7 @@ classdef MapApp < matlab.apps.AppBase
             app.LeftPanel.Title = 'Layers';
             app.LeftPanel.Layout.Row = [1 3];
             app.LeftPanel.Layout.Column = 1;
-            app.LeftPanel.Scrollable = 'on'; 
+            app.LeftPanel.Scrollable = 'on';
 
             % Create RightPanel
             app.RightPanel = uipanel(app.GridLayout);
@@ -137,7 +140,7 @@ classdef MapApp < matlab.apps.AppBase
             % Create Tree
             app.Tree = uitree(app.LeftPanel, 'checkbox');
             app.Tree.CheckedNodesChangedFcn = @(src,event) checkchange(src, event, app, gx);
-            
+
             % Create nodes
             % Node 1 parent
             app.Node1 = uitreenode(app.Tree);
@@ -146,21 +149,21 @@ classdef MapApp < matlab.apps.AppBase
             % Node 1 children
             app.Node1_1 = uitreenode(app.Node1);
             app.Node1_1.Text = 'Power Plant';
-                pwrplnt = readtable("EPA_flight_GHG_powerplants_data.xls");
-                pwrplnt_GT = table2geotable(pwrplnt);
-                app.Node1_1.NodeData = pwrplnt_GT;
+            pwrplnt = readtable("EPA_flight_GHG_powerplants_data.xls");
+            pwrplnt_GT = table2geotable(pwrplnt);
+            app.Node1_1.NodeData = pwrplnt_GT;
 
             app.Node1_2 = uitreenode(app.Node1);
             app.Node1_2.Text = 'Cement Plant';
-                cmntplnt = readtable("EPA_flight_GHG_cementplants_data.xls");
-                cmntplnt_GT = table2geotable(cmntplnt);
-                app.Node1_2.NodeData = cmntplnt_GT;
+            cmntplnt = readtable("EPA_flight_GHG_cementplants_data.xls");
+            cmntplnt_GT = table2geotable(cmntplnt);
+            app.Node1_2.NodeData = cmntplnt_GT;
 
             app.Node1_3 = uitreenode(app.Node1);
             app.Node1_3.Text = 'Ethanol Plant';
-                ethnlplnt = readtable("EPA_flight_GHG_ethanolplants_data.xls");
-                ethnlplnt_GT = table2geotable(ethnlplnt);
-                app.Node1_3.NodeData = ethnlplnt_GT;
+            ethnlplnt = readtable("EPA_flight_GHG_ethanolplants_data.xls");
+            ethnlplnt_GT = table2geotable(ethnlplnt);
+            app.Node1_3.NodeData = ethnlplnt_GT;
 
             % Node 2 Parent
             app.Node2 = uitreenode(app.Tree);
@@ -169,25 +172,26 @@ classdef MapApp < matlab.apps.AppBase
             % Node 2 children
             app.Node2_1 = uitreenode(app.Node2);
             app.Node2_1.Text = 'Pipelines';
-                pplns_GT = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
-                app.Node2_1.NodeData = pplns_GT;
-            
+            pplns_GT = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
+            %                 pplns_shp = shaperead("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
+            app.Node2_1.NodeData = pplns_GT;
+
             app.Node2_2 = uitreenode(app.Node2);
             app.Node2_2.Text = 'Injection Sites';
-%                 njctn = readtable("CATF_CCUS_database.xlsx");
-%                 njctn_GT = table2geotable(njctn);
-%                 app.Node2_1.NodeData = njctn_GT;
+            %                 njctn = readtable("CATF_CCUS_database.xlsx");
+            %                 njctn_GT = table2geotable(njctn);
+            %                 app.Node2_1.NodeData = njctn_GT;
 
             app.Node2_3 = uitreenode(app.Node2);
             app.Node2_3.Text = 'Sequestration Resevouir';
-%                 pplns = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
-%                 app.Node2_1.NodeData = pplns;
+            %                 pplns = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
+            %                 app.Node2_1.NodeData = pplns;
 
             % Node 3 Parent
             app.Node3 = uitreenode(app.Tree);
             app.Node3.Text = 'Environmental Risk';
-%                 nri = shaperead("NRI_Shapefile_States.shp");
-%                 app.Node2_1.NodeData = nri;
+            %                 nri = shaperead("NRI_Shapefile_States.shp");
+            %                 app.Node2_1.NodeData = nri;
 
             % Node 3 children
             app.Node3_1 = uitreenode(app.Node3);
@@ -198,49 +202,49 @@ classdef MapApp < matlab.apps.AppBase
 
             app.Node3_3 = uitreenode(app.Node3);
             app.Node3_3.Text = 'Cold Wave';
-            
+
             app.Node3_4 = uitreenode(app.Node3);
             app.Node3_4.Text = 'Drought';
-            
+
             app.Node3_5 = uitreenode(app.Node3);
             app.Node3_5.Text = 'Earthquake';
-            
+
             app.Node3_6 = uitreenode(app.Node3);
             app.Node3_6.Text = 'Hail';
-            
+
             app.Node3_7 = uitreenode(app.Node3);
             app.Node3_7.Text = 'Heat Wave';
-            
+
             app.Node3_8 = uitreenode(app.Node3);
             app.Node3_8.Text = 'Hurricane';
-            
+
             app.Node3_9 = uitreenode(app.Node3);
             app.Node3_9.Text = 'Ice Storm';
-            
+
             app.Node3_10 = uitreenode(app.Node3);
             app.Node3_10.Text = 'Landslide' ;
-            
+
             app.Node3_11 = uitreenode(app.Node3);
             app.Node3_11.Text = 'Lightning';
-            
+
             app.Node3_12 = uitreenode(app.Node3);
             app.Node3_12.Text = 'Riverine Flooding';
-            
+
             app.Node3_13 = uitreenode(app.Node3);
             app.Node3_13.Text = 'Strong Wind';
-            
+
             app.Node3_14 = uitreenode(app.Node3);
             app.Node3_14.Text = 'Tornado';
-            
+
             app.Node3_15 = uitreenode(app.Node3);
             app.Node3_15.Text = 'Tsunami';
-            
+
             app.Node3_16 = uitreenode(app.Node3);
             app.Node3_16.Text = 'Volcanic Activity';
-            
+
             app.Node3_17 = uitreenode(app.Node3);
             app.Node3_17.Text = 'Wildfire';
-            
+
             app.Node3_18 = uitreenode(app.Node3);
             app.Node3_18.Text = 'Winter Weather';
 
@@ -263,57 +267,57 @@ classdef MapApp < matlab.apps.AppBase
             % Node 7 children
             app.Node7_1 = uitreenode(app.Node7);
             app.Node7_1.Text = 'Accenture';
-            
+
             app.Node7_2 = uitreenode(app.Node7);
             app.Node7_2.Text = 'Apple';
-            
+
             app.Node7_3 = uitreenode(app.Node7);
             app.Node7_3.Text = 'BBVA';
-            
+
             app.Node7_4 = uitreenode(app.Node7);
             app.Node7_4.Text = 'Biogen';
-            
+
             app.Node7_5 = uitreenode(app.Node7);
             app.Node7_5.Text = 'Boeing';
-            
+
             app.Node7_6 = uitreenode(app.Node7);
             app.Node7_6.Text = 'Cargill';
-            
+
             app.Node7_7 = uitreenode(app.Node7);
             app.Node7_7.Text = 'Dow';
-            
+
             app.Node7_8 = uitreenode(app.Node7);
             app.Node7_8.Text = 'Holcim';
-            
+
             app.Node7_9 = uitreenode(app.Node7);
             app.Node7_9.Text = 'IBM';
-            
+
             app.Node7_10 = uitreenode(app.Node7);
             app.Node7_10.Text = 'Inditex';
-            
+
             app.Node7_11 = uitreenode(app.Node7);
             app.Node7_11.Text = 'MathWorks';
-            
+
             app.Node7_12 = uitreenode(app.Node7);
             app.Node7_12.Text = 'Nexplore - Hochtief';
-            
+
             app.Node7_13 = uitreenode(app.Node7);
             app.Node7_13.Text = 'PepsiCo';
-            
+
             app.Node7_14 = uitreenode(app.Node7);
             app.Node7_14.Text = 'Rand-Whitney Containerboard, a Kraft Group company';
-            
+
             app.Node7_15 = uitreenode(app.Node7);
             app.Node7_15.Text = 'Verizon';
-            
+
             app.Node7_16 = uitreenode(app.Node7);
             app.Node7_16.Text = 'Vontier';
 
             % Node 8 Parent
             app.Node8 = uitreenode(app.Tree);
             app.Node8.Text = 'Climate Zones';
-%                 clmtzns = readgeotable("ClimateZones.shp");
-%                 app.Node2_1.NodeData = clmtzns;
+            %                 clmtzns = readgeotable("ClimateZones.shp");
+            %                 app.Node2_1.NodeData = clmtzns;
 
             expand(app.Tree);
 
@@ -328,17 +332,17 @@ classdef MapApp < matlab.apps.AppBase
             lbl_1.Text = 'Distance from CCUS infrastructure (miles):';
             lbl_1.Layout.Row = 1;
             lbl_1.Layout.Column = [1 2];
-            nef = uieditfield(gl, 'numeric', 'Limits', [0 100], 'Editable', 'on', 'Value', 0);
+            nef = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on', 'Value', 0);
             nef.Layout.Row = 1;
             nef.Layout.Column = [3 5];
-            
+
             % Make button
             b = uibutton(gl);
             b.Text = 'Update';
             b.Layout.Row = 2;
             b.Layout.Column = [3 5];
             b.ButtonPushedFcn =  @(src,event) updateMap(src, event, gx);
-            
+
             % Display figure only when all components have been created
             app.UIFigure.Visible = 'on';
 
@@ -370,7 +374,7 @@ classdef MapApp < matlab.apps.AppBase
                         delete(objs(kk))
                     end
                 end
-            end     
+            end
 
 
 
@@ -378,20 +382,20 @@ classdef MapApp < matlab.apps.AppBase
             function updateMap(~, event, gx)
 
                 % Check if the value changed
-%                 nef.ValueChangedFcn = @(src,event) distanceChange(src, event, gx);
+                nef.ValueChangedFcn = @(src,event) distanceChange(src, event, gx);
 
             end
 
             function distanceChange(~, event, ax)
-                
+
                 % variable distance is the number user puts in the field
                 % textbox
                 newValue = event.Value;
                 oldValue = event.PreviousValue;
-               
-                if newValue ~= oldValue
 
-                    % define all point sources                 
+                if newValue ~= oldValue
+     
+                    % define all point sources
                     T_1 = pwrplnt(:, 5:6);
                     T_2 = cmntplnt(:, 5:6);
                     T_3 = ethnlplnt(:, 5:6);
@@ -402,52 +406,63 @@ classdef MapApp < matlab.apps.AppBase
                     % select all lat and lons for every point and make a
                     % new variable
                     xy = [T(:, 'LATITUDE') T(:, 'LONGITUDE')];
-                    
+
 
                     % select all lat and lon for specific point and assign to variables
                     % lat and lon
-                    for ii = 1:size(xy)
+                    for ii = 1:10;%size(xy,1)
                         latp = table2array(xy(ii, 1));
                         lonp = table2array(xy(ii, 2));
-                        r = newValue;
+                        r_mi = newValue;
+                        r_deg = r_mi/69;
 
                         % create circle using lat and lon for the specific point
                         % change radius from degrees to miles
-                        [latc, lonc] = scircle1(latp, lonp, r);
-%                         circle = [latc, lonc]
+                        [latc, lonc] = scircle1(latp, lonp, r_deg);
+                        %                         circle = [latc, lonc]
 
                         % select each line from the pipeline geotable
                         for jj = 1:size(pplns_GT)
-                            
+
                             % get lines
-                            shape = pplns_GT.Shape;
-
-                            % select specific line
-                            line = shape(jj, :);                       
-
+                            %                             shape_GT = pplns_GT.Shape;
+                            %                             shape_x = [pplns_shp.X];
+                            %                             shape_y = [pplns_shp.Y];
+                            info = shapeinfo("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
+                            p = info.CoordinateReferenceSystem.GeographicCRS;
+                            %                             [lat, lon] = projinv(p, shape_x, shape_y);
+                            %                             p2 = projcrs
+                            %
+                            %                             % select specific line
+                            %                             line = shape_GT(jj, :);
+                            %
                             % make GT a table and get latitude and longitudes
                             T_4 = geotable2table(pplns_GT, ["Latitude","Longitude"]);
-                            
+
+
                             % get latitude and longitude for specific line
-                            T2 = T_4(jj, :);
-                            
-                            % separate lat and lon, make them into rows,
-                            % and then assign lat to x and lon to y
-                            [latl, lonl] = polyjoin(T2.Latitude', T2.Longitude');
+                            %                             T2 = T_4(jj, :);
+
+                            %                             % separate lat and lon, make them into rows,
+                            %                             % and then assign lat to x and lon to y
+                            %                             [latl, lonl] = polyjoin(T2.Latitude', T2.Longitude');
+
+                            [latl,lonl] = projinv(info.CoordinateReferenceSystem,T_4(jj,:).Latitude{1},T_4(jj,:).Longitude{1});
+
+                            shape2  = geolineshape(latl, lonl);
 
                             % if any x, y pair is in the circle, plot the
                             % circle and the point
 
-                            h1 = geoplot(gx, latp, lonp, "om", MarkerFaceColor = "m")
-                            h2 = geoplot(gx, latc, lonc)
-                            h3 = geoplot(gx, line)
                             disp('point')
 
                             if any(inpolygon(latl, lonl, latc, lonc))
                                 disp('true')
-
+                                h1 = geoplot(gx, latp, lonp, "om", MarkerFaceColor = "m")
+%                                 h2 = geoplot(gx, latc, lonc)
+%                                 h3 = geoplot(gx, shape2)
                             end
-                      
+
                         end
                     end
                 end
@@ -470,18 +485,18 @@ classdef MapApp < matlab.apps.AppBase
         end
 
         % Code that executes before app deletion
-        
-%         function delete(app)
-%             add_rm_custom_paths('remove');
-%             delete(app.UIFigure);
-%             % deletes immediately after creating the figure, but can still
-%             % plot the data
-%             % no need to delete figure to delete paths
-%             disp('path removed')
-%         end
+
+        %         function delete(app)
+        %             add_rm_custom_paths('remove');
+        %             delete(app.UIFigure);
+        %             % deletes immediately after creating the figure, but can still
+        %             % plot the data
+        %             % no need to delete figure to delete paths
+        %             disp('path removed')
+        %         end
 
     end
 
-    
+
 
 end
