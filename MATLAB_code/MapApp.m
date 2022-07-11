@@ -1,5 +1,5 @@
 classdef MapApp < matlab.apps.AppBase
-    % MapApp This is the base class of an App which contains methods needed by Apps.
+    % MapApp This is the base class of an App which contains methods needed
 
     properties(Access = public)
         UIFigure    matlab.ui.Figure
