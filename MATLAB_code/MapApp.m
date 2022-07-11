@@ -363,9 +363,9 @@ classdef MapApp < matlab.apps.AppBase
                         data2plot = findobj(ax, 'Tag', nodes(ii).Text);
                         if isempty(data2plot)
                             if strcmp(nodes(ii).NodeData.Shape.Geometry,"point")
-                                geoplot(ax, nodes(ii).NodeData,'markersize',25, 'Tag', nodes(ii).Text)
+                                geoplot(ax, nodes(ii).NodeData,'markersize', 25, 'Tag', nodes(ii).Text)
                             else
-                                geoplot(ax, nodes(ii).NodeData,'linewidth',3, 'Tag', nodes(ii).Text)
+                                geoplot(ax, nodes(ii).NodeData,'linewidth', 3, 'Tag', nodes(ii).Text)
                             end
                         end
                     end
@@ -386,7 +386,7 @@ classdef MapApp < matlab.apps.AppBase
 
             end
 
-            function distanceChange(~, event, ax)
+            function distanceChange(~, event, gx)
 
                 % variable distance is the number user puts in the field
                 % textbox
@@ -420,8 +420,7 @@ classdef MapApp < matlab.apps.AppBase
                         % create circle using lat and lon for the specific point
                         % change radius from degrees to miles
                         [latc, lonc] = scircle1(latp, lonp, r_deg);
-                        %                         circle = [latc, lonc]
-
+                       
                         % select each line from the pipeline geotable
                         for jj = 1:size(pplns_GT)
 
@@ -431,20 +430,29 @@ classdef MapApp < matlab.apps.AppBase
                             % make GT a table and get latitude and longitudes
                             T_4 = geotable2table(pplns_GT, ["Latitude","Longitude"]);
 
-                            [latl,lonl] = projinv(info.CoordinateReferenceSystem,T_4(jj,:).Latitude{1},T_4(jj,:).Longitude{1});
+                            [latl, lonl] = projinv(info.CoordinateReferenceSystem,T_4(jj,:).Latitude{1},T_4(jj,:).Longitude{1});
 
                             shape2  = geolineshape(latl, lonl);
 
                             % if any x, y pair is in the circle, plot the
                             % circle and the point
 
-                            disp('point')
-
                             if any(inpolygon(latl, lonl, latc, lonc))
-                                disp('true')
-                                h1 = geoplot(gx, latp, lonp, "om", MarkerFaceColor = "m")
-%                                 h2 = geoplot(gx, latc, lonc)
-%                                 h3 = geoplot(gx, shape2)
+                                    disp('inpoly')
+                            else
+                                disp('not')
+%                                 for kk = 1:size(T)
+%                                     if kk <= 1756
+%                                         disp(kk)
+%                                         geoplot(gx, latp, lonp, '.', 'm');
+%                                     elseif (1756) < kk && kk <= (1756+99) 
+%                                         geoplot(gx, latp, lonp, ".", 'b');
+%                                     else
+%                                         geoplot(gx, latp, lonp, '.', 'r');
+%                                     end
+%                                 end
+                                
+
                             end
 
                         end
