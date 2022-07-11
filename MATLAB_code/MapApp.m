@@ -410,11 +410,12 @@ classdef MapApp < matlab.apps.AppBase
 
                     % select all lat and lon for specific point and assign to variables
                     % lat and lon
-                    for ii = 1:10;%size(xy,1)
+                    for ii = 1:10;
+                        %size(xy,1)
                         latp = table2array(xy(ii, 1));
                         lonp = table2array(xy(ii, 2));
                         r_mi = newValue;
-                        r_deg = r_mi/69;
+                        r_deg = r_mi/69; %convert from miles to degrees
 
                         % create circle using lat and lon for the specific point
                         % change radius from degrees to miles
@@ -424,28 +425,11 @@ classdef MapApp < matlab.apps.AppBase
                         % select each line from the pipeline geotable
                         for jj = 1:size(pplns_GT)
 
-                            % get lines
-                            %                             shape_GT = pplns_GT.Shape;
-                            %                             shape_x = [pplns_shp.X];
-                            %                             shape_y = [pplns_shp.Y];
                             info = shapeinfo("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
                             p = info.CoordinateReferenceSystem.GeographicCRS;
-                            %                             [lat, lon] = projinv(p, shape_x, shape_y);
-                            %                             p2 = projcrs
-                            %
-                            %                             % select specific line
-                            %                             line = shape_GT(jj, :);
-                            %
+
                             % make GT a table and get latitude and longitudes
                             T_4 = geotable2table(pplns_GT, ["Latitude","Longitude"]);
-
-
-                            % get latitude and longitude for specific line
-                            %                             T2 = T_4(jj, :);
-
-                            %                             % separate lat and lon, make them into rows,
-                            %                             % and then assign lat to x and lon to y
-                            %                             [latl, lonl] = polyjoin(T2.Latitude', T2.Longitude');
 
                             [latl,lonl] = projinv(info.CoordinateReferenceSystem,T_4(jj,:).Latitude{1},T_4(jj,:).Longitude{1});
 
