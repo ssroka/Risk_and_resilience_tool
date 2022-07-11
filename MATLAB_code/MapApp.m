@@ -190,63 +190,82 @@ classdef MapApp < matlab.apps.AppBase
             % Node 3 Parent
             app.Node3 = uitreenode(app.Tree);
             app.Node3.Text = 'Environmental Risk';
-            %                 nri = shaperead("NRI_Shapefile_States.shp");
-            %                 app.Node2_1.NodeData = nri;
+                            nri = shaperead("NRI_Shapefile_States.shp");
+                            crs_info = shapeinfo("NRI_Shapefile_States.shp"); %struct with fields:
+%                           Filename: [3×126 char]
+%                           ShapeType: 'Polygon'
+%                           BoundingBox: [2×2 double]
+%                           NumFeatures: 51
+%                           Attributes: [231×1 struct]
+%                           CoordinateReferenceSystem: [1×1 projcrs]
 
-            % Node 3 children
-            app.Node3_1 = uitreenode(app.Node3);
-            app.Node3_1.Text = 'Avalanche';
+                            crs = crs_info.CoordinateReferenceSystem;
+%                           Name: "WGS 84 / Pseudo-Mercator"
+%                           GeographicCRS: [1×1 geocrs]
+%                           ProjectionMethod: "Popular Visualisation Pseudo Mercator"
+%                           LengthUnit: "meter"
+%                           ProjectionParameters: [1×1 map.crs.ProjectionParameters]
+                            nri_GT = struct2geotable(nri, CoordinateReferenceSystem = crs);
+                            
+                            app.Node3.NodeData = nri_GT;
+                            %assign each column of risk to each node
+                            %plot all rows for that column (:, 'AVLN_')
 
-            app.Node3_2 = uitreenode(app.Node3);
-            app.Node3_2.Text = 'Coastal Flooding';
 
-            app.Node3_3 = uitreenode(app.Node3);
-            app.Node3_3.Text = 'Cold Wave';
-
-            app.Node3_4 = uitreenode(app.Node3);
-            app.Node3_4.Text = 'Drought';
-
-            app.Node3_5 = uitreenode(app.Node3);
-            app.Node3_5.Text = 'Earthquake';
-
-            app.Node3_6 = uitreenode(app.Node3);
-            app.Node3_6.Text = 'Hail';
-
-            app.Node3_7 = uitreenode(app.Node3);
-            app.Node3_7.Text = 'Heat Wave';
-
-            app.Node3_8 = uitreenode(app.Node3);
-            app.Node3_8.Text = 'Hurricane';
-
-            app.Node3_9 = uitreenode(app.Node3);
-            app.Node3_9.Text = 'Ice Storm';
-
-            app.Node3_10 = uitreenode(app.Node3);
-            app.Node3_10.Text = 'Landslide' ;
-
-            app.Node3_11 = uitreenode(app.Node3);
-            app.Node3_11.Text = 'Lightning';
-
-            app.Node3_12 = uitreenode(app.Node3);
-            app.Node3_12.Text = 'Riverine Flooding';
-
-            app.Node3_13 = uitreenode(app.Node3);
-            app.Node3_13.Text = 'Strong Wind';
-
-            app.Node3_14 = uitreenode(app.Node3);
-            app.Node3_14.Text = 'Tornado';
-
-            app.Node3_15 = uitreenode(app.Node3);
-            app.Node3_15.Text = 'Tsunami';
-
-            app.Node3_16 = uitreenode(app.Node3);
-            app.Node3_16.Text = 'Volcanic Activity';
-
-            app.Node3_17 = uitreenode(app.Node3);
-            app.Node3_17.Text = 'Wildfire';
-
-            app.Node3_18 = uitreenode(app.Node3);
-            app.Node3_18.Text = 'Winter Weather';
+%             % Node 3 children
+%             app.Node3_1 = uitreenode(app.Node3);
+%             app.Node3_1.Text = 'Avalanche';
+% 
+%             app.Node3_2 = uitreenode(app.Node3);
+%             app.Node3_2.Text = 'Coastal Flooding';
+% 
+%             app.Node3_3 = uitreenode(app.Node3);
+%             app.Node3_3.Text = 'Cold Wave';
+% 
+%             app.Node3_4 = uitreenode(app.Node3);
+%             app.Node3_4.Text = 'Drought';
+% 
+%             app.Node3_5 = uitreenode(app.Node3);
+%             app.Node3_5.Text = 'Earthquake';
+% 
+%             app.Node3_6 = uitreenode(app.Node3);
+%             app.Node3_6.Text = 'Hail';
+% 
+%             app.Node3_7 = uitreenode(app.Node3);
+%             app.Node3_7.Text = 'Heat Wave';
+% 
+%             app.Node3_8 = uitreenode(app.Node3);
+%             app.Node3_8.Text = 'Hurricane';
+% 
+%             app.Node3_9 = uitreenode(app.Node3);
+%             app.Node3_9.Text = 'Ice Storm';
+% 
+%             app.Node3_10 = uitreenode(app.Node3);
+%             app.Node3_10.Text = 'Landslide' ;
+% 
+%             app.Node3_11 = uitreenode(app.Node3);
+%             app.Node3_11.Text = 'Lightning';
+% 
+%             app.Node3_12 = uitreenode(app.Node3);
+%             app.Node3_12.Text = 'Riverine Flooding';
+% 
+%             app.Node3_13 = uitreenode(app.Node3);
+%             app.Node3_13.Text = 'Strong Wind';
+% 
+%             app.Node3_14 = uitreenode(app.Node3);
+%             app.Node3_14.Text = 'Tornado';
+% 
+%             app.Node3_15 = uitreenode(app.Node3);
+%             app.Node3_15.Text = 'Tsunami';
+% 
+%             app.Node3_16 = uitreenode(app.Node3);
+%             app.Node3_16.Text = 'Volcanic Activity';
+% 
+%             app.Node3_17 = uitreenode(app.Node3);
+%             app.Node3_17.Text = 'Wildfire';
+% 
+%             app.Node3_18 = uitreenode(app.Node3);
+%             app.Node3_18.Text = 'Winter Weather';
 
             % Node 4 parent
             app.Node4 = uitreenode(app.Tree);
