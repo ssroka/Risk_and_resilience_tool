@@ -410,7 +410,7 @@ classdef MapApp < matlab.apps.AppBase
 
                     % select all lat and lon for specific point and assign to variables
                     % lat and lon
-                    for ii = 1:10;
+                    for ii = 1:10
                         %size(xy,1)
                         latp = table2array(xy(ii, 1));
                         lonp = table2array(xy(ii, 2));
@@ -423,7 +423,7 @@ classdef MapApp < matlab.apps.AppBase
                         %                         circle = [latc, lonc]
 
                         % select each line from the pipeline geotable
-                        for jj = 1:size(pplns_GT)
+                        for jj = 1:size(pplns_GT,1)
 
                             info = shapeinfo("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
                             p = info.CoordinateReferenceSystem.GeographicCRS;
