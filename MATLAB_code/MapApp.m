@@ -187,10 +187,14 @@ classdef MapApp < matlab.apps.AppBase
             %                 pplns = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
             %                 app.Node2_1.NodeData = pplns;
 
+
             % Node 3 Parent
             app.Node3 = uitreenode(app.Tree);
             app.Node3.Text = 'Environmental Risk';
-                            nri = shaperead("NRI_Shapefile_States.shp");
+                            
+%                           select certain fields to avoid loading too much data   
+                            nri = shaperead("NRI_Shapefile_States.shp", 'Attributes', {'Shape', 'Geometry', 'BoundingBox', 'X', 'Y', 'STATE', 'STATEABBRV', 'POPULATION', 'AREA', 'EAL_RATNG', 'AVLN_EALR', 'CFLD_EALR'... 
+                                'CWAV_EALR', 'DRGT_EALR', 'ERQK_EALR', 'HAIL_EALR', 'HWAV_EALR', 'HRCN_EALR', 'ISTM_EALR', 'LNDS_EALR', 'LTNG_EALR', 'RFLD_EALR', 'SWND_EALR', 'TRND_EALR', 'TSUN_EALR', 'VLCN_EALR', 'WFIR_EALR', 'WNTW_EALR'});
                             crs_info = shapeinfo("NRI_Shapefile_States.shp"); %struct with fields:
 %                           Filename: [3×126 char]
 %                           ShapeType: 'Polygon'
@@ -206,67 +210,103 @@ classdef MapApp < matlab.apps.AppBase
 %                           LengthUnit: "meter"
 %                           ProjectionParameters: [1×1 map.crs.ProjectionParameters]
                             nri_GT = struct2geotable(nri, CoordinateReferenceSystem = crs);
-                            
+%                             
                             app.Node3.NodeData = nri_GT;
-                            %assign each column of risk to each node
-                            %plot all rows for that column (:, 'AVLN_')
+%                           assign each column of risk to each node
+%                           plot all rows for that column (:, 'AVLN_')
 
 
-%             % Node 3 children
-%             app.Node3_1 = uitreenode(app.Node3);
-%             app.Node3_1.Text = 'Avalanche';
-% 
-%             app.Node3_2 = uitreenode(app.Node3);
-%             app.Node3_2.Text = 'Coastal Flooding';
-% 
-%             app.Node3_3 = uitreenode(app.Node3);
-%             app.Node3_3.Text = 'Cold Wave';
-% 
-%             app.Node3_4 = uitreenode(app.Node3);
-%             app.Node3_4.Text = 'Drought';
-% 
-%             app.Node3_5 = uitreenode(app.Node3);
-%             app.Node3_5.Text = 'Earthquake';
-% 
-%             app.Node3_6 = uitreenode(app.Node3);
-%             app.Node3_6.Text = 'Hail';
-% 
-%             app.Node3_7 = uitreenode(app.Node3);
-%             app.Node3_7.Text = 'Heat Wave';
-% 
-%             app.Node3_8 = uitreenode(app.Node3);
-%             app.Node3_8.Text = 'Hurricane';
-% 
-%             app.Node3_9 = uitreenode(app.Node3);
-%             app.Node3_9.Text = 'Ice Storm';
-% 
-%             app.Node3_10 = uitreenode(app.Node3);
-%             app.Node3_10.Text = 'Landslide' ;
-% 
-%             app.Node3_11 = uitreenode(app.Node3);
-%             app.Node3_11.Text = 'Lightning';
-% 
-%             app.Node3_12 = uitreenode(app.Node3);
-%             app.Node3_12.Text = 'Riverine Flooding';
-% 
-%             app.Node3_13 = uitreenode(app.Node3);
-%             app.Node3_13.Text = 'Strong Wind';
-% 
-%             app.Node3_14 = uitreenode(app.Node3);
-%             app.Node3_14.Text = 'Tornado';
-% 
-%             app.Node3_15 = uitreenode(app.Node3);
-%             app.Node3_15.Text = 'Tsunami';
-% 
-%             app.Node3_16 = uitreenode(app.Node3);
-%             app.Node3_16.Text = 'Volcanic Activity';
-% 
-%             app.Node3_17 = uitreenode(app.Node3);
-%             app.Node3_17.Text = 'Wildfire';
-% 
-%             app.Node3_18 = uitreenode(app.Node3);
-%             app.Node3_18.Text = 'Winter Weather';
+            % Node 3 children
+            app.Node3_1 = uitreenode(app.Node3);
+            app.Node3_1.Text = 'Avalanche';
+            app.Node3_1.NodeData = nri_GT(:, [1:10, 11]); 
 
+
+            app.Node3_2 = uitreenode(app.Node3);
+            app.Node3_2.Text = 'Coastal Flooding';
+            app.Node3_2.NodeData = nri_GT(:, [1:10, 12]) ;
+
+
+            app.Node3_3 = uitreenode(app.Node3);
+            app.Node3_3.Text = 'Cold Wave';
+            app.Node3_3.NodeData = nri_GT(:, [1:10, 13]) ;
+
+
+            app.Node3_4 = uitreenode(app.Node3);
+            app.Node3_4.Text = 'Drought';
+            app.Node3_4.NodeData = nri_GT(:, [1:10, 14]) ;
+
+
+            app.Node3_5 = uitreenode(app.Node3);
+            app.Node3_5.Text = 'Earthquake';
+            app.Node3_5.NodeData = nri_GT(:, [1:10, 15]) ;
+
+
+            app.Node3_6 = uitreenode(app.Node3);
+            app.Node3_6.Text = 'Hail';
+            app.Node3_6.NodeData =  nri_GT(:, [1:10, 16]) ;
+
+
+            app.Node3_7 = uitreenode(app.Node3);
+            app.Node3_7.Text = 'Heat Wave';
+            app.Node3_7.NodeData =  nri_GT(:, [1:10, 17]) ;
+
+
+            app.Node3_8 = uitreenode(app.Node3);
+            app.Node3_8.Text = 'Hurricane';
+            app.Node3_8.NodeData =  nri_GT(:, [1:10, 18]) ;
+
+
+            app.Node3_9 = uitreenode(app.Node3);
+            app.Node3_9.Text = 'Ice Storm';
+            app.Node3_9.NodeData =  nri_GT(:, [1:10, 19]) ;
+
+
+            app.Node3_10 = uitreenode(app.Node3);
+            app.Node3_10.Text = 'Landslide' ;
+            app.Node3_10.NodeData =  nri_GT(:, [1:10, 20]) ;
+
+
+            app.Node3_11 = uitreenode(app.Node3);
+            app.Node3_11.Text = 'Lightning';
+            app.Node3_11.NodeData =  nri_GT(:, [1:10, 21]) ;
+
+
+            app.Node3_12 = uitreenode(app.Node3);
+            app.Node3_12.Text = 'Riverine Flooding';
+            app.Node3_12.NodeData =  nri_GT(:, [1:10, 22]) ;
+
+
+            app.Node3_13 = uitreenode(app.Node3);
+            app.Node3_13.Text = 'Strong Wind';
+            app.Node3_13.NodeData =  nri_GT(:, [1:10, 23]) ;
+
+
+            app.Node3_14 = uitreenode(app.Node3);
+            app.Node3_14.Text = 'Tornado';
+            app.Node3_14.NodeData =  nri_GT(:, [1:10, 24]) ;
+
+
+            app.Node3_15 = uitreenode(app.Node3);
+            app.Node3_15.Text = 'Tsunami';
+            app.Node3_15.NodeData =  nri_GT(:, [1:10, 25]) ;
+
+
+            app.Node3_16 = uitreenode(app.Node3);
+            app.Node3_16.Text = 'Volcanic Activity';
+            app.Node3_16.NodeData =  nri_GT(:, [1:10, 26]) ;
+
+
+            app.Node3_17 = uitreenode(app.Node3);
+            app.Node3_17.Text = 'Wildfire';
+            app.Node3_17.NodeData =  nri_GT(:, [1:10, 27]) ;
+
+
+            app.Node3_18 = uitreenode(app.Node3);
+            app.Node3_18.Text = 'Winter Weather';
+            app.Node3_18.NodeData =  nri_GT(:, [1:10, 28]) ;
+
+            
             % Node 4 parent
             app.Node4 = uitreenode(app.Tree);
             app.Node4.Text = 'Power Sector Carbon Intensity';
@@ -332,11 +372,12 @@ classdef MapApp < matlab.apps.AppBase
             app.Node7_16 = uitreenode(app.Node7);
             app.Node7_16.Text = 'Vontier';
 
+
             % Node 8 Parent
             app.Node8 = uitreenode(app.Tree);
             app.Node8.Text = 'Climate Zones';
-            %                 clmtzns = readgeotable("ClimateZones.shp");
-            %                 app.Node2_1.NodeData = clmtzns;
+            % clmtzns = readgeotable("ClimateZones.shp");
+            % app.Node8.NodeData = clmtzns;
 
             expand(app.Tree);
 
@@ -355,6 +396,7 @@ classdef MapApp < matlab.apps.AppBase
             nef.Layout.Row = 1;
             nef.Layout.Column = [3 5];
 
+
             % Make button
             b = uibutton(gl);
             b.Text = 'Update';
@@ -362,27 +404,70 @@ classdef MapApp < matlab.apps.AppBase
             b.Layout.Column = [3 5];
             b.ButtonPushedFcn =  @(src,event) updateMap(src, event, gx);
 
+
             % Display figure only when all components have been created
             app.UIFigure.Visible = 'on';
+
 
             % Function that plots/deletes when checkbox is
             % selected/deselected
             function checkchange(src, event, app, ax)
                 nodes = event.LeafCheckedNodes;
                 objs = get(ax, 'Children');
-                if ~isempty(nodes) % if there are checked boxes
-                    names = {nodes(:).Text}; % find the names of everything that is checked
-                    for jj = 1:length(objs) % loop through the children
-                        if ~ismember(objs(jj).Tag, names) % if a child and the box of the same name isn't checked, delete the object
+               
+                % if there are checked boxes
+                if ~isempty(nodes)
+                    % find the names of everything that is checked
+                    names = {nodes(:).Text};
+                    
+                    % loop through the children
+                    for jj = 1:length(objs) 
+
+                        % if a child and the box of the same name isn't checked, delete the object
+                        if ~ismember(objs(jj).Tag, names) 
                             delete(objs(jj))
                         end
+
                     end
+
                     % for each node (i.e. checked box) see if the object is already plotted, and if not plot it
                     for ii = 1:length(nodes)
                         data2plot = findobj(ax, 'Tag', nodes(ii).Text);
+
                         if isempty(data2plot)
+
+                            % plot if the node has point geometry
                             if strcmp(nodes(ii).NodeData.Shape.Geometry,"point")
-                                geoplot(ax, nodes(ii).NodeData,'markersize',25, 'Tag', nodes(ii).Text)
+                                geoplot(ax, nodes(ii).NodeData,'markersize', 25, 'Tag', nodes(ii).Text)
+
+                            % plot if the node has polygon geometry
+                            elseif strcmp(nodes(ii).NodeData.Shape.Geometry, "polygon")
+
+                               for s = 1:1
+
+                              
+                               switch string(nodes(ii).NodeData{s, 11})
+                                   case "Very High"
+                                       geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#a63603');
+                                   case "Relatively High"
+                                       geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#e6550d');
+                                   case "Relatively Moderate"
+                                       geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#fd8d3c');
+                                   case "Relatively Low"
+                                       geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#fdbe85');
+                                   case "Very Low"
+                                       geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#feedde');
+                                   case "No Rating"
+                                       geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#f0f0f0');
+                                   case "Not Applicable"
+                                       geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#bdbdbd');
+                                   case "Insufficient Data"
+                                       geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#636363');
+                               end
+                               
+                               
+                               end
+
                             else
                                 geoplot(ax, nodes(ii).NodeData,'linewidth',3, 'Tag', nodes(ii).Text)
                             end
@@ -457,11 +542,8 @@ classdef MapApp < matlab.apps.AppBase
                             % if any x, y pair is in the circle, plot the
                             % circle and the point
 
-                            disp('point')
-
                             if any(inpolygon(latl, lonl, latc, lonc))
-                                disp('true')
-                                h1 = geoplot(gx, latp, lonp, "om", MarkerFaceColor = "m")
+                                h1 = geoplot(gx, latp, lonp, "om", MarkerFaceColor = "m");
 %                                 h2 = geoplot(gx, latc, lonc)
 %                                 h3 = geoplot(gx, shape2)
                             end
