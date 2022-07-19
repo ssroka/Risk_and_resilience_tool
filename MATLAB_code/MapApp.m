@@ -120,7 +120,7 @@ classdef MapApp < matlab.apps.AppBase
             gx.Scalebar.Visible = 'on'; % display scale bar
             gx.Grid = "off"; % no grid (may be distracting)
             % add option to turn grid on
-            set(gx, 'fontname', 'Open Sans','fontsize',24); % use open sans font
+            set(gx, 'fontname', 'Open Sans','fontsize', 16); % use open sans font
             tlbr = axtoolbar(gx, {'export', 'datacursor', 'stepzoomin', 'stepzoomout', 'restoreview'}); % add differfent options to map toolbar
             addToolbarMapButton(tlbr, "basemap"); % allow user to choose different basemaps for personalized visualization
             geolimits(gx, [10 70], [-180 -30]); % map shows entirety of the USA
@@ -384,107 +384,72 @@ classdef MapApp < matlab.apps.AppBase
 
 
             % Middle panel grid
-            gl = uigridlayout(app.MiddlePanel, [10 7]);
-            gl.ColumnSpacing = 2;
-            gl.RowSpacing = 3;
-            gl.Padding = [2 2 2 2];
+            gl = uigridlayout(app.MiddlePanel, [6 7]);
+            gl.ColumnSpacing = 5;
+            gl.RowSpacing = 5;
+            gl.Padding = [5 5 5 5];
 
 
-            % Create DropDown and label
+            % Distance from CCUS
             lbl_1 = uilabel(gl);
             lbl_1.Text = 'Distance from CCUS infrastructure (miles):';
             lbl_1.Layout.Row = 1;
-            lbl_1.Layout.Column = [1 4];
+            lbl_1.Layout.Column = [1 5];
             pip = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on');
             pip.Layout.Row = 1;
-            pip.Layout.Column = [5 7];
+            pip.Layout.Column = [6 7];
 
 
-            % Create DropDown and label
+            % NRI
             lbl_2 = uilabel(gl);
             lbl_2.Text = 'FEMA Risk Index:';
-            lbl_2.Layout.Row = 3;
+            lbl_2.Layout.Row = 2;
             lbl_2.Layout.Column = [1 3];
-            ind = uidropdown(gl, 'Items', {'Very High', 'Relatively High', 'Relatively Moderate', 'Relatively Low', 'Very Low'}, 'Placeholder', 'Enter index', 'Editable','on');
-            ind.Layout.Row = 3;
+            ind = uidropdown(gl, 'Items', {'Very High', 'Relatively High', 'Relatively Moderate', 'Relatively Low', 'Very Low'}, 'Editable', 'off');
+            ind.Layout.Row = 2;
             ind.Layout.Column = [6 7];
-
-            % make one for hazards
             rsk = uidropdown(gl, 'Items', {'Avalanche', 'Coastal Flooding', 'Cold Wave', 'Drought', 'Earthquake', 'Hail', 'Heat Wave', 'Hurricane', 'Ice Storm', 'Landslide', 'Lightning', 'Riverine Flooding', 'Strong Wind', 'Tornado', 'Tsunami', 'Volcanic Activity', 'Wildfire', 'Winter Weather'},...
-                'Editable','on', 'Placeholder', 'Enter risk');
-            rsk.Layout.Row = 3;
+                'Editable','off', 'Placeholder', 'Enter risk');
+            rsk.Layout.Row = 2;
             rsk.Layout.Column = [4 5];
 
 
-
-            % Create DropDown and label
+            % CO2 emissions
             lbl_3 = uilabel(gl);
             lbl_3.Text = 'CO2 emissions (MT CO2e):';
-            lbl_3.Layout.Row = 5;
-            lbl_3.Layout.Column = [1 4];
-            emm = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on', 'Value', 0);
-            emm.Layout.Row = 5;
-            emm.Layout.Column = [5 7];
+            lbl_3.Layout.Row = 3;
+            lbl_3.Layout.Column = [1 5];
+            emm = uieditfield(gl, 'numeric', 'Limits', [0 17232898], 'Editable', 'on', 'Value', 0);
+            emm.Layout.Row = 3;
+            emm.Layout.Column = [6 7];
 
 
-            % Create DropDown and label
+            % Facility age
             lbl_4 = uilabel(gl);
             lbl_4.Text = 'Facility age (years):';
-            lbl_4.Layout.Row = 7;
-            lbl_4.Layout.Column = [1 4];
+            lbl_4.Layout.Row = 4;
+            lbl_4.Layout.Column = [1 5];
             age = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on', 'Value', 0);
-            age.Layout.Row = 7;
-            age.Layout.Column = [5 7];
+            age.Layout.Row = 4;
+            age.Layout.Column = [6 7];
 
 
-            % Create DropDown and label
+            % Distance from population
             lbl_5 = uilabel(gl);
             lbl_5.Text = 'Distance from populations (miles):';
-            lbl_5.Layout.Row = 9;
-            lbl_5.Layout.Column = [1 4];
+            lbl_5.Layout.Row = 5;
+            lbl_5.Layout.Column = [1 5];
             pop = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on', 'Value', 0);
-            pop.Layout.Row = 9;
-            pop.Layout.Column = [5 7];
+            pop.Layout.Row = 5;
+            pop.Layout.Column = [6 7];
 
 
-            % Make button
-            b_1 = uibutton(gl);
-            b_1.Text = 'Update';
-            b_1.Layout.Row = 2;
-            b_1.Layout.Column = [6 7];
-            b_1.ButtonPushedFcn =  {@updateMap, app, gx};
-
-
-            % Make button
-            b_2 = uibutton(gl);
-            b_2.Text = 'Update';
-            b_2.Layout.Row = 4;
-            b_2.Layout.Column = [6 7];
-            b_2.ButtonPushedFcn =  {@updateMap, app, gx};
-            %
-            %
-            %             % Make button
-            %             b_3 = uibutton(gl);
-            %             b_3.Text = 'Update';
-            %             b_3.Layout.Row = 6;
-            %             b_3.Layout.Column = 6;
-            %             b_3.ButtonPushedFcn =  @(src,event) updateMap(src, event, gx);
-            %
-            %
-            %             % Make button
-            %             b_4 = uibutton(gl);
-            %             b_4.Text = 'Update';
-            %             b_4.Layout.Row = 8;
-            %             b_4.Layout.Column = 6;
-            %             b_4.ButtonPushedFcn =  @(src,event) updateMap(src, event, gx);
-            %
-            %
-            %             % Make button
-            %             b_5 = uibutton(gl);
-            %             b_5.Text = 'Update';
-            %             b_5.Layout.Row = 10;
-            %             b_5.Layout.Column = 6;
-            %             b_5.ButtonPushedFcn =  @(src,event) updateMap(src, event, gx);
+            % Update Map button
+            b = uibutton(gl);
+            b.Text = 'Update map';
+            b.Layout.Row = 6;
+            b.Layout.Column = [1 7];
+            b.ButtonPushedFcn =  {@updateMap, app, gx};
 
 
             % Display figure only when all components have been created
@@ -492,251 +457,222 @@ classdef MapApp < matlab.apps.AppBase
 
 
 
-            % callback functions for filters
-
-
-
-            % Push button to update the map for pipeline
+            % When "update map" button is pushed, get data in filter
+            % fields, points currently plotted on the map, and then replot
+            % according to new data
             function updateMap(src, event, app, ax)
 
-                % made data into one table
-                T = [app.Node1.Children(1).NodeData; app.Node1.Children(2).NodeData; app.Node1.Children(3).NodeData];
+                % get values in filter fields
+                CCUS_distance = app.MiddlePanel.Children.Children(2).Value;
+                indx = app.MiddlePanel.Children.Children(4).Value;
+                risk = app.MiddlePanel.Children.Children(5).Value;
+                co2_emissions = app.MiddlePanel.Children.Children(7).Value;
+%                 facility_age = app.MiddlePanel.Children.Children(9).Value;
+%                 pop_distance = app.MiddlePanel.Children.Children(11).Value;
 
-                % select all lat and lons for every point and make a
-                % new variable
-                xy = [T(:, 'LATITUDE') T(:, 'LONGITUDE')]
-                disp('table')
 
-                % select all lat and lon for specific point and assign to variables
-                % lat and lon
+
+                % for the first 10 point sources
                 for ii = 1:10
-                    %size(xy,1)
-                    latp = table2array(xy(ii, 1));
-                    lonp = table2array(xy(ii, 2));
+                    
 
-                    if event.Source ==  app.MiddlePanel.Children.Children(12)
+                    % make a table of all the point sources
+                    T = [app.Node1.Children(1).NodeData; app.Node1.Children(2).NodeData; app.Node1.Children(3).NodeData];
 
-                        % select each line from the pipeline geotable
-                        for jj = 1:size(app.Node2.Children(1).NodeData,1)
+                    % get latitude and longitude of current point source
+                    latp = T{ii, 'LATITUDE'};
+                    lonp = T{ii, 'LONGITUDE'};
 
-                            r_mi = app.MiddlePanel.Children.Children(2).Value;
+                    % select each line from the pipeline geotable
+                    for jj = 1:size(app.Node2.Children(1).NodeData)
 
-                            % convert from miles to degrees
-                            r_deg = r_mi/69;
+                        % convert from miles to degrees
+                        r_deg = CCUS_distance/69;
 
-                            % create circle using lat and lon for the specific point
-                            % change radius from degrees to miles
-                            [latc, lonc] = scircle1(latp, lonp, r_deg);
+                        % create circle using lat and lon for the first point source
+                        [latc, lonc] = scircle1(latp, lonp, r_deg);
 
-                            %                           circle = [latc, lonc]
+                        % circle = [latc, lonc]
 
-                            info = shapeinfo("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
-                            p = info.CoordinateReferenceSystem.GeographicCRS;
+                        info = shapeinfo("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
+                        p = info.CoordinateReferenceSystem.GeographicCRS;
 
-                            % make GT a table and get latitude and longitudes
-                            T_pipe = geotable2table(app.Node2.Children(1).NodeData, ["Latitude","Longitude"]);
-                            [latl,lonl] = projinv(info.CoordinateReferenceSystem,T_pipe(jj,:).Latitude{1},T_pipe(jj,:).Longitude{1});
+                        % make GT a table to extract the latitude and
+                        % longitude of the first line for the first point
+                        % source
+                        T_pipe = geotable2table(app.Node2.Children(1).NodeData, ["Latitude","Longitude"]);
+                        [latl, lonl] = projinv(info.CoordinateReferenceSystem, T_pipe(jj,:).Latitude{1}, T_pipe(jj,:).Longitude{1});
 
-                            %                            shape2  = geolineshape(latl, lonl);
+                        % shape2  = geolineshape(latl, lonl);
 
-                            % if any x, y pair is in the circle, plot the
-                            % circle and the point
-                            if any(inpolygon(latl, lonl, latc, lonc))
+                        % if any part of the first line is within the radius of the first point source
+                        % then the first point source meets the user requirements   
+                        if any(inpolygon(latl, lonl, latc, lonc))
+                            
+                            % do the plant emissions of this plant meet the
+                            % value entered by user
+                            plnt_emissions = T{ii, 'GHGQUANTITY_METRICTONSCO2e_'};
+                            
+                            % if the emissions of the first point source
+                            % meets (at least) the emissions value entered
+                            % by the user, then the first point source
+                            % satisfies the minimum requirement for
+                            % emissions
+                            if co2_emissions <= plnt_emissions
 
-                                h1 = geoplot(ax, latp, lonp, "om", MarkerFaceColor = "m");
+                                % check the risk selected by the user and
+                                % plot the point sources that experience that natural hazard
+                                switch string(risk)
 
-                                %                                 h2 = geoplot(gx, latc, lonc)
-                                %                                 h3 = geoplot(gx, shape2)
-
-                            end
-
-                        end
-
-                    end
-
-
-                    if event.Source == app.MiddlePanel.Children.Children(13)
-                        risk = app.MiddlePanel.Children.Children(5).Value;
-                        index = app.MiddlePanel.Children.Children(4).Value;
-
-                        switch string(risk)
-                            case "Avalanche"
-                                plotPSbyRisk(ax, T, app, app.Node3_1, index)
-
-                            case "Coastal Flooding"
-                                plotPSbyRisk(ax, T, app, app.Node3_2, index)
-
-                            case "Cold Wave"
-                                plotPSbyRisk(ax, T, app, app.Node3_3, index)
-
-                            case "Drought"
-                                plotPSbyRisk(ax, T, app, app.Node3_4, index)
-
-                            case "Earthquake"
-                                plotPSbyRisk(ax, T, app, app.Node3_5, index)
- 
-                            case "Hail"
-                                plotPSbyRisk(ax, T, app, app.Node3_6, index)
+                                    % if the risk is avalanche, make the
+                                    % geoaxes, point source data, app
+                                    % components, avalanche data, the
+                                    % current point source, and the index
+                                    % value selected by user
+                                    case "Avalanche"
+                                        plotPSbyRisk(ax, T, app, app.Node3_1, indx, ii)
     
-                            case "Heat Wave"
-                                plotPSbyRisk(ax, T, app, app.Node3_7, index)
-                                
-                            case "Hurricane"
-                                plotPSbyRisk(ax, T, app, app.Node3_8, index)
-                               
-                            case "Ice Storm"
-                                plotPSbyRisk(ax, T, app, app.Node3_9, index)
-                                
-                            case "Landslide"
-                                plotPSbyRisk(ax, T, app, app.Node3_10, index)
-                               
-                            case "Lightning"
-                                plotPSbyRisk(ax, T, app, app.Node3_11, index)
-                                
-                            case "Riverine Flooding"
-                                plotPSbyRisk(ax, T, app, app.Node3_12, index)
-                                
-                            case "Strong Wind"
-                                plotPSbyRisk(ax, T, app, app.Node3_13, index)
-                                
-                            case "Tornado"
-                                plotPSbyRisk(ax, T, app, app.Node3_14, index)
-                               
-                            case "Tsunami"
-                                plotPSbyRisk(ax, T, app, app.Node3_15, index)
-                               
-                            case"Volcanic Activity"
-                                plotPSbyRisk(ax, T, app, app.Node3_16, index)
-                              
-                            case "Wildfire"
-                                plotPSbyRisk(ax, T, app, app.Node3_17, index)
-                               
-                            case"Winter Weather"
-                                plotPSbyRisk(ax, T, app, app.Node3_18, index)
-                              
+                                    case "Coastal Flooding"
+                                        plotPSbyRisk(ax, T, app, app.Node3_2, indx, ii)
+    
+                                    case "Cold Wave"
+                                        plotPSbyRisk(ax, T, app, app.Node3_3, indx, ii)
+    
+                                    case "Drought"
+                                        plotPSbyRisk(ax, T, app, app.Node3_4, indx, ii)
+    
+                                    case "Earthquake"
+                                        plotPSbyRisk(ax, T, app, app.Node3_5, indx, ii)
+    
+                                    case "Hail"
+                                        plotPSbyRisk(ax, T, app, app.Node3_6, indx, ii)
+    
+                                    case "Heat Wave"
+                                        plotPSbyRisk(ax, T, app, app.Node3_7, indx, ii)
+    
+                                    case "Hurricane"
+                                        plotPSbyRisk(ax, T, app, app.Node3_8, indx, ii)
+    
+                                    case "Ice Storm"
+                                        plotPSbyRisk(ax, T, app, app.Node3_9, indx, ii)
+    
+                                    case "Landslide"
+                                        plotPSbyRisk(ax, T, app, app.Node3_10, indx, ii)
+    
+                                    case "Lightning"
+                                        plotPSbyRisk(ax, T, app, app.Node3_11, indx, ii)
+    
+                                    case "Riverine Flooding"
+                                        plotPSbyRisk(ax, T, app, app.Node3_12, indx, ii)
+    
+                                    case "Strong Wind"
+                                        plotPSbyRisk(ax, T, app, app.Node3_13, indx, ii)
+    
+                                    case "Tornado"
+                                        plotPSbyRisk(ax, T, app, app.Node3_14, indx, ii)
+    
+                                    case "Tsunami"
+                                        plotPSbyRisk(ax, T, app, app.Node3_15, indx, ii)
+    
+                                    case"Volcanic Activity"
+                                        plotPSbyRisk(ax, T, app, app.Node3_16, indx, ii)
+    
+                                    case "Wildfire"
+                                        plotPSbyRisk(ax, T, app, app.Node3_17, indx, ii)
+    
+                                    case"Winter Weather"
+                                        plotPSbyRisk(ax, T, app, app.Node3_18, indx, ii)
+                                end
+                            end
                         end
-
                     end
                 end
             end
-        end
+              
 
 
 
 
+            % Function that plots/deletes when checkbox is
+            % selected/deselected
+            function checkchange(src, event, app, ax)
+                nodes = event.LeafCheckedNodes;
+                objs = get(ax, 'Children');
 
+                % if there are checked boxes
+                if ~isempty(nodes)
 
+                    % find the names of everything that is checked
+                    names = {nodes(:).Text};
 
+                    % loop through the children
+                    for jj = 1:length(objs)
 
+                        % if a child and the box of the same name isn't checked, delete the object
+                        if ~ismember(objs(jj).Tag, names)
+                            delete(objs(jj))
+                        end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        % callback functions for checkboxes
-
-
-        % Function that plots/deletes when checkbox is
-        % selected/deselected
-        function checkchange(src, event, app, ax)
-            nodes = event.LeafCheckedNodes;
-            objs = get(ax, 'Children');
-
-            % if there are checked boxes
-            if ~isempty(nodes)
-
-                % find the names of everything that is checked
-                names = {nodes(:).Text};
-
-                % loop through the children
-                for jj = 1:length(objs)
-
-                    % if a child and the box of the same name isn't checked, delete the object
-                    if ~ismember(objs(jj).Tag, names)
-                        delete(objs(jj))
                     end
 
-                end
+                    % for each node (i.e. checked box) see if the object is already plotted, and if not plot it
+                    for ii = 1:length(nodes)
+                        data2plot = findobj(ax, 'Tag', nodes(ii).Text);
 
-                % for each node (i.e. checked box) see if the object is already plotted, and if not plot it
-                for ii = 1:length(nodes)
-                    data2plot = findobj(ax, 'Tag', nodes(ii).Text);
+                        if isempty(data2plot)
 
-                    if isempty(data2plot)
+                            % plot if the node has point geometry
+                            if strcmp(nodes(ii).NodeData.Shape.Geometry,"point")
+                                geoplot(ax, nodes(ii).NodeData,'markersize', 25, 'Tag', nodes(ii).Text)
 
-                        % plot if the node has point geometry
-                        if strcmp(nodes(ii).NodeData.Shape.Geometry,"point")
-                            geoplot(ax, nodes(ii).NodeData,'markersize', 25, 'Tag', nodes(ii).Text)
+                                % plot if the node has polygon geometry
+                            elseif strcmp(nodes(ii).NodeData.Shape.Geometry, "polygon")
 
-                            % plot if the node has polygon geometry
-                        elseif strcmp(nodes(ii).NodeData.Shape.Geometry, "polygon")
+                                for s = 1:1
 
-                            for s = 1:1
+                                    switch string(nodes(ii).NodeData{s, 11})
+                                        case "Very High"
+                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#a63603');
+                                        case "Relatively High"
+                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#e6550d');
+                                        case "Relatively Moderate"
+                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#fd8d3c');
+                                        case "Relatively Low"
+                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#fdbe85');
+                                        case "Very Low"
+                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#feedde');
+                                        case "No Rating"
+                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#f0f0f0');
+                                        case "Not Applicable"
+                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#bdbdbd');
+                                        case "Insufficient Data"
+                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#636363');
+                                    end
 
-                                switch string(nodes(ii).NodeData{s, 11})
-                                    case "Very High"
-                                        geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#a63603');
-                                    case "Relatively High"
-                                        geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#e6550d');
-                                    case "Relatively Moderate"
-                                        geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#fd8d3c');
-                                    case "Relatively Low"
-                                        geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#fdbe85');
-                                    case "Very Low"
-                                        geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#feedde');
-                                    case "No Rating"
-                                        geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#f0f0f0');
-                                    case "Not Applicable"
-                                        geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#bdbdbd');
-                                    case "Insufficient Data"
-                                        geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#636363');
+
                                 end
 
-
+                            else
+                                geoplot(ax, nodes(ii).NodeData,'linewidth',3, 'Tag', nodes(ii).Text)
                             end
 
-                        else
-                            geoplot(ax, nodes(ii).NodeData,'linewidth',3, 'Tag', nodes(ii).Text)
                         end
 
                     end
 
+                else
+
+                    % if there are not any checked boxes, delete all "lines"
+                    for kk = 1:length(objs)
+
+                        delete(objs(kk))
+
+                    end
+
                 end
-
-            else
-
-                % if there are not any checked boxes, delete all "lines"
-                for kk = 1:length(objs)
-
-                    delete(objs(kk))
-
-                end
-
             end
-
         end
-
     end
-
-
-
-
-
-
-
-
-
 
 
 
@@ -774,7 +710,7 @@ classdef MapApp < matlab.apps.AppBase
         %         end
 
     end
-
-
-
 end
+
+
+
