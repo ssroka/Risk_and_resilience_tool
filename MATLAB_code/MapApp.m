@@ -39,6 +39,7 @@ classdef MapApp < matlab.apps.AppBase
         Node4     matlab.ui.container.TreeNode
         Node5      matlab.ui.container.TreeNode
         Node6     matlab.ui.container.TreeNode
+        Node7     matlab.ui.container.TreeNode
         %         Node7     matlab.ui.container.TreeNode
         %         Node7_1     matlab.ui.container.TreeNode
         %         Node7_2     matlab.ui.container.TreeNode
@@ -205,10 +206,10 @@ classdef MapApp < matlab.apps.AppBase
 
             % Node 3 Parent
             app.Node3 = uitreenode(app.Tree);
-            app.Node3.Text = 'Environmental Risk';
+            app.Node3.Text = 'Natural Hazards';
 
             % select certain fields to avoid loading too much data
-            nri = shaperead("NRI_Shapefile_States.shp", 'Attributes', {'Shape', 'Geometry', 'BoundingBox', 'X', 'Y', 'STATE', 'STATEABBRV', 'POPULATION', 'AREA', 'EAL_RATNG', 'AVLN_EALR', 'CFLD_EALR'...
+            nri = shaperead("NRI_Shapefile_States.shp", 'Attributes', {'Shape', 'Geometry', 'BoundingBox', 'X', 'Y', 'STATE', 'STATEABBRV', 'POPULATION', 'AREA', 'EAL_RATNG', 'SOVI_RATING', 'SOVI_SCORE', 'RESL_RATING', 'RESL_SCORE', 'AVLN_EALR', 'CFLD_EALR'...
                 'CWAV_EALR', 'DRGT_EALR', 'ERQK_EALR', 'HAIL_EALR', 'HWAV_EALR', 'HRCN_EALR', 'ISTM_EALR', 'LNDS_EALR', 'LTNG_EALR', 'RFLD_EALR', 'SWND_EALR', 'TRND_EALR', 'TSUN_EALR', 'VLCN_EALR', 'WFIR_EALR', 'WNTW_EALR'});
             crs_info = shapeinfo("NRI_Shapefile_States.shp");
             crs = crs_info.CoordinateReferenceSystem;
@@ -311,15 +312,20 @@ classdef MapApp < matlab.apps.AppBase
             app.Node4 = uitreenode(app.Tree);
             app.Node4.Text = 'Power Sector Carbon Intensity';
 
-
-            % Node 5 parent
-            app.Node5 = uitreenode(app.Tree);
-            app.Node5.Text = 'Social Impact';
-
+% 
+%             % Node 5 parent
+%             app.Node5 = uitreenode(app.Tree);
+%             app.Node5.Text = 'Social Vulnerability';
+%             app.Node5.NodeData = nri_GT(:, {'Shape', 'STATEABBRV', 'SOVI_SCORE', 'SOVI_RATING'});
+% 
+%             % Node 6 parent
+%             app.Node6 = uitreenode(app.Tree);
+%             app.Node6.Text = 'Community Resilience';
+%             app.Node6.NodeData = nri_GT(:, {'Shape', 'STATEABBRV', 'RESL_SCORE', 'RESL_RATING'});
 
             % Node 6 parent
-            app.Node6 = uitreenode(app.Tree);
-            app.Node6.Text = 'eGRID Subregion';
+            app.Node7 = uitreenode(app.Tree);
+            app.Node7.Text = 'eGRID Subregion';
 
 
             %             % Node 7 Parent
@@ -467,14 +473,14 @@ classdef MapApp < matlab.apps.AppBase
                 indx = app.MiddlePanel.Children.Children(4).Value;
                 risk = app.MiddlePanel.Children.Children(5).Value;
                 co2_emissions = app.MiddlePanel.Children.Children(7).Value;
-%                 facility_age = app.MiddlePanel.Children.Children(9).Value;
-%                 pop_distance = app.MiddlePanel.Children.Children(11).Value;
+                %                 facility_age = app.MiddlePanel.Children.Children(9).Value;
+                %                 pop_distance = app.MiddlePanel.Children.Children(11).Value;
 
 
 
                 % for the first 10 point sources
                 for ii = 1:10
-                    
+
 
                     % make a table of all the point sources
                     T = [app.Node1.Children(1).NodeData; app.Node1.Children(2).NodeData; app.Node1.Children(3).NodeData];
@@ -506,13 +512,13 @@ classdef MapApp < matlab.apps.AppBase
                         % shape2  = geolineshape(latl, lonl);
 
                         % if any part of the first line is within the radius of the first point source
-                        % then the first point source meets the user requirements   
+                        % then the first point source meets the user requirements
                         if any(inpolygon(latl, lonl, latc, lonc))
-                            
+
                             % do the plant emissions of this plant meet the
                             % value entered by user
                             plnt_emissions = T{ii, 'GHGQUANTITY_METRICTONSCO2e_'};
-                            
+
                             % if the emissions of the first point source
                             % meets (at least) the emissions value entered
                             % by the user, then the first point source
@@ -531,55 +537,55 @@ classdef MapApp < matlab.apps.AppBase
                                     % value selected by user
                                     case "Avalanche"
                                         plotPSbyRisk(ax, T, app, app.Node3_1, indx, ii)
-    
+
                                     case "Coastal Flooding"
                                         plotPSbyRisk(ax, T, app, app.Node3_2, indx, ii)
-    
+
                                     case "Cold Wave"
                                         plotPSbyRisk(ax, T, app, app.Node3_3, indx, ii)
-    
+
                                     case "Drought"
                                         plotPSbyRisk(ax, T, app, app.Node3_4, indx, ii)
-    
+
                                     case "Earthquake"
                                         plotPSbyRisk(ax, T, app, app.Node3_5, indx, ii)
-    
+
                                     case "Hail"
                                         plotPSbyRisk(ax, T, app, app.Node3_6, indx, ii)
-    
+
                                     case "Heat Wave"
                                         plotPSbyRisk(ax, T, app, app.Node3_7, indx, ii)
-    
+
                                     case "Hurricane"
                                         plotPSbyRisk(ax, T, app, app.Node3_8, indx, ii)
-    
+
                                     case "Ice Storm"
                                         plotPSbyRisk(ax, T, app, app.Node3_9, indx, ii)
-    
+
                                     case "Landslide"
                                         plotPSbyRisk(ax, T, app, app.Node3_10, indx, ii)
-    
+
                                     case "Lightning"
                                         plotPSbyRisk(ax, T, app, app.Node3_11, indx, ii)
-    
+
                                     case "Riverine Flooding"
                                         plotPSbyRisk(ax, T, app, app.Node3_12, indx, ii)
-    
+
                                     case "Strong Wind"
                                         plotPSbyRisk(ax, T, app, app.Node3_13, indx, ii)
-    
+
                                     case "Tornado"
                                         plotPSbyRisk(ax, T, app, app.Node3_14, indx, ii)
-    
+
                                     case "Tsunami"
                                         plotPSbyRisk(ax, T, app, app.Node3_15, indx, ii)
-    
+
                                     case"Volcanic Activity"
                                         plotPSbyRisk(ax, T, app, app.Node3_16, indx, ii)
-    
+
                                     case "Wildfire"
                                         plotPSbyRisk(ax, T, app, app.Node3_17, indx, ii)
-    
+
                                     case"Winter Weather"
                                         plotPSbyRisk(ax, T, app, app.Node3_18, indx, ii)
                                 end
@@ -588,7 +594,7 @@ classdef MapApp < matlab.apps.AppBase
                     end
                 end
             end
-              
+
 
 
 
@@ -622,13 +628,13 @@ classdef MapApp < matlab.apps.AppBase
                         if isempty(data2plot)
 
                             % plot if the node has point geometry
-                            if strcmp(nodes(ii).NodeData.Shape.Geometry,"point")
-                                geoplot(ax, nodes(ii).NodeData,'markersize', 25, 'Tag', nodes(ii).Text)
+                            if strcmp(nodes(ii).NodeData.Shape.Geometry, "point")
+                               h = geoplot(ax, nodes(ii).NodeData, 'Marker', '.', 'MarkerSize', 10, 'Tag', nodes(ii).Text)
 
                                 % plot if the node has polygon geometry
                             elseif strcmp(nodes(ii).NodeData.Shape.Geometry, "polygon")
 
-                                for s = 1:1
+                                for s = 1:20
 
                                     switch string(nodes(ii).NodeData{s, 11})
                                         case "Very High"

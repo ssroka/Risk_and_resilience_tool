@@ -21,6 +21,7 @@ custom_paths = {
     ['.' filesep 'Data' filesep 'environmental_social_risks' filesep ],
     ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'NRI_Shapefile_States' filesep ],
     ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'NRI_Shapefile_Counties' filesep ],
+    ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'NRI_Shapefile_CensusTracts' filesep ],
     ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'NationalRiskIndex_Metadata' filesep ],
     ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'ClimateZones_US_EIA' filesep ],
     

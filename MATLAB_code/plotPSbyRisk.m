@@ -17,7 +17,7 @@ switch string(indx)
         % see if the state of the first point source matches any of the
         % states with a very high avalanche rating
         if any(string(T{ii, 'STATE'}) == indx_state)
-            geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "om", MarkerFaceColor = "m")
+            geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "o", MarkerFaceColor = "#a63603")
         end
 
     case "Relatively High"
@@ -32,7 +32,7 @@ switch string(indx)
         % see if the state of the first point source matches any of the
         % states with a very high avalanche rating
         if any(string(T{ii, 'STATE'}) == indx_state)
-            geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "om", MarkerFaceColor = "m")
+            geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "o", MarkerFaceColor = '#e6550d')
         end
 
     case "Relatively Moderate"
@@ -47,7 +47,7 @@ switch string(indx)
         % see if the state of the first point source matches any of the
         % states with a very high avalanche rating
         if any(string(T{ii, 'STATE'}) == indx_state)
-            geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "om", MarkerFaceColor = "m")
+            geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "o", MarkerFaceColor = "#fd8d3c")
         end
 
     case "Relatively Low"
@@ -62,7 +62,7 @@ switch string(indx)
         % see if the state of the first point source matches any of the
         % states with a very high avalanche rating
         if any(string(T{ii, 'STATE'}) == indx_state)
-            geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "om", MarkerFaceColor = "m")
+            geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "o", MarkerFaceColor = "#fdbe85")
         end
 
     case "Very Low"
@@ -77,7 +77,7 @@ switch string(indx)
         % see if the state of the first point source matches any of the
         % states with a very high avalanche rating
         if any(string(T{ii, 'STATE'}) == indx_state)
-            geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "om", MarkerFaceColor = "m")
+            geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "o", MarkerFaceColor = "#feedde")
         end
 
 end
