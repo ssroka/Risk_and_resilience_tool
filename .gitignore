@@ -20,3 +20,9 @@
 *.html
 *.ini
 *.docx
+*.gdbtable
+*.gdbindexes
+*.atx
+*.gdbtablx
+*.spx
+*.gdb
