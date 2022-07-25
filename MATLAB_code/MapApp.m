@@ -401,6 +401,8 @@ classdef MapApp < matlab.apps.AppBase
             % Node 8 Parent
             app.Node8 = uitreenode(app.Tree);
             app.Node8.Text = 'Population Density';
+            pop_sz = readtable('ACSDT5Y2020.B01003_data_with_overlays_2022-04-27T113129.csv')
+            
 %             pop = readgeotable("ClimateZones.shp");
 %             app.Node8.NodeData = clmtzns;
 
