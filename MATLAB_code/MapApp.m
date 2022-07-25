@@ -58,6 +58,7 @@ classdef MapApp < matlab.apps.AppBase
         %         Node7_15     matlab.ui.container.TreeNode
         %         Node7_16     matlab.ui.container.TreeNode
         Node8     matlab.ui.container.TreeNode
+        Node9     matlab.ui.container.TreeNode
     end
 
     % Callbacks with handle components
@@ -86,7 +87,7 @@ classdef MapApp < matlab.apps.AppBase
             app.UIFigure = uifigure;
             app.UIFigure.Name = 'Map';
             app.UIFigure.WindowState = 'maximized';
-
+            
 
             % Create GridLayout
             app.GridLayout = uigridlayout(app.UIFigure, [7 12]);
@@ -97,7 +98,7 @@ classdef MapApp < matlab.apps.AppBase
 
             % Create LeftPanel
             app.LeftPanel = uipanel(app.GridLayout);
-            app.LeftPanel.FontName = 'Open Sans';
+            app.LeftPanel.FontName = 'Helvetica';
             app.LeftPanel.Title = 'Layers';
             app.LeftPanel.Layout.Row = [1 2];
             app.LeftPanel.Layout.Column = [1 3];
@@ -106,7 +107,7 @@ classdef MapApp < matlab.apps.AppBase
 
             % Create RightPanel
             app.RightPanel = uipanel(app.GridLayout);
-            app.RightPanel.FontName = 'Open Sans';
+            app.RightPanel.FontName = 'Helvetica';
             app.RightPanel.Title = 'Map';
             app.RightPanel.Layout.Row = [1 7];
             app.RightPanel.Layout.Column = [4 12];
@@ -115,13 +116,20 @@ classdef MapApp < matlab.apps.AppBase
 
             % Create GeoAxes
             gx = geoaxes(app.RightPanel, 'Basemap', 'darkwater', 'NextPlot', 'add');
+            gx.Title.FontName = 'Helvetica';
             gx.Title.String = 'Map'; % display label, come up with better name
+            gx.Title.FontSize = 18;
             gx.Subtitle.String = sprintf('An interactive, user friendly map to display relevant power sector data\n and support better business decisions regarding CCUS and resiliency retrofitting');
+            gx.Subtitle.FontName = 'Helvetica';
+            gx.Subtitle.FontSize = 16;
             gx.Subtitle.FontAngle = 'italic';
             gx.Scalebar.Visible = 'on'; % display scale bar
             gx.Grid = "off"; % no grid (may be distracting)
             % add option to turn grid on
-            set(gx, 'fontname', 'Open Sans','fontsize', 16); % use open sans font
+            gx.LatitudeLabel.FontName = 'Helvetica';
+            gx.LatitudeLabel.FontSize = 16;
+            gx.LongitudeLabel.FontName = 'Helvetica';
+            gx.LongitudeLabel.FontSize = 16;
             tlbr = axtoolbar(gx, {'export', 'datacursor', 'stepzoomin', 'stepzoomout', 'restoreview'}); % add differfent options to map toolbar
             addToolbarMapButton(tlbr, "basemap"); % allow user to choose different basemaps for personalized visualization
             geolimits(gx, [10 70], [-180 -30]); % map shows entirety of the USA
@@ -130,7 +138,7 @@ classdef MapApp < matlab.apps.AppBase
 
             % Create BottomPanel
             app.BottomPanel = uipanel(app.GridLayout);
-            app.BottomPanel.FontName = 'Open Sans';
+            app.BottomPanel.FontName = 'Helvetica';
             app.BottomPanel.Title = 'Calculator';
             app.BottomPanel.Layout.Row = [6 7];
             app.BottomPanel.Layout.Column = [1 3];
@@ -139,7 +147,7 @@ classdef MapApp < matlab.apps.AppBase
 
             % Create MiddlePanel
             app.MiddlePanel = uipanel(app.GridLayout);
-            app.MiddlePanel.FontName = 'Open Sans';
+            app.MiddlePanel.FontName = 'Helvetica';
             app.MiddlePanel.Title = 'Filter point sources by ...';
             app.MiddlePanel.Layout.Row = [3 5];
             app.MiddlePanel.Layout.Column = [1 3];
@@ -149,14 +157,14 @@ classdef MapApp < matlab.apps.AppBase
             % Create Tree
             app.Tree = uitree(app.LeftPanel, 'checkbox');
             app.Tree.CheckedNodesChangedFcn = @(src,event) checkchange(src, event, app, gx);
+            app.Tree.FontName = 'Helvetica';
 
 
             % Create nodes
             % Node 1 parent
             app.Node1 = uitreenode(app.Tree);
             app.Node1.Text = 'Point Source';
-
-
+            
             % Node 1 children
             app.Node1_1 = uitreenode(app.Node1);
             app.Node1_1.Text = 'Power Plant';
@@ -210,12 +218,18 @@ classdef MapApp < matlab.apps.AppBase
             app.Node3.Text = 'Natural Hazards';
 
             % select certain fields to avoid loading too much data
-            nri = shaperead("NRI_Shapefile_States.shp", 'Attributes', {'Shape', 'Geometry', 'BoundingBox', 'X', 'Y', 'STATE', 'STATEABBRV', 'POPULATION', 'AREA', 'EAL_RATNG', 'SOVI_RATING', 'SOVI_SCORE', 'RESL_RATING', 'RESL_SCORE', 'AVLN_EALR', 'CFLD_EALR'...
+            nri = shaperead("NRI_Shapefile_Counties.shp", 'Attributes', {'Shape', 'Geometry', 'BoundingBox', 'X', 'Y', 'STATE', 'STATEABBRV', 'POPULATION', 'AREA', 'EAL_RATNG', 'AVLN_EALR', 'CFLD_EALR'...
                 'CWAV_EALR', 'DRGT_EALR', 'ERQK_EALR', 'HAIL_EALR', 'HWAV_EALR', 'HRCN_EALR', 'ISTM_EALR', 'LNDS_EALR', 'LTNG_EALR', 'RFLD_EALR', 'SWND_EALR', 'TRND_EALR', 'TSUN_EALR', 'VLCN_EALR', 'WFIR_EALR', 'WNTW_EALR'});
-            crs_info = shapeinfo("NRI_Shapefile_States.shp");
+            crs_info = shapeinfo("NRI_Shapefile_Counties.shp");
             crs = crs_info.CoordinateReferenceSystem;
-            nri_GT = struct2geotable(nri, CoordinateReferenceSystem = crs);
+            nri_GT = struct2geotable(nri(1:10), CoordinateReferenceSystem = crs);
             app.Node3.NodeData = nri_GT;
+            sovi_resl = readtable("NRI_Table_Counties.csv");
+            sovi = sovi_resl.SOVI_RATNG;
+            sovi_T = cell2table(sovi(1:10), "VariableNames", "SOVI_RATNG");
+            resl = sovi_resl.RESL_RATNG;
+            resl_T = cell2table(resl(1:10), "VariableNames", "RESL_RATNG");
+
 
 
             % Node 3 children
@@ -313,16 +327,18 @@ classdef MapApp < matlab.apps.AppBase
             app.Node4 = uitreenode(app.Tree);
             app.Node4.Text = 'Power Sector Carbon Intensity';
 
-% 
-%             % Node 5 parent
-%             app.Node5 = uitreenode(app.Tree);
-%             app.Node5.Text = 'Social Vulnerability';
-%             app.Node5.NodeData = nri_GT(:, {'Shape', 'STATEABBRV', 'SOVI_SCORE', 'SOVI_RATING'});
-% 
-%             % Node 6 parent
-%             app.Node6 = uitreenode(app.Tree);
-%             app.Node6.Text = 'Community Resilience';
-%             app.Node6.NodeData = nri_GT(:, {'Shape', 'STATEABBRV', 'RESL_SCORE', 'RESL_RATING'});
+
+            % Node 5 parent
+            app.Node5 = uitreenode(app.Tree);
+            app.Node5.Text = 'Social Vulnerability';
+            sovi_GT = [nri_GT, sovi_T];
+            app.Node5.NodeData = sovi_GT(:, {'Shape', 'STATEABBRV', 'SOVI_RATNG'});
+
+            % Node 6 parent
+            app.Node6 = uitreenode(app.Tree);
+            app.Node6.Text = 'Community Resilience';
+            resl_GT = [nri_GT, resl_T];
+            app.Node6.NodeData = resl_GT(:, {'Shape', 'STATEABBRV', 'RESL_RATNG'});
 
             % Node 6 parent
             app.Node7 = uitreenode(app.Tree);
@@ -385,7 +401,15 @@ classdef MapApp < matlab.apps.AppBase
 
             % Node 8 Parent
             app.Node8 = uitreenode(app.Tree);
-            app.Node8.Text = 'Climate Zones';
+            app.Node8.Text = 'Population Density';
+            pop_sz = readtable('ACSDT5Y2020.B01003_data_with_overlays_2022-04-27T113129.csv')
+            
+%             pop = readgeotable("ClimateZones.shp");
+%             app.Node8.NodeData = clmtzns;
+
+            % Node 9 Parent
+            app.Node9 = uitreenode(app.Tree);
+            app.Node9.Text = 'Climate Zones';
             % clmtzns = readgeotable("ClimateZones.shp");
             % app.Node8.NodeData = clmtzns;
 
@@ -399,6 +423,7 @@ classdef MapApp < matlab.apps.AppBase
 
             % Distance from CCUS
             lbl_1 = uilabel(gl);
+            lbl_1.FontName = 'Helvetica';
             lbl_1.Text = 'Distance from CCUS infrastructure (miles):';
             lbl_1.Layout.Row = 1;
             lbl_1.Layout.Column = [1 5];
@@ -410,6 +435,7 @@ classdef MapApp < matlab.apps.AppBase
             % NRI
             lbl_2 = uilabel(gl);
             lbl_2.Text = 'FEMA Risk Index:';
+            lbl2.FontName = 'Helvetica';
             lbl_2.Layout.Row = 2;
             lbl_2.Layout.Column = [1 3];
             ind = uidropdown(gl, 'Items', {'Very High', 'Relatively High', 'Relatively Moderate', 'Relatively Low', 'Very Low'}, 'Editable', 'off');
@@ -424,6 +450,7 @@ classdef MapApp < matlab.apps.AppBase
             % CO2 emissions
             lbl_3 = uilabel(gl);
             lbl_3.Text = 'CO2 emissions (MT CO2e):';
+            lbl_3.FontName = 'Helvetica';
             lbl_3.Layout.Row = 3;
             lbl_3.Layout.Column = [1 5];
             emm = uieditfield(gl, 'numeric', 'Limits', [0 17232898], 'Editable', 'on', 'Value', 0);
@@ -434,6 +461,7 @@ classdef MapApp < matlab.apps.AppBase
             % Facility age
             lbl_4 = uilabel(gl);
             lbl_4.Text = 'Facility age (years):';
+            lbl_4.FontName = 'Helvetica';
             lbl_4.Layout.Row = 4;
             lbl_4.Layout.Column = [1 5];
             age = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on', 'Value', 0);
@@ -444,6 +472,7 @@ classdef MapApp < matlab.apps.AppBase
             % Distance from population
             lbl_5 = uilabel(gl);
             lbl_5.Text = 'Distance from populations (miles):';
+            lbl_5.FontName = 'Helvetica';
             lbl_5.Layout.Row = 5;
             lbl_5.Layout.Column = [1 5];
             pop = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on', 'Value', 0);
@@ -454,6 +483,7 @@ classdef MapApp < matlab.apps.AppBase
             % Update Map button
             b = uibutton(gl);
             b.Text = 'Update map';
+            b.FontName = 'Helvetica';
             b.Layout.Row = 6;
             b.Layout.Column = [1 7];
             b.ButtonPushedFcn =  {@updateMap, app, gx};
@@ -537,58 +567,58 @@ classdef MapApp < matlab.apps.AppBase
                                     % current point source, and the index
                                     % value selected by user
                                     case "Avalanche"
-                                        plotPSbyRisk(ax, T, app, app.Node3_1, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_1, indx, ii)
 
                                     case "Coastal Flooding"
-                                        plotPSbyRisk(ax, T, app, app.Node3_2, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_2, indx, ii)
 
                                     case "Cold Wave"
-                                        plotPSbyRisk(ax, T, app, app.Node3_3, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_3, indx, ii)
 
                                     case "Drought"
-                                        plotPSbyRisk(ax, T, app, app.Node3_4, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_4, indx, ii)
 
                                     case "Earthquake"
-                                        plotPSbyRisk(ax, T, app, app.Node3_5, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_5, indx, ii)
 
                                     case "Hail"
-                                        plotPSbyRisk(ax, T, app, app.Node3_6, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_6, indx, ii)
 
                                     case "Heat Wave"
-                                        plotPSbyRisk(ax, T, app, app.Node3_7, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_7, indx, ii)
 
                                     case "Hurricane"
-                                        plotPSbyRisk(ax, T, app, app.Node3_8, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_8, indx, ii)
 
                                     case "Ice Storm"
-                                        plotPSbyRisk(ax, T, app, app.Node3_9, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_9, indx, ii)
 
                                     case "Landslide"
-                                        plotPSbyRisk(ax, T, app, app.Node3_10, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_10, indx, ii)
 
                                     case "Lightning"
-                                        plotPSbyRisk(ax, T, app, app.Node3_11, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_11, indx, ii)
 
                                     case "Riverine Flooding"
-                                        plotPSbyRisk(ax, T, app, app.Node3_12, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_12, indx, ii)
 
                                     case "Strong Wind"
-                                        plotPSbyRisk(ax, T, app, app.Node3_13, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_13, indx, ii)
 
                                     case "Tornado"
-                                        plotPSbyRisk(ax, T, app, app.Node3_14, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_14, indx, ii)
 
                                     case "Tsunami"
-                                        plotPSbyRisk(ax, T, app, app.Node3_15, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_15, indx, ii)
 
                                     case"Volcanic Activity"
-                                        plotPSbyRisk(ax, T, app, app.Node3_16, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_16, indx, ii)
 
                                     case "Wildfire"
-                                        plotPSbyRisk(ax, T, app, app.Node3_17, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_17, indx, ii)
 
                                     case"Winter Weather"
-                                        plotPSbyRisk(ax, T, app, app.Node3_18, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_18, indx, ii)
                                 end
                             end
                         end
@@ -630,34 +660,11 @@ classdef MapApp < matlab.apps.AppBase
 
                             % plot if the node has point geometry
                             if strcmp(nodes(ii).NodeData.Shape.Geometry, "point")
-                               h = geoplot(ax, nodes(ii).NodeData, 'Marker', '.', 'MarkerSize', 10, 'Tag', nodes(ii).Text)
+                                pointLayer(ax, nodes(ii), event)
 
                                 % plot if the node has polygon geometry
                             elseif strcmp(nodes(ii).NodeData.Shape.Geometry, "polygon")
-
-                                for s = 1:20
-
-                                    switch string(nodes(ii).NodeData{s, 11})
-                                        case "Very High"
-                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#a63603');
-                                        case "Relatively High"
-                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#e6550d');
-                                        case "Relatively Moderate"
-                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#fd8d3c');
-                                        case "Relatively Low"
-                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#fdbe85');
-                                        case "Very Low"
-                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#feedde');
-                                        case "No Rating"
-                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#f0f0f0');
-                                        case "Not Applicable"
-                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#bdbdbd');
-                                        case "Insufficient Data"
-                                            geoplot(ax, nodes(ii).NodeData(s, :), FaceColor = '#636363');
-                                    end
-
-
-                                end
+                                riskLayer(ax, nodes(ii).NodeData, event)
 
                             else
                                 geoplot(ax, nodes(ii).NodeData,'linewidth',3, 'Tag', nodes(ii).Text)
@@ -671,7 +678,6 @@ classdef MapApp < matlab.apps.AppBase
 
                     % if there are not any checked boxes, delete all "lines"
                     for kk = 1:length(objs)
-
                         delete(objs(kk))
 
                     end
@@ -705,16 +711,16 @@ classdef MapApp < matlab.apps.AppBase
 
         end
 
-        % Code that executes before app deletion
+%         Code that executes before app deletion
 
-        %         function delete(app)
-        %             add_rm_custom_paths('remove');
-        %             delete(app.UIFigure);
-        %             % deletes immediately after creating the figure, but can still
-        %             % plot the data
-        %             % no need to delete figure to delete paths
-        %             disp('path removed')
-        %         end
+                function delete(app)
+                    add_rm_custom_paths('remove');
+                    delete(app.UIFigure);
+                    % deletes immediately after creating the figure, but can still
+                    % plot the data
+                    % no need to delete figure to delete paths
+                    disp('path removed')
+                end
 
     end
 end
