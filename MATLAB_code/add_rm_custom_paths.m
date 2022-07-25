@@ -19,7 +19,7 @@ custom_paths = {
     ['.' filesep 'Data' filesep 'pipelines' filesep 'PetroleumProduct_Pipelines_US_EIA' filesep ],
     ['.' filesep 'Data' filesep 'pipelines' filesep 'NaturalGas_InterIntrastate_Pipelines_US_EIA' filesep ],
     ['.' filesep 'Data' filesep 'pipelines' filesep 'HGL_Pipelines_US_EIA' filesep ],
-    ['.' filesep 'Data' filesep 'CrudeOil_Pipelines_US_EIA' filesep ],
+    ['.' filesep 'Data' filesep 'pipelines' filesep  'CrudeOil_Pipelines_US_EIA' filesep ],
     
     ['.' filesep 'Data' filesep 'member_facilities' filesep ],
     
