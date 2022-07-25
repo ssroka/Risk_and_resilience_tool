@@ -3,9 +3,15 @@ function add_rm_custom_paths(add_rm_string)
 custom_paths = {
 
     ['.' filesep 'Data' filesep 'point_sources' filesep ],
-
     ['.' filesep 'Data' filesep 'point_sources' filesep 'PowerPlants_US_EIA' filesep ],
     
+    ['.' filesep 'Data' filesep 'population' filesep ],
+    ['.' filesep 'Data' filesep 'population' filesep 'ACSDT5Y2020.B01003_2022-07-22T175938' filesep ],
+    ['.' filesep 'Data' filesep 'population' filesep 'cb_2021_us_cbsa_20m' filesep ],
+    ['.' filesep 'Data' filesep 'population' filesep 'tl_2021_us_cbsa' filesep ],
+    ['.' filesep 'Data' filesep 'population' filesep 'tl_2021_us_uac10' filesep ],
+    ['.' filesep 'Data' filesep 'population' filesep 'tlgdb_2021_a_us_nationgeo.gdb' filesep ],
+
     ['.' filesep 'Data' filesep 'pipelines' filesep ],
     ['.' filesep 'Data' filesep 'pipelines' filesep 'Newest_pipelines_data' filesep ],
     ['.' filesep 'Data' filesep 'pipelines' filesep 'OHWVPA_potential_pipelines_data' filesep ],
@@ -22,6 +28,7 @@ custom_paths = {
     ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'NRI_Shapefile_States' filesep ],
     ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'NRI_Shapefile_Counties' filesep ],
     ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'NRI_Shapefile_CensusTracts' filesep ],
+    ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'NRI_Table_Counties' filesep ],
     ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'NationalRiskIndex_Metadata' filesep ],
     ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'ClimateZones_US_EIA' filesep ],
     
