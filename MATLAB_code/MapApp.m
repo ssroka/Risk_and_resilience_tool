@@ -209,6 +209,8 @@ classdef MapApp < matlab.apps.AppBase
             % IN DEVELOPMENT
             app.Node2_3 = uitreenode(app.Node2);
             app.Node2_3.Text = 'Sequestration Resevouir';
+            basinTable = basinData;
+            app.Node2_3.NodeData = basinTable;
 
             
 
@@ -615,7 +617,7 @@ classdef MapApp < matlab.apps.AppBase
 
                             % plot if the node has polygon geometry
                             elseif strcmp(nodes(mm).NodeData.Shape.Geometry, "polygon")
-                                riskLayer(ax, nodes(mm).NodeData, event)
+                                polyLayer(ax, nodes(mm).NodeData, event)
 
                             % plot lines
                             else

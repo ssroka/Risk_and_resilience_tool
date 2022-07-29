@@ -1,7 +1,9 @@
-function riskLayer(ax, nodeData, event)
+function polyLayer(ax, nodeData, event)
 
 for t = 1:size(event.Source.CheckedNodes)
 
+
+    % for loop for social vulnerability
     if any(event.Source.CheckedNodes(t) == event.Source.Children(5))
 
         % only runs through first 10 counties for testing efficiency
@@ -28,6 +30,7 @@ for t = 1:size(event.Source.CheckedNodes)
 
         end
 
+        % for loop for community resilience
     elseif any(event.Source.CheckedNodes(t) == event.Source.Children(6))
 
         % only runs through first 10 counties for testing efficiency
@@ -54,6 +57,11 @@ for t = 1:size(event.Source.CheckedNodes)
 
         end
 
+    elseif any(event.Source.CheckedNodes(t) == event.Source.Children(2).Children(3))
+        geoplot(ax, nodeData);
+
+
+        % for loop for natural hazards
     else
 
         % only runs through first 10 counties for testing efficiency
