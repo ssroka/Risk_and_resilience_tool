@@ -6,7 +6,7 @@ for t = 1:size(event.Source.CheckedNodes)
 
         switch string(nodes.Text)
             case "Power Plant"
-                geobubble(ax, nodes.NodeData, 'Marker', '.', 'MarkerSize', 10, 'Tag', nodes.Text, MarkerFaceColor = '#303638', MarkerEdgeColor = '#303638');
+                geoplot(ax, nodes.NodeData, 'Marker', '.', 'MarkerSize', 10, 'Tag', nodes.Text, MarkerFaceColor = '#303638', MarkerEdgeColor = '#303638');
             case "Cement Plant"
                 geoplot(ax, nodes.NodeData, 'Marker', 's', 'MarkerSize', 10, 'Tag', nodes.Text, MarkerFaceColor = '#303638', MarkerEdgeColor = '#303638');
             case "Ethanol Plant"

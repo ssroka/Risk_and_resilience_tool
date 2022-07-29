@@ -493,7 +493,6 @@ classdef MapApp < matlab.apps.AppBase
             app.UIFigure.Visible = 'on';
 
 
-
             % When "update map" button is pushed, get data in filter
             % fields, points currently plotted on the map, and then replot
             % according to new data
