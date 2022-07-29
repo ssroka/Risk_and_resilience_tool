@@ -214,6 +214,7 @@ classdef MapApp < matlab.apps.AppBase
 
             % Node 3 Parent
             app.Node3 = uitreenode(app.Tree);
+
             app.Node3.Text = 'Natural Hazards';
 
             % select certain fields to avoid loading too much data

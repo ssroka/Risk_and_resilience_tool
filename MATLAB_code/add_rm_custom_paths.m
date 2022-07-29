@@ -2,6 +2,7 @@ function add_rm_custom_paths(add_rm_string)
 
 custom_paths = {
 
+
     ['.' filesep 'Data' filesep 'point_sources' filesep ],
     ['.' filesep 'Data' filesep 'point_sources' filesep 'PowerPlants_US_EIA' filesep ],
     
@@ -18,7 +19,7 @@ custom_paths = {
     ['.' filesep 'Data' filesep 'pipelines' filesep 'PetroleumProduct_Pipelines_US_EIA' filesep ],
     ['.' filesep 'Data' filesep 'pipelines' filesep 'NaturalGas_InterIntrastate_Pipelines_US_EIA' filesep ],
     ['.' filesep 'Data' filesep 'pipelines' filesep 'HGL_Pipelines_US_EIA' filesep ],
-    ['.' filesep 'Data' filesep 'CrudeOil_Pipelines_US_EIA' filesep ],
+    ['.' filesep 'Data' filesep 'pipelines' filesep  'CrudeOil_Pipelines_US_EIA' filesep ],
     
     ['.' filesep 'Data' filesep 'member_facilities' filesep ],
     
