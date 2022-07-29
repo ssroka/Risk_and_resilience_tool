@@ -36,14 +36,12 @@ N = length(fn);
 % initialize array
 basinCellArray = cell(N,1);
 
+% initialize table
+basinTable = readgeotable(sprintf('SAU_C%d.shp',fn(1))).Shape;
+
 % populate cell array with shape files
-for i = 1:length(fn)
-    basinCellArray{i} = readgeotable(sprintf('SAU_C%d.shp',fn(i)));
+
+for i = 2:N
+    basinTable = cat(1,basinTable,readgeotable(sprintf('SAU_C%d.shp',fn(i))).Shape);
 end
 
-% convert cell array to table
-basinTable = table2geotable(cell2table(basinCellArray));
-
-
-%     50560101:50560102,...    
-% 50370118:50370128,...

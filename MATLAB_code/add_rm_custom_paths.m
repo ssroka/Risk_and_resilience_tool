@@ -11,7 +11,7 @@ custom_paths = {
     ['.' filesep 'Data' filesep 'population' filesep 'cb_2021_us_cbsa_20m' filesep ],
     ['.' filesep 'Data' filesep 'population' filesep 'tl_2021_us_cbsa' filesep ],
     ['.' filesep 'Data' filesep 'population' filesep 'tl_2021_us_uac10' filesep ],
-    ['.' filesep 'Data' filesep 'population' filesep 'place_shp' filesep ],
+    ['.' filesep 'Data' filesep 'population' filesep 'tlgdb_2021_a_us_nationgeo.gdb' filesep ],
 
     ['.' filesep 'Data' filesep 'pipelines' filesep ],
     ['.' filesep 'Data' filesep 'pipelines' filesep 'Newest_pipelines_data' filesep ],
