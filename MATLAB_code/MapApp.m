@@ -350,7 +350,7 @@ classdef MapApp < matlab.apps.AppBase
 
             % Node 8 Parent
             app.Node8 = uitreenode(app.Tree);
-            app.Node8.Text = 'Population Density';
+            app.Node8.Text = 'Populations';
             pop_sz = readtable('ACSDT5Y2020.B01003_data_with_overlays_2022-04-27T113129.csv');
 
 
