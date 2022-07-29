@@ -119,7 +119,7 @@ classdef MapApp < matlab.apps.AppBase
             gx.Title.FontName = 'Helvetica';
             gx.Title.String = 'Map'; % display label, come up with better name
             gx.Title.FontSize = 18;
-            gx.Subtitle.String = sprintf('An interactive, user friendly map to display relevant power sector data\n and support better business decisions regarding CCUS and resiliency retrofitting');
+            gx.Subtitle.String = sprintf('An interactive, user friendly map to display relevant power sector data\n and support better business decisions regarding CCS and resiliency retrofitting');
             gx.Subtitle.FontName = 'Helvetica';
             gx.Subtitle.FontSize = 16;
             gx.Subtitle.FontAngle = 'italic';
@@ -189,7 +189,7 @@ classdef MapApp < matlab.apps.AppBase
 
             % Node 2 Parent
             app.Node2 = uitreenode(app.Tree);
-            app.Node2.Text = 'CCUS Infrastructure';
+            app.Node2.Text = 'CCS Infrastructure';
 
 
             % Node 2 children
@@ -198,19 +198,19 @@ classdef MapApp < matlab.apps.AppBase
             pplns_GT = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
             app.Node2_1.NodeData = pplns_GT;
 
-
+            % IN DEVELOPMENT
             app.Node2_2 = uitreenode(app.Node2);
             app.Node2_2.Text = 'Injection Sites';
-            %                 njctn = readtable("CATF_CCUS_database.xlsx");
-            %                 njctn_GT = table2geotable(njctn);
-            %                 app.Node2_1.NodeData = njctn_GT;
+            njctn = readtable("NETL_CCS_injection_site_data.csv");
+            njctn_GT = table2geotable(njctn);
+            app.Node2_2.NodeData = njctn_GT;
 
 
+            % IN DEVELOPMENT
             app.Node2_3 = uitreenode(app.Node2);
             app.Node2_3.Text = 'Sequestration Resevouir';
-            %                 pplns = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
-            %                 app.Node2_1.NodeData = pplns;
 
+            
 
             % Node 3 Parent
             app.Node3 = uitreenode(app.Tree);
@@ -343,68 +343,15 @@ classdef MapApp < matlab.apps.AppBase
             app.Node7 = uitreenode(app.Tree);
             app.Node7.Text = 'eGRID Subregion';
 
-
-            %             % Node 7 Parent
-            %             app.Node7 = uitreenode(app.Tree);
-            %             app.Node7.Text = 'Company Facilities';
-            %
-            %             % Node 7 children
-            %             app.Node7_1 = uitreenode(app.Node7);
-            %             app.Node7_1.Text = 'Accenture';
-            %
-            %             app.Node7_2 = uitreenode(app.Node7);
-            %             app.Node7_2.Text = 'Apple';
-            %
-            %             app.Node7_3 = uitreenode(app.Node7);
-            %             app.Node7_3.Text = 'BBVA';
-            %
-            %             app.Node7_4 = uitreenode(app.Node7);
-            %             app.Node7_4.Text = 'Biogen';
-            %
-            %             app.Node7_5 = uitreenode(app.Node7);
-            %             app.Node7_5.Text = 'Boeing';
-            %
-            %             app.Node7_6 = uitreenode(app.Node7);
-            %             app.Node7_6.Text = 'Cargill';
-            %
-            %             app.Node7_7 = uitreenode(app.Node7);
-            %             app.Node7_7.Text = 'Dow';
-            %
-            %             app.Node7_8 = uitreenode(app.Node7);
-            %             app.Node7_8.Text = 'Holcim';
-            %
-            %             app.Node7_9 = uitreenode(app.Node7);
-            %             app.Node7_9.Text = 'IBM';
-            %
-            %             app.Node7_10 = uitreenode(app.Node7);
-            %             app.Node7_10.Text = 'Inditex';
-            %
-            %             app.Node7_11 = uitreenode(app.Node7);
-            %             app.Node7_11.Text = 'MathWorks';
-            %
-            %             app.Node7_12 = uitreenode(app.Node7);
-            %             app.Node7_12.Text = 'Nexplore - Hochtief';
-            %
-            %             app.Node7_13 = uitreenode(app.Node7);
-            %             app.Node7_13.Text = 'PepsiCo';
-            %
-            %             app.Node7_14 = uitreenode(app.Node7);
-            %             app.Node7_14.Text = 'Rand-Whitney Containerboard, a Kraft Group company';
-            %
-            %             app.Node7_15 = uitreenode(app.Node7);
-            %             app.Node7_15.Text = 'Verizon';
-            %
-            %             app.Node7_16 = uitreenode(app.Node7);
-            %             app.Node7_16.Text = 'Vontier';
+            % MCSC company locations
+            % adding_mcsc_companies;
 
 
             % Node 8 Parent
             app.Node8 = uitreenode(app.Tree);
             app.Node8.Text = 'Population Density';
-            pop_sz = readtable('ACSDT5Y2020.B01003_data_with_overlays_2022-04-27T113129.csv')
-            
-%             pop = readgeotable("ClimateZones.shp");
-%             app.Node8.NodeData = clmtzns;
+            pop_sz = readtable('ACSDT5Y2020.B01003_data_with_overlays_2022-04-27T113129.csv');
+
 
             % Node 9 Parent
             app.Node9 = uitreenode(app.Tree);
@@ -420,10 +367,10 @@ classdef MapApp < matlab.apps.AppBase
             gl.Padding = [5 5 5 5];
 
 
-            % Distance from CCUS
+            % Distance from CCS
             lbl_1 = uilabel(gl);
             lbl_1.FontName = 'Helvetica';
-            lbl_1.Text = 'Distance from CCUS infrastructure (miles):';
+            lbl_1.Text = 'Distance from CO2 pipelines and injection sites (miles):';
             lbl_1.Layout.Row = 1;
             lbl_1.Layout.Column = [1 5];
             pip = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on');
@@ -452,7 +399,7 @@ classdef MapApp < matlab.apps.AppBase
             lbl_3.FontName = 'Helvetica';
             lbl_3.Layout.Row = 3;
             lbl_3.Layout.Column = [1 5];
-            emm = uieditfield(gl, 'numeric', 'Limits', [0 17232898], 'Editable', 'on', 'Value', 0);
+            emm = uieditfield(gl, 'numeric', 'Limits', [0 17.232898], 'Editable', 'on', 'Value', 0);
             emm.Layout.Row = 3;
             emm.Layout.Column = [6 7];
 
@@ -499,16 +446,18 @@ classdef MapApp < matlab.apps.AppBase
             function updateMap(src, event, app, ax)
 
                 % get values in filter fields
-                CCUS_distance = app.MiddlePanel.Children.Children(2).Value;
-                indx = app.MiddlePanel.Children.Children(4).Value;
-                risk = app.MiddlePanel.Children.Children(5).Value;
+                CCS_distance = app.MiddlePanel.Children.Children(2).Value;
+                risk_level = app.MiddlePanel.Children.Children(4).Value;
+                risk_type = app.MiddlePanel.Children.Children(5).Value;
                 co2_emissions = app.MiddlePanel.Children.Children(7).Value;
                 %                 facility_age = app.MiddlePanel.Children.Children(9).Value;
                 %                 pop_distance = app.MiddlePanel.Children.Children(11).Value;
 
 
 
-                % for the first 10 point sources
+                % only the first 10 point sources for testing efficiency
+                % (we would like to include all points in the final
+                % product)
                 for ii = 1:10
 
 
@@ -523,12 +472,12 @@ classdef MapApp < matlab.apps.AppBase
                     for jj = 1:size(app.Node2.Children(1).NodeData)
 
                         % convert from miles to degrees
-                        r_deg = CCUS_distance/69;
+                        r_deg = CCS_distance/69.2;
 
                         % create circle using lat and lon for the first point source
                         [latc, lonc] = scircle1(latp, lonp, r_deg);
 
-                        % circle = [latc, lonc]
+                        
 
                         info = shapeinfo("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
                         p = info.CoordinateReferenceSystem.GeographicCRS;
@@ -536,18 +485,20 @@ classdef MapApp < matlab.apps.AppBase
                         % make GT a table to extract the latitude and
                         % longitude of the first line for the first point
                         % source
-                        T_pipe = geotable2table(app.Node2.Children(1).NodeData, ["Latitude","Longitude"]);
+                        T_pipe = geotable2table(app.Node2_1.NodeData, ["Latitude","Longitude"]);
                         [latl, lonl] = projinv(info.CoordinateReferenceSystem, T_pipe(jj,:).Latitude{1}, T_pipe(jj,:).Longitude{1});
+% IN DEVELOPMENT                      
+[lat_in, lon_in] = app.Node2_2.NodeData(:, {'Latitude', 'Longitude'});
 
-                        % shape2  = geolineshape(latl, lonl);
+                        
 
                         % if any part of the first line is within the radius of the first point source
                         % then the first point source meets the user requirements
-                        if any(inpolygon(latl, lonl, latc, lonc))
+                        if any(inpolygon(latl, lonl, latc, lonc)) && any(inpolygon(lat_in, lon_in, latc, lonc))
 
                             % do the plant emissions of this plant meet the
                             % value entered by user
-                            plnt_emissions = T{ii, 'GHGQUANTITY_METRICTONSCO2e_'};
+                            plnt_emissions = (T{ii, 'GHGQUANTITY_METRICTONSCO2e_'}/1000000);
 
                             % if the emissions of the first point source
                             % meets (at least) the emissions value entered
@@ -558,7 +509,7 @@ classdef MapApp < matlab.apps.AppBase
 
                                 % check the risk selected by the user and
                                 % plot the point sources that experience that natural hazard
-                                switch string(risk)
+                                switch string(risk_type)
 
                                     % if the risk is avalanche, make the
                                     % geoaxes, point source data, app
@@ -566,58 +517,58 @@ classdef MapApp < matlab.apps.AppBase
                                     % current point source, and the index
                                     % value selected by user
                                     case "Avalanche"
-                                        riskFilter(ax, T, app, app.Node3_1, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_1, risk_level, ii)
 
                                     case "Coastal Flooding"
-                                        riskFilter(ax, T, app, app.Node3_2, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_2, risk_level, ii)
 
                                     case "Cold Wave"
-                                        riskFilter(ax, T, app, app.Node3_3, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_3, risk_level, ii)
 
                                     case "Drought"
-                                        riskFilter(ax, T, app, app.Node3_4, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_4, risk_level, ii)
 
                                     case "Earthquake"
-                                        riskFilter(ax, T, app, app.Node3_5, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_5, risk_level, ii)
 
                                     case "Hail"
-                                        riskFilter(ax, T, app, app.Node3_6, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_6, risk_level, ii)
 
                                     case "Heat Wave"
-                                        riskFilter(ax, T, app, app.Node3_7, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_7, risk_level, ii)
 
                                     case "Hurricane"
-                                        riskFilter(ax, T, app, app.Node3_8, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_8, risk_level, ii)
 
                                     case "Ice Storm"
-                                        riskFilter(ax, T, app, app.Node3_9, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_9, risk_level, ii)
 
                                     case "Landslide"
-                                        riskFilter(ax, T, app, app.Node3_10, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_10, risk_level, ii)
 
                                     case "Lightning"
-                                        riskFilter(ax, T, app, app.Node3_11, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_11, risk_level, ii)
 
                                     case "Riverine Flooding"
-                                        riskFilter(ax, T, app, app.Node3_12, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_12, risk_level, ii)
 
                                     case "Strong Wind"
-                                        riskFilter(ax, T, app, app.Node3_13, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_13, risk_level, ii)
 
                                     case "Tornado"
-                                        riskFilter(ax, T, app, app.Node3_14, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_14, risk_level, ii)
 
                                     case "Tsunami"
-                                        riskFilter(ax, T, app, app.Node3_15, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_15, risk_level, ii)
 
                                     case"Volcanic Activity"
-                                        riskFilter(ax, T, app, app.Node3_16, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_16, risk_level, ii)
 
                                     case "Wildfire"
-                                        riskFilter(ax, T, app, app.Node3_17, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_17, risk_level, ii)
 
                                     case"Winter Weather"
-                                        riskFilter(ax, T, app, app.Node3_18, indx, ii)
+                                        riskFilter(ax, T, app, app.Node3_18, risk_level, ii)
                                 end
                             end
                         end
@@ -628,7 +579,7 @@ classdef MapApp < matlab.apps.AppBase
 
 
 
-
+           
             % Function that plots/deletes when checkbox is
             % selected/deselected
             function checkchange(src, event, app, ax)
@@ -642,40 +593,43 @@ classdef MapApp < matlab.apps.AppBase
                     names = {nodes(:).Text};
 
                     % loop through the children
-                    for jj = 1:length(objs)
+                    for kk = 1:length(objs)
 
                         % if a child and the box of the same name isn't checked, delete the object
-                        if ~ismember(objs(jj).Tag, names)
-                            delete(objs(jj))
+                        if ~ismember(objs(kk).Tag, names)
+                            delete(objs(kk))
                         end
 
                     end
 
                     % for each node (i.e. checked box) see if the object is already plotted, and if not plot it
-                    for ii = 1:length(nodes)
-                        data2plot = findobj(ax, 'Tag', nodes(ii).Text);
+                    for mm = 1:length(nodes)
+                        data2plot = findobj(ax, 'Tag', nodes(mm).Text);
 
                         if isempty(data2plot)
 
+                            % IN DEVELOPMENT
                             % plot if the node has point geometry
-                            if strcmp(nodes(ii).NodeData.Shape.Geometry, "point")
-                                pointLayer(ax, nodes(ii), event)
+                            if strcmp(nodes(mm).NodeData.Shape.Geometry, "point")
+                                pointLayer(ax, nodes(mm), event)
 
-                                % plot if the node has polygon geometry
-                            elseif strcmp(nodes(ii).NodeData.Shape.Geometry, "polygon")
-                                riskLayer(ax, nodes(ii).NodeData, event)
+                            % plot if the node has polygon geometry
+                            elseif strcmp(nodes(mm).NodeData.Shape.Geometry, "polygon")
+                                riskLayer(ax, nodes(mm).NodeData, event)
 
+                            % plot lines
                             else
-                                geoplot(ax, nodes(ii).NodeData,'linewidth',3, 'Tag', nodes(ii).Text)
+                                lineLayer(ax, nodes(mm), event)
+                                
                             end
 
                         end
 
                     end
 
+                % if there are not any checked boxes, delete all objects   
                 else
-
-                    % if there are not any checked boxes, delete all "lines"
+                    
                     for kk = 1:length(objs)
                         delete(objs(kk))
 
@@ -710,7 +664,8 @@ classdef MapApp < matlab.apps.AppBase
 
         end
 
-%         Code that executes before app deletion
+%         Code that removes path before app deletion to maximize efficiency and
+%         storage space
 
                 function delete(app)
                     add_rm_custom_paths('remove');
