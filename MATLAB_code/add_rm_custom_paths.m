@@ -46,15 +46,23 @@ custom_paths = {
     
     ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Permian_palo_basin_boundaries' filesep ],
         ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Permian_palo_basin_density' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Permian_palo_basin_boundaries' filesep 'SAU_C5045' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Permian_palo_basin_boundaries' filesep 'SAU_C5044' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Permian_palo_basin_boundaries' filesep 'SAU_C5043' filesep ],
         
     ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Hanna_laramie_shirley_basin_boundaries' filesep ],
         ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Hanna_laramie_shirley_basin_density' filesep ],
 
     ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Gulf_basin_boundaries' filesep ],
         ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Gulf_basin_density' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Gulf_basin_boundaries' filesep 'SAU_C5049' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Gulf_basin_boundaries' filesep 'SAU_C5047' filesep ],
+        
 
     ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Greater_green_river_basin_boundaries' filesep ],
         ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Greater_green_river_basin_density' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Greater_green_river_basin_boundaries' filesep 'SAU_C5037' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Greater_green_river_basin_boundaries' filesep 'SAU_C5036' filesep ],
         
     ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Eastern_mesozoic_basin_boundaries' filesep ],
         ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Eastern_mesozoic_basin_density' filesep ],
@@ -64,6 +72,8 @@ custom_paths = {
 
     ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Columbia_basin_boundaries' filesep ],
         ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Columbia_basin_density' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Columbia_basin_boundaries' filesep 'SAU_C5005' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Columbia_basin_boundaries' filesep 'SAU_C5004' filesep ],
 
     ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Bighorn_basin_boundaries' filesep ],
         ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Bighorn_basin_density' filesep ],
@@ -88,6 +98,11 @@ custom_paths = {
 
     ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Southern_rocky_basin_boundaries' filesep ],
         ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Southern_rocky_basin_density' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Southern_rocky_basin_boundaries' filesep 'SAU_C5041' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Southern_rocky_basin_boundaries' filesep 'SAU_C5022' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Southern_rocky_basin_boundaries' filesep 'SAU_C5021' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Southern_rocky_basin_boundaries' filesep 'SAU_C5020' filesep ],
+        ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Southern_rocky_basin_boundaries' filesep 'SAU_C5019' filesep ],
 
     ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Williston_basin_boundaries' filesep ],
         ['.' filesep 'Data' filesep 'CO2_basins' filesep 'Williston_basin_density' filesep ],

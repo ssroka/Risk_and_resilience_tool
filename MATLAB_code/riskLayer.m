@@ -4,6 +4,7 @@ for t = 1:size(event.Source.CheckedNodes)
 
     if any(event.Source.CheckedNodes(t) == event.Source.Children(5))
 
+        % only runs through first 10 counties for testing efficiency
         for s = 1:10
 
             switch string(nodeData{s, end})
@@ -29,6 +30,7 @@ for t = 1:size(event.Source.CheckedNodes)
 
     elseif any(event.Source.CheckedNodes(t) == event.Source.Children(6))
 
+        % only runs through first 10 counties for testing efficiency
         for s = 1:10
 
             switch string(nodeData{s, end})
@@ -54,6 +56,7 @@ for t = 1:size(event.Source.CheckedNodes)
 
     else
 
+        % only runs through first 10 counties for testing efficiency
         for s = 1:10
 
             switch string(nodeData{s, end})

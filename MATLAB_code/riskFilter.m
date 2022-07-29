@@ -1,22 +1,22 @@
-function riskFilter(ax, T, app, riskType, indx, ii)
+function riskFilter(ax, T, app, risk_type, risk_level, ii)
 
 % for avalanches, check the index value entered by user and plot the first point
 % source if it is in a very high risk avalanche area
-switch string(indx)
+switch string(risk_level)
 
     % the user said "very high"
     case "Very High"
 
         % create table selecting the states that have a very high avalanche
         % rating
-        indx_state_risk = string(riskType.NodeData{:, end}) == "Very High";
+        state_risk_level = string(risk_type.NodeData{:, end}) == "Very High";
 
-        % assign state abbreviations to indx_states
-        indx_state = string(app.Node3.NodeData{indx_state_risk, 'STATEABBRV'});
+        % assign state abbreviations to statess
+        states = string(app.Node3.NodeData{state_risk_level, 'STATEABBRV'});
 
         % see if the state of the first point source matches any of the
         % states with a very high avalanche rating
-        if any(string(T{ii, 'STATE'}) == indx_state)
+        if any(string(T{ii, 'STATE'}) == states)
             geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "o", MarkerFaceColor = "#E3427D")
         end
 
@@ -24,14 +24,14 @@ switch string(indx)
 
         % create table selecting the states that have a very high avalanche
         % rating
-        indx_state_risk = string(riskType.NodeData{:, end}) == "Relatively High";
+        state_risk_level = string(risk_type.NodeData{:, end}) == "Relatively High";
 
-        % assign state abbreviations to indx_states
-        indx_state = string(app.Node3.NodeData{indx_state_risk, 'STATEABBRV'});
+        % assign state abbreviations to statess
+        states = string(app.Node3.NodeData{state_risk_level, 'STATEABBRV'});
 
         % see if the state of the first point source matches any of the
         % states with a very high avalanche rating
-        if any(string(T{ii, 'STATE'}) == indx_state)
+        if any(string(T{ii, 'STATE'}) == states)
             geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "o", MarkerFaceColor = '#E54E85')
         end
 
@@ -39,14 +39,14 @@ switch string(indx)
 
         % create table selecting the states that have a very high avalanche
         % rating
-        indx_state_risk = string(riskType.NodeData{:, end}) == "Relatively Moderate";
+        state_risk_level = string(risk_type.NodeData{:, end}) == "Relatively Moderate";
 
-        % assign state abbreviations to indx_states
-        indx_state = string(app.Node3.NodeData{indx_state_risk, 'STATEABBRV'});
+        % assign state abbreviations to statess
+        states = string(app.Node3.NodeData{state_risk_level, 'STATEABBRV'});
 
         % see if the state of the first point source matches any of the
         % states with a very high avalanche rating
-        if any(string(T{ii, 'STATE'}) == indx_state)
+        if any(string(T{ii, 'STATE'}) == states)
             geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "o", MarkerFaceColor = "#E75B8E")
         end
 
@@ -54,14 +54,14 @@ switch string(indx)
 
         % create table selecting the states that have a very high avalanche
         % rating
-        indx_state_risk = string(riskType.NodeData{:, end}) == "Relatively Low";
+        state_risk_level = string(risk_type.NodeData{:, end}) == "Relatively Low";
 
-        % assign state abbreviations to indx_states
-        indx_state = string(app.Node3.NodeData{indx_state_risk, 'STATEABBRV'});
+        % assign state abbreviations to statess
+        states = string(app.Node3.NodeData{state_risk_level, 'STATEABBRV'});
 
         % see if the state of the first point source matches any of the
         % states with a very high avalanche rating
-        if any(string(T{ii, 'STATE'}) == indx_state)
+        if any(string(T{ii, 'STATE'}) == states)
             geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "o", MarkerFaceColor = "#E96998")
         end
 
@@ -69,14 +69,14 @@ switch string(indx)
 
         % create table selecting the states that have a very high avalanche
         % rating
-        indx_state_risk = string(riskType.NodeData{:, end}) == "Very Low";
+        state_risk_level = string(risk_type.NodeData{:, end}) == "Very Low";
 
-        % assign state abbreviations to indx_states
-        indx_state = string(app.Node3.NodeData{indx_state_risk, 'STATEABBRV'});
+        % assign state abbreviations to statess
+        states = string(app.Node3.NodeData{state_risk_level, 'STATEABBRV'});
 
         % see if the state of the first point source matches any of the
         % states with a very high avalanche rating
-        if any(string(T{ii, 'STATE'}) == indx_state)
+        if any(string(T{ii, 'STATE'}) == states)
             geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "o", MarkerFaceColor = "#EB77A1")
         end
 
