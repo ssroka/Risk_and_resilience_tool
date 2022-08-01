@@ -209,6 +209,7 @@ classdef MapApp < matlab.apps.AppBase
             % IN DEVELOPMENT
             app.Node2_3 = uitreenode(app.Node2);
             app.Node2_3.Text = 'Sequestration Resevouir';
+            app.Node2_3.NodeData = basinData
 
             
 
@@ -350,7 +351,7 @@ classdef MapApp < matlab.apps.AppBase
 
             % Node 8 Parent
             app.Node8 = uitreenode(app.Tree);
-            app.Node8.Text = 'Population Density';
+            app.Node8.Text = 'Populations';
             pop_sz = readtable('ACSDT5Y2020.B01003_data_with_overlays_2022-04-27T113129.csv');
 
 
@@ -615,7 +616,7 @@ classdef MapApp < matlab.apps.AppBase
 
                             % plot if the node has polygon geometry
                             elseif strcmp(nodes(mm).NodeData.Shape.Geometry, "polygon")
-                                riskLayer(ax, nodes(mm).NodeData, event)
+                                polyLayer(ax, nodes(mm).NodeData, event)
 
                             % plot lines
                             else
