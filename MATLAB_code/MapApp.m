@@ -209,7 +209,9 @@ classdef MapApp < matlab.apps.AppBase
             % IN DEVELOPMENT
             app.Node2_3 = uitreenode(app.Node2);
             app.Node2_3.Text = 'Sequestration Resevouir';
-            app.Node2_3.NodeData = basinData
+
+            basinTable = basinData;
+            app.Node2_3.NodeData = basinTable;
 
             
 
