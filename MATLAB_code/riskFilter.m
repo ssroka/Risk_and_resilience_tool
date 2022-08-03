@@ -62,7 +62,7 @@ switch string(risk_level)
         % see if the state of the first point source matches any of the
         % states with a very high avalanche rating
         if any(string(T{ii, 'STATE'}) == states)
-            geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "o", MarkerFaceColor = "#E96998")
+            geoplot(ax, T{ii, 'LATITUDE'}, T{ii, 'LONGITUDE'}, "o", MarkerFaceColor = "#540D6E", MarkerEdgeColor = "#540D6E")
         end
 
     case "Very Low"
