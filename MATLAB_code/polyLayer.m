@@ -58,7 +58,7 @@ for t = 1:size(event.Source.CheckedNodes)
         end
 
     elseif any(event.Source.CheckedNodes(t) == event.Source.Children(2).Children(3))
-        geoplot(ax, nodeData);
+        geoplot(ax, nodeData, FaceColor = '#3BCEAC');
 
 
         % for loop for natural hazards

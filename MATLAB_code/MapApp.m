@@ -87,7 +87,7 @@ classdef MapApp < matlab.apps.AppBase
             app.UIFigure = uifigure;
             app.UIFigure.Name = 'Map';
             app.UIFigure.WindowState = 'maximized';
-            
+
 
             % Create GridLayout
             app.GridLayout = uigridlayout(app.UIFigure, [7 12]);
@@ -164,7 +164,7 @@ classdef MapApp < matlab.apps.AppBase
             % Node 1 parent
             app.Node1 = uitreenode(app.Tree);
             app.Node1.Text = 'Point Source';
-            
+
             % Node 1 children
             app.Node1_1 = uitreenode(app.Node1);
             app.Node1_1.Text = 'Power Plant';
@@ -212,7 +212,7 @@ classdef MapApp < matlab.apps.AppBase
             basinTable = basinData;
             app.Node2_3.NodeData = basinTable;
 
-            
+
 
             % Node 3 Parent
             app.Node3 = uitreenode(app.Tree);
@@ -460,7 +460,7 @@ classdef MapApp < matlab.apps.AppBase
                 % only the first 10 point sources for testing efficiency
                 % (we would like to include all points in the final
                 % product)
-                for ii = 1:10
+                for ii = 150:170
 
 
                     % make a table of all the point sources
@@ -479,7 +479,7 @@ classdef MapApp < matlab.apps.AppBase
                         % create circle using lat and lon for the first point source
                         [latc, lonc] = scircle1(latp, lonp, r_deg);
 
-                        
+
 
                         info = shapeinfo("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
                         p = info.CoordinateReferenceSystem.GeographicCRS;
@@ -489,88 +489,94 @@ classdef MapApp < matlab.apps.AppBase
                         % source
                         T_pipe = geotable2table(app.Node2_1.NodeData, ["Latitude","Longitude"]);
                         [latl, lonl] = projinv(info.CoordinateReferenceSystem, T_pipe(jj,:).Latitude{1}, T_pipe(jj,:).Longitude{1});
-% IN DEVELOPMENT                      
-[lat_in, lon_in] = app.Node2_2.NodeData(:, {'Latitude', 'Longitude'});
 
-                        
+                        for nn = 24:26
+%                             nn = 1:size(app.Node2_2.NodeData)
 
-                        % if any part of the first line is within the radius of the first point source
-                        % then the first point source meets the user requirements
-                        if any(inpolygon(latl, lonl, latc, lonc)) && any(inpolygon(lat_in, lon_in, latc, lonc))
+                            % IN DEVELOPMENT
+                            latin = app.Node2_2.NodeData{nn, {'Latitude'}};
+                            lonin = app.Node2_2.NodeData{nn, {'Longitude'}};
 
-                            % do the plant emissions of this plant meet the
-                            % value entered by user
-                            plnt_emissions = (T{ii, 'GHGQUANTITY_METRICTONSCO2e_'}/1000000);
 
-                            % if the emissions of the first point source
-                            % meets (at least) the emissions value entered
-                            % by the user, then the first point source
-                            % satisfies the minimum requirement for
-                            % emissions
-                            if co2_emissions <= plnt_emissions
 
-                                % check the risk selected by the user and
-                                % plot the point sources that experience that natural hazard
-                                switch string(risk_type)
+                            % if any part of the first line is within the radius of the first point source
+                            % then the first point source meets the user requirements
+                            if any(inpolygon(latl, lonl, latc, lonc)) && any(inpolygon(latin, lonin, latc, lonc))
 
-                                    % if the risk is avalanche, make the
-                                    % geoaxes, point source data, app
-                                    % components, avalanche data, the
-                                    % current point source, and the index
-                                    % value selected by user
-                                    case "Avalanche"
-                                        riskFilter(ax, T, app, app.Node3_1, risk_level, ii)
+                                % do the plant emissions of this plant meet the
+                                % value entered by user
+                                plnt_emissions = (T{ii, 'GHGQUANTITY_METRICTONSCO2e_'}/1000000);
 
-                                    case "Coastal Flooding"
-                                        riskFilter(ax, T, app, app.Node3_2, risk_level, ii)
+                                % if the emissions of the first point source
+                                % meets (at least) the emissions value entered
+                                % by the user, then the first point source
+                                % satisfies the minimum requirement for
+                                % emissions
+                                if co2_emissions <= plnt_emissions
 
-                                    case "Cold Wave"
-                                        riskFilter(ax, T, app, app.Node3_3, risk_level, ii)
+                                    % check the risk selected by the user and
+                                    % plot the point sources that experience that natural hazard
+                                    switch string(risk_type)
 
-                                    case "Drought"
-                                        riskFilter(ax, T, app, app.Node3_4, risk_level, ii)
+                                        % if the risk is avalanche, make the
+                                        % geoaxes, point source data, app
+                                        % components, avalanche data, the
+                                        % current point source, and the index
+                                        % value selected by user
+                                        case "Avalanche"
+                                            riskFilter(ax, T, app, app.Node3_1, risk_level, ii)
 
-                                    case "Earthquake"
-                                        riskFilter(ax, T, app, app.Node3_5, risk_level, ii)
+                                        case "Coastal Flooding"
+                                            riskFilter(ax, T, app, app.Node3_2, risk_level, ii)
 
-                                    case "Hail"
-                                        riskFilter(ax, T, app, app.Node3_6, risk_level, ii)
+                                        case "Cold Wave"
+                                            riskFilter(ax, T, app, app.Node3_3, risk_level, ii)
 
-                                    case "Heat Wave"
-                                        riskFilter(ax, T, app, app.Node3_7, risk_level, ii)
+                                        case "Drought"
+                                            riskFilter(ax, T, app, app.Node3_4, risk_level, ii)
 
-                                    case "Hurricane"
-                                        riskFilter(ax, T, app, app.Node3_8, risk_level, ii)
+                                        case "Earthquake"
+                                            riskFilter(ax, T, app, app.Node3_5, risk_level, ii)
 
-                                    case "Ice Storm"
-                                        riskFilter(ax, T, app, app.Node3_9, risk_level, ii)
+                                        case "Hail"
+                                            riskFilter(ax, T, app, app.Node3_6, risk_level, ii)
 
-                                    case "Landslide"
-                                        riskFilter(ax, T, app, app.Node3_10, risk_level, ii)
+                                        case "Heat Wave"
+                                            riskFilter(ax, T, app, app.Node3_7, risk_level, ii)
 
-                                    case "Lightning"
-                                        riskFilter(ax, T, app, app.Node3_11, risk_level, ii)
+                                        case "Hurricane"
+                                            riskFilter(ax, T, app, app.Node3_8, risk_level, ii)
 
-                                    case "Riverine Flooding"
-                                        riskFilter(ax, T, app, app.Node3_12, risk_level, ii)
+                                        case "Ice Storm"
+                                            riskFilter(ax, T, app, app.Node3_9, risk_level, ii)
 
-                                    case "Strong Wind"
-                                        riskFilter(ax, T, app, app.Node3_13, risk_level, ii)
+                                        case "Landslide"
+                                            riskFilter(ax, T, app, app.Node3_10, risk_level, ii)
 
-                                    case "Tornado"
-                                        riskFilter(ax, T, app, app.Node3_14, risk_level, ii)
+                                        case "Lightning"
+                                            riskFilter(ax, T, app, app.Node3_11, risk_level, ii)
 
-                                    case "Tsunami"
-                                        riskFilter(ax, T, app, app.Node3_15, risk_level, ii)
+                                        case "Riverine Flooding"
+                                            riskFilter(ax, T, app, app.Node3_12, risk_level, ii)
 
-                                    case"Volcanic Activity"
-                                        riskFilter(ax, T, app, app.Node3_16, risk_level, ii)
+                                        case "Strong Wind"
+                                            riskFilter(ax, T, app, app.Node3_13, risk_level, ii)
 
-                                    case "Wildfire"
-                                        riskFilter(ax, T, app, app.Node3_17, risk_level, ii)
+                                        case "Tornado"
+                                            riskFilter(ax, T, app, app.Node3_14, risk_level, ii)
 
-                                    case"Winter Weather"
-                                        riskFilter(ax, T, app, app.Node3_18, risk_level, ii)
+                                        case "Tsunami"
+                                            riskFilter(ax, T, app, app.Node3_15, risk_level, ii)
+
+                                        case"Volcanic Activity"
+                                            riskFilter(ax, T, app, app.Node3_16, risk_level, ii)
+
+                                        case "Wildfire"
+                                            riskFilter(ax, T, app, app.Node3_17, risk_level, ii)
+
+                                        case"Winter Weather"
+                                            riskFilter(ax, T, app, app.Node3_18, risk_level, ii)
+                                    end
                                 end
                             end
                         end
@@ -581,7 +587,7 @@ classdef MapApp < matlab.apps.AppBase
 
 
 
-           
+
             % Function that plots/deletes when checkbox is
             % selected/deselected
             function checkchange(src, event, app, ax)
@@ -615,23 +621,23 @@ classdef MapApp < matlab.apps.AppBase
                             if strcmp(nodes(mm).NodeData.Shape.Geometry, "point")
                                 pointLayer(ax, nodes(mm), event)
 
-                            % plot if the node has polygon geometry
+                                % plot if the node has polygon geometry
                             elseif strcmp(nodes(mm).NodeData.Shape.Geometry, "polygon")
                                 polyLayer(ax, nodes(mm).NodeData, event)
 
-                            % plot lines
+                                % plot lines
                             else
                                 lineLayer(ax, nodes(mm), event)
-                                
+
                             end
 
                         end
 
                     end
 
-                % if there are not any checked boxes, delete all objects   
+                    % if there are not any checked boxes, delete all objects
                 else
-                    
+
                     for kk = 1:length(objs)
                         delete(objs(kk))
 
@@ -666,17 +672,17 @@ classdef MapApp < matlab.apps.AppBase
 
         end
 
-%         Code that removes path before app deletion to maximize efficiency and
-%         storage space
+        %         Code that removes path before app deletion to maximize efficiency and
+        %         storage space
 
-                function delete(app)
-                    add_rm_custom_paths('remove');
-                    delete(app.UIFigure);
-                    % deletes immediately after creating the figure, but can still
-                    % plot the data
-                    % no need to delete figure to delete paths
-                    disp('path removed')
-                end
+        function delete(app)
+            add_rm_custom_paths('remove');
+            delete(app.UIFigure);
+            % deletes immediately after creating the figure, but can still
+            % plot the data
+            % no need to delete figure to delete paths
+            disp('path removed')
+        end
 
     end
 end
