@@ -199,11 +199,11 @@ classdef MapApp < matlab.apps.AppBase
             app.Node2_1.NodeData = pplns_GT;
 
             % IN DEVELOPMENT
-            app.Node2_2 = uitreenode(app.Node2);
-            app.Node2_2.Text = 'Injection Sites';
-            njctn = readtable("NETL_CCS_injection_site_data.csv");
-            njctn_GT = table2geotable(njctn);
-            app.Node2_2.NodeData = njctn_GT;
+%             app.Node2_2 = uitreenode(app.Node2);
+%             app.Node2_2.Text = 'Injection Sites';
+%             njctn = readtable("NETL_CCS_injection_site_data.csv");
+%             njctn_GT = table2geotable(njctn);
+%             app.Node2_2.NodeData = njctn_GT;
 
 
             % IN DEVELOPMENT
