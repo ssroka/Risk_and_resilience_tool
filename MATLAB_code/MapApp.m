@@ -199,11 +199,11 @@ classdef MapApp < matlab.apps.AppBase
             app.Node2_1.NodeData = pplns_GT;
 
             % IN DEVELOPMENT
-%             app.Node2_2 = uitreenode(app.Node2);
-%             app.Node2_2.Text = 'Injection Sites';
-%             njctn = readtable("NETL_CCS_injection_site_data.csv");
-%             njctn_GT = table2geotable(njctn);
-%             app.Node2_2.NodeData = njctn_GT;
+            app.Node2_2 = uitreenode(app.Node2);
+            app.Node2_2.Text = 'Injection Sites';
+            njctn = readtable("NETL_CCS_injection_site_data.csv");
+            njctn_GT = table2geotable(njctn);
+            app.Node2_2.NodeData = njctn_GT;
 
 
             % IN DEVELOPMENT
@@ -214,24 +214,24 @@ classdef MapApp < matlab.apps.AppBase
             app.Node2_3.NodeData = basinTable;
 
 
-
             % Node 3 Parent
             app.Node3 = uitreenode(app.Tree);
 
             app.Node3.Text = 'Natural Hazards';
 
             % select certain fields to avoid loading too much data
+            n_counties = 10; % only include the first 10 counties for efficiency
             nri = shaperead("NRI_Shapefile_Counties.shp", 'Attributes', {'Shape', 'Geometry', 'BoundingBox', 'X', 'Y', 'STATE', 'STATEABBRV', 'POPULATION', 'AREA', 'EAL_RATNG', 'AVLN_EALR', 'CFLD_EALR'...
                 'CWAV_EALR', 'DRGT_EALR', 'ERQK_EALR', 'HAIL_EALR', 'HWAV_EALR', 'HRCN_EALR', 'ISTM_EALR', 'LNDS_EALR', 'LTNG_EALR', 'RFLD_EALR', 'SWND_EALR', 'TRND_EALR', 'TSUN_EALR', 'VLCN_EALR', 'WFIR_EALR', 'WNTW_EALR'});
             crs_info = shapeinfo("NRI_Shapefile_Counties.shp");
             crs = crs_info.CoordinateReferenceSystem;
-            nri_GT = struct2geotable(nri(1:10), CoordinateReferenceSystem = crs);
+            nri_GT = struct2geotable(nri(1:n_counties), CoordinateReferenceSystem = crs);
             app.Node3.NodeData = nri_GT;
             sovi_resl = readtable("NRI_Table_Counties.csv");
             sovi = sovi_resl.SOVI_RATNG;
-            sovi_T = cell2table(sovi(1:10), "VariableNames", "SOVI_RATNG");
+            sovi_T = cell2table(sovi(1:n_counties), "VariableNames", "SOVI_RATNG");
             resl = sovi_resl.RESL_RATNG;
-            resl_T = cell2table(resl(1:10), "VariableNames", "RESL_RATNG");
+            resl_T = cell2table(resl(1:n_counties), "VariableNames", "RESL_RATNG");
 
 
 
@@ -343,9 +343,11 @@ classdef MapApp < matlab.apps.AppBase
             resl_GT = [nri_GT, resl_T];
             app.Node6.NodeData = resl_GT(:, {'Shape', 'STATEABBRV', 'RESL_RATNG'});
 
-            % Node 6 parent
+            % Node 7 parent
             app.Node7 = uitreenode(app.Tree);
             app.Node7.Text = 'eGRID Subregion';
+            eGRID_GT = readgeotable("eGRID2020_subregions.shp");
+            app.Node7.NodeData = eGRID_GT;
 
             % MCSC company locations
             % adding_mcsc_companies;
@@ -479,7 +481,6 @@ classdef MapApp < matlab.apps.AppBase
 
                         % create circle using lat and lon for the first point source
                         [latc, lonc] = scircle1(latp, lonp, r_deg);
-
 
 
                         info = shapeinfo("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");

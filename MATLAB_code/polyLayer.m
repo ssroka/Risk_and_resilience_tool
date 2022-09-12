@@ -1,13 +1,12 @@
 function polyLayer(ax, nodeData, event)
-
+n_polys = size(nodeData,1);
 for t = 1:size(event.Source.CheckedNodes)
 
 
     % for loop for social vulnerability
     if any(event.Source.CheckedNodes(t) == event.Source.Children(5))
 
-        % only runs through first 10 counties for testing efficiency
-        for s = 1:10
+        for s = 1:n_polys
 
             switch string(nodeData{s, end})
                 case "Very High"
@@ -33,8 +32,7 @@ for t = 1:size(event.Source.CheckedNodes)
         % for loop for community resilience
     elseif any(event.Source.CheckedNodes(t) == event.Source.Children(6))
 
-        % only runs through first 10 counties for testing efficiency
-        for s = 1:10
+        for s = 1:n_polys
 
             switch string(nodeData{s, end})
                 case "Very High"
@@ -57,15 +55,17 @@ for t = 1:size(event.Source.CheckedNodes)
 
         end
 
+                % eGrid Subregions
     elseif any(event.Source.CheckedNodes(t) == event.Source.Children(2).Children(3))
         geoplot(ax, nodeData, FaceColor = '#3BCEAC');
 
-
+        % eGrid Subregions
+    elseif any(event.Source.CheckedNodes(t) == event.Source.Children(7))
+        geoplot(ax, nodeData, FaceColor = '#2596be');
         % for loop for natural hazards
     else
 
-        % only runs through first 10 counties for testing efficiency
-        for s = 1:10
+        for s = 1:n_polys
 
             switch string(nodeData{s, end})
                 case "Very High"
