@@ -1,8 +1,5 @@
-function pointLayer(ax, nodes, event)
+function pointLayer(ax, nodes)
 
-for t = 1:size(event.Source.CheckedNodes)
-
-    if any(event.Source.CheckedNodes(t) == event.Source.Children(1).Children)
 
         switch string(nodes.Text)
             case "Power Plant"
@@ -13,17 +10,9 @@ for t = 1:size(event.Source.CheckedNodes)
                 geoplot(ax, nodes.NodeData, 'Marker', 'p', 'MarkerSize', 7, 'Tag', nodes.Text, MarkerFaceColor = '#FFD23F', MarkerEdgeColor = '#FFD23F');
             case "Iron and Steel Plant"
                 geoplot(ax, nodes.NodeData, 'Marker', '^', 'MarkerSize', 7, 'Tag', nodes.Text, MarkerFaceColor = '#00A300', MarkerEdgeColor = '#FFD23F');
-        end
-    elseif any(event.Source.CheckedNodes(t) == event.Source.Children(2).Children)
-
-        switch string(nodes.Text)
             case "Injection Sites"
                 geoplot(ax, nodes.NodeData, 'Marker', 'o', 'MarkerSize', 10, 'Tag', nodes.Text, MarkerFaceColor = '#25BE8B', MarkerEdgeColor = '#25BE8B');
         end
 
-    end
-
-
-end
 
 end

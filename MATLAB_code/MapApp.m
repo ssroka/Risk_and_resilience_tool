@@ -653,7 +653,7 @@ classdef MapApp < matlab.apps.AppBase
                             % IN DEVELOPMENT
                             % plot if the node has point geometry
                             if strcmp(nodes(mm).NodeData.Shape.Geometry, "point")
-                                pointLayer(ax, nodes(mm), event)
+                                pointLayer(ax, nodes(mm))
 
                                 % plot if the node has polygon geometry
                             elseif strcmp(nodes(mm).NodeData.Shape.Geometry, "polygon")
