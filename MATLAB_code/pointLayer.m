@@ -11,6 +11,8 @@ for t = 1:size(event.Source.CheckedNodes)
                 geoplot(ax, nodes.NodeData, 'Marker', 's', 'MarkerSize', 7, 'Tag', nodes.Text, MarkerFaceColor = '#3D6AFF', MarkerEdgeColor = '#3D6AFF');
             case "Ethanol Plant"
                 geoplot(ax, nodes.NodeData, 'Marker', 'p', 'MarkerSize', 7, 'Tag', nodes.Text, MarkerFaceColor = '#FFD23F', MarkerEdgeColor = '#FFD23F');
+            case "Iron and Steel Plant"
+                geoplot(ax, nodes.NodeData, 'Marker', '^', 'MarkerSize', 7, 'Tag', nodes.Text, MarkerFaceColor = '#00A300', MarkerEdgeColor = '#FFD23F');
         end
     elseif any(event.Source.CheckedNodes(t) == event.Source.Children(2).Children)
 

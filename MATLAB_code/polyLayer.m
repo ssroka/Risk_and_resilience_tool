@@ -3,33 +3,33 @@ n_polys = size(nodeData,1);
 for t = 1:size(event.Source.CheckedNodes)
 
 
-    % for loop for social vulnerability
+    % Social vulnerability
     if any(event.Source.CheckedNodes(t) == event.Source.Children(5))
 
         for s = 1:n_polys
 
             switch string(nodeData{s, end})
                 case "Very High"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#9341B3');
+                    geoplot(ax, nodeData(s, :), FaceColor = '#E3427D');
                 case "Relatively High"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#9D4ABE');
+                    geoplot(ax, nodeData(s, :), FaceColor = '#E54E85');
                 case "Relatively Moderate"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#A458C3');
+                    geoplot(ax, nodeData(s, :), FaceColor = '#E75B8E');
                 case "Relatively Low"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#AC66C8');
+                    geoplot(ax, nodeData(s, :), FaceColor = '#E96998');
                 case "Very Low"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#B474CD');
+                    geoplot(ax, nodeData(s, :), FaceColor = '#EB77A1');
                 case "No Rating"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#BB82D2');
+                    geoplot(ax, nodeData(s, :), FaceColor = '#ED84AB');
                 case "Not Applicable"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#C390D7');
+                    geoplot(ax, nodeData(s, :), FaceColor = '#EF92B4');
                 case "Insufficient Data"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#CA9EDC');
+                    geoplot(ax, nodeData(s, :), FaceColor = '#F1A0BD');
             end
 
         end
 
-        % for loop for community resilience
+        % Community resilience
     elseif any(event.Source.CheckedNodes(t) == event.Source.Children(6))
 
         for s = 1:n_polys
@@ -55,13 +55,20 @@ for t = 1:size(event.Source.CheckedNodes)
 
         end
 
-                % eGrid Subregions
+        % Sinks
     elseif any(event.Source.CheckedNodes(t) == event.Source.Children(2).Children(3))
         geoplot(ax, nodeData, FaceColor = '#3BCEAC');
 
         % eGrid Subregions
-    elseif any(event.Source.CheckedNodes(t) == event.Source.Children(7))
-        geoplot(ax, nodeData, FaceColor = '#2596be');
+    elseif any(event.Source.CheckedNodes(t) == [event.Source.Children(7);event.Source.Children(7).Children(:)])
+        % make a colorbar based on the most recent year
+        % 2020 is the most recent year in the data
+        scl_clr = (nodeData.CO2e_2020-min(nodeData.CO2e_2020))./(max(nodeData.CO2e_2020)-min(nodeData.CO2e_2020));
+        for s = 1:n_polys
+            geoplot(ax, nodeData(s,:), 'FaceColor',[0 0 scl_clr(s)])
+        end
+%         legend(ax,'Location','southwest')
+
         % for loop for natural hazards
     else
 
@@ -69,22 +76,24 @@ for t = 1:size(event.Source.CheckedNodes)
 
             switch string(nodeData{s, end})
                 case "Very High"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#E3427D');
+                    geoplot(ax, nodeData(s, :), FaceColor = '#900C3F');
                 case "Relatively High"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#E54E85');
+                    geoplot(ax, nodeData(s, :), FaceColor = '#C70039');
                 case "Relatively Moderate"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#E75B8E');
+                    geoplot(ax, nodeData(s, :), FaceColor = '#FF5733');
                 case "Relatively Low"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#E96998');
-                case "Very Low"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#EB77A1');
-                case "No Rating"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#ED84AB');
-                case "Not Applicable"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#EF92B4');
-                case "Insufficient Data"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#F1A0BD');
+                    geoplot(ax, nodeData(s, :), FaceColor = '#FFC300');
+%                 case "Very Low"
+%                     geoplot(ax, nodeData(s, :), FaceColor = '#DAF7A6');
+%                 case "No Rating"
+%                     geoplot(ax, nodeData(s, :), FaceColor = '#E8E8E8');
+%                 case "Not Applicable"
+%                     geoplot(ax, nodeData(s, :), FaceColor = '#E8E8E8');
+%                 case "Insufficient Data"
+%                     geoplot(ax, nodeData(s, :), FaceColor = '#E8E8E8');
             end
+
+
 
         end
 

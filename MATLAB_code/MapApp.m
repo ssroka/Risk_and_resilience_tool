@@ -13,6 +13,7 @@ classdef MapApp < matlab.apps.AppBase
         Node1_1      matlab.ui.container.TreeNode
         Node1_2      matlab.ui.container.TreeNode
         Node1_3      matlab.ui.container.TreeNode
+        Node1_4      matlab.ui.container.TreeNode
         Node2     matlab.ui.container.TreeNode
         Node2_1     matlab.ui.container.TreeNode
         Node2_2     matlab.ui.container.TreeNode
@@ -40,6 +41,8 @@ classdef MapApp < matlab.apps.AppBase
         Node5      matlab.ui.container.TreeNode
         Node6     matlab.ui.container.TreeNode
         Node7     matlab.ui.container.TreeNode
+        Node7_1     matlab.ui.container.TreeNode
+        Node7_2     matlab.ui.container.TreeNode
         %         Node7     matlab.ui.container.TreeNode
         %         Node7_1     matlab.ui.container.TreeNode
         %         Node7_2     matlab.ui.container.TreeNode
@@ -186,6 +189,11 @@ classdef MapApp < matlab.apps.AppBase
             ethnlplnt_GT = table2geotable(ethnlplnt);
             app.Node1_3.NodeData = ethnlplnt_GT;
 
+            app.Node1_4 = uitreenode(app.Node1);
+            app.Node1_4.Text = 'Iron and Steel Plant';
+            steelplnt = readtable("EPA_flight_GHG_ironsteel.xls");
+            steelplnt_GT = table2geotable(steelplnt);
+            app.Node1_4.NodeData = steelplnt_GT;
 
             % Node 2 Parent
             app.Node2 = uitreenode(app.Tree);
@@ -209,21 +217,24 @@ classdef MapApp < matlab.apps.AppBase
             % IN DEVELOPMENT
             app.Node2_3 = uitreenode(app.Node2);
             app.Node2_3.Text = 'Sequestration Resevouir';
-
             basinTable = basinData;
             app.Node2_3.NodeData = basinTable;
 
 
             % Node 3 Parent
             app.Node3 = uitreenode(app.Tree);
-
             app.Node3.Text = 'Natural Hazards';
 
             % select certain fields to avoid loading too much data
-            n_counties = 10; % only include the first 10 counties for efficiency
-            nri = shaperead("NRI_Shapefile_Counties.shp", 'Attributes', {'Shape', 'Geometry', 'BoundingBox', 'X', 'Y', 'STATE', 'STATEABBRV', 'POPULATION', 'AREA', 'EAL_RATNG', 'AVLN_EALR', 'CFLD_EALR'...
+            n_counties = 50; % only include the first 10 counties for efficiency
+%             nri = shaperead("NRI_Shapefile_Counties.shp", 'Attributes', {'Shape', 'Geometry', 'BoundingBox', 'X', 'Y', 'STATE', 'STATEABBRV', 'POPULATION', 'AREA', 'EAL_RATNG', 'AVLN_EALR', 'CFLD_EALR'...
+%                 'CWAV_EALR', 'DRGT_EALR', 'ERQK_EALR', 'HAIL_EALR', 'HWAV_EALR', 'HRCN_EALR', 'ISTM_EALR', 'LNDS_EALR', 'LTNG_EALR', 'RFLD_EALR', 'SWND_EALR', 'TRND_EALR', 'TSUN_EALR', 'VLCN_EALR', 'WFIR_EALR', 'WNTW_EALR'});
+%             crs_info = shapeinfo("NRI_Shapefile_Counties.shp");
+
+            nri = shaperead("NRI_Shapefile_States.shp", 'Attributes', {'Shape', 'Geometry', 'BoundingBox', 'X', 'Y', 'STATE', 'STATEABBRV', 'POPULATION', 'AREA', 'EAL_RATNG', 'AVLN_EALR', 'CFLD_EALR'...
                 'CWAV_EALR', 'DRGT_EALR', 'ERQK_EALR', 'HAIL_EALR', 'HWAV_EALR', 'HRCN_EALR', 'ISTM_EALR', 'LNDS_EALR', 'LTNG_EALR', 'RFLD_EALR', 'SWND_EALR', 'TRND_EALR', 'TSUN_EALR', 'VLCN_EALR', 'WFIR_EALR', 'WNTW_EALR'});
-            crs_info = shapeinfo("NRI_Shapefile_Counties.shp");
+            crs_info = shapeinfo("NRI_Shapefile_States.shp");
+
             crs = crs_info.CoordinateReferenceSystem;
             nri_GT = struct2geotable(nri(1:n_counties), CoordinateReferenceSystem = crs);
             app.Node3.NodeData = nri_GT;
@@ -347,7 +358,28 @@ classdef MapApp < matlab.apps.AppBase
             app.Node7 = uitreenode(app.Tree);
             app.Node7.Text = 'eGRID Subregion';
             eGRID_GT = readgeotable("eGRID2020_subregions.shp");
+            eGRID_CO2e = readtable("eGRID_CarbonIntensity_EPA.xlsx",...
+                'sheet',"SRCO2EQA",...
+                'range','B1:J28',...
+                'ReadVariableNames',true);
+
+            eGRID_lbs_MWh = readtable("eGRID_CarbonIntensity_EPA.xlsx",...
+                'sheet',"lbsperMWhr",...
+                'range', 'B2:J29',...
+                'ReadVariableNames',true);
+            % append CO2e and lbs/MWh to eGRID_GT
+            eGRID_GT =  [eGRID_GT eGRID_CO2e eGRID_lbs_MWh];
             app.Node7.NodeData = eGRID_GT;
+
+            % get emissions
+            app.Node7_1 = uitreenode(app.Node7);
+            app.Node7_1.Text = 'Emissions [lbs CO2_e / MWh]';
+            app.Node7_1.NodeData = eGRID_GT;
+
+            app.Node7_2 = uitreenode(app.Node7);
+            app.Node7_2.Text = 'Emissions Reduction ';
+            app.Node7_2.NodeData = eGRID_GT;
+
 
             % MCSC company locations
             % adding_mcsc_companies;
@@ -678,7 +710,9 @@ classdef MapApp < matlab.apps.AppBase
         %         storage space
 
         function delete(app)
+            cd('..')
             add_rm_custom_paths('remove');
+            cd('MATLAB_code')
             delete(app.UIFigure);
             % deletes immediately after creating the figure, but can still
             % plot the data
