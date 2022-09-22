@@ -1,103 +1,95 @@
-function polyLayer(ax, nodeData, event)
-n_polys = size(nodeData,1);
-for t = 1:size(event.Source.CheckedNodes)
+function polyLayer(ax, nodes, event)
+% n_polys = size(nodes.NodeData,1);
 
 
-    % Social vulnerability
-    if any(event.Source.CheckedNodes(t) == event.Source.Children(5))
+switch string(nodes.Text)
+    case 'Social Vulnerability'
+        [IDs] = getNRI_IDs(nodes.NodeData.SOVI_RATNG);
+        plot_NRI(ax,IDs,nodes.NodeData)
 
-        for s = 1:n_polys
+    case  'Community Resilience'
+        [IDs] = getNRI_IDs(nodes.NodeData.RESL_RATNG);
+        plot_NRI(ax,IDs,nodes.NodeData)
 
-            switch string(nodeData{s, end})
-                case "Very High"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#E3427D');
-                case "Relatively High"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#E54E85');
-                case "Relatively Moderate"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#E75B8E');
-                case "Relatively Low"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#E96998');
-                case "Very Low"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#EB77A1');
-                case "No Rating"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#ED84AB');
-                case "Not Applicable"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#EF92B4');
-                case "Insufficient Data"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#F1A0BD');
-            end
+    case 'Drought'
+        [IDs] = getNRI_IDs(nodes.NodeData.DRGT_RISKR);
+        plot_NRI(ax,IDs,nodes.NodeData)
 
-        end
+    case 'Hurricane'
+        [IDs] = getNRI_IDs(nodes.NodeData.HRCN_RISKR);
+        plot_NRI(ax,IDs,nodes.NodeData)
 
-        % Community resilience
-    elseif any(event.Source.CheckedNodes(t) == event.Source.Children(6))
+    case 'Riverine Flooding'
+        [IDs] = getNRI_IDs(nodes.NodeData.RFLD_RISKR);
+        plot_NRI(ax,IDs,nodes.NodeData)
 
-        for s = 1:n_polys
+    case 'Strong Wind'
+        [IDs] = getNRI_IDs(nodes.NodeData.SWND_RISKR);
+        plot_NRI(ax,IDs,nodes.NodeData)
 
-            switch string(nodeData{s, end})
-                case "Very High"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#469374');
-                case "Relatively High"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#4EA280');
-                case "Relatively Moderate"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#57AE8B');
-                case "Relatively Low"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#65B595');
-                case "Very Low"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#73BC9E');
-                case "No Rating"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#81C2A8');
-                case "Not Applicable"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#8FC9B2');
-                case "Insufficient Data"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#9DD0BB');
-            end
+    case 'Wildfire'
+        [IDs] = getNRI_IDs(nodes.NodeData.WFIR_RISKR);
+        plot_NRI(ax,IDs,nodes.NodeData)
 
-        end
+    case 'Emissions [lbs CO2_e / MWh]'
+        [IDs] = geteGRID_IDs(nodes.NodeData.lbspMWh_2020);
 
-        % Sinks
-    elseif any(event.Source.CheckedNodes(t) == event.Source.Children(2).Children(3))
-        geoplot(ax, nodeData, FaceColor = '#3BCEAC');
-
-        % eGrid Subregions
-    elseif any(event.Source.CheckedNodes(t) == [event.Source.Children(7);event.Source.Children(7).Children(:)])
-        % make a colorbar based on the most recent year
-        % 2020 is the most recent year in the data
-        scl_clr = (nodeData.CO2e_2020-min(nodeData.CO2e_2020))./(max(nodeData.CO2e_2020)-min(nodeData.CO2e_2020));
-        for s = 1:n_polys
-            geoplot(ax, nodeData(s,:), 'FaceColor',[0 0 scl_clr(s)])
-        end
-%         legend(ax,'Location','southwest')
-
-        % for loop for natural hazards
-    else
-
-        for s = 1:n_polys
-
-            switch string(nodeData{s, end})
-                case "Very High"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#900C3F');
-                case "Relatively High"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#C70039');
-                case "Relatively Moderate"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#FF5733');
-                case "Relatively Low"
-                    geoplot(ax, nodeData(s, :), FaceColor = '#FFC300');
-%                 case "Very Low"
-%                     geoplot(ax, nodeData(s, :), FaceColor = '#DAF7A6');
-%                 case "No Rating"
-%                     geoplot(ax, nodeData(s, :), FaceColor = '#E8E8E8');
-%                 case "Not Applicable"
-%                     geoplot(ax, nodeData(s, :), FaceColor = '#E8E8E8');
-%                 case "Insufficient Data"
-%                     geoplot(ax, nodeData(s, :), FaceColor = '#E8E8E8');
-            end
+        geoplot(ax, nodes.NodeData(IDs(:,1), :), FaceColor = '#FEFFFF');
+        geoplot(ax, nodes.NodeData(IDs(:,2), :), FaceColor = '#E3FFE8');
+        geoplot(ax, nodes.NodeData(IDs(:,3), :), FaceColor = '#a3ffb4');
+        geoplot(ax, nodes.NodeData(IDs(:,4), :), FaceColor = '#2cba00');
+        geoplot(ax, nodes.NodeData(IDs(:,5), :), FaceColor = '#a3ff00');
+        geoplot(ax, nodes.NodeData(IDs(:,6), :), FaceColor = '#fff400');
+        geoplot(ax, nodes.NodeData(IDs(:,7), :), FaceColor = '#ffa700');
+        geoplot(ax, nodes.NodeData(IDs(:,8), :), FaceColor = '#ff0000');
+    case 'Emissions Reduction'
 
 
+end
 
-        end
+
+    function [] = plot_NRI(ax,IDs,data)
+        % "Very Low"
+        geoplot(ax, data(IDs(:,1), :), FaceColor = '#DAF7A6');
+        % "Relatively Low"
+        geoplot(ax, data(IDs(:,2), :), FaceColor = '#FFC300');
+        % "Relatively Moderate"
+        geoplot(ax, data(IDs(:,3), :), FaceColor = '#FF5733');
+        % "Relatively High"
+        geoplot(ax, data(IDs(:,4), :), FaceColor = '#C70039');
+        % "Very High"
+        geoplot(ax, data(IDs(:,5), :), FaceColor = '#900C3F');
+        %             % "Empty"
+        %                 geoplot(ax, nodes.NodeData(IDs(:,6), :), FaceColor = '#E8E8E8');
 
     end
-end
+
+
+    function [IDs] = getNRI_IDs(rating)
+        IDs = false(size(rating,1),8);
+        IDs(:,1) = strcmp(rating,'Very Low');
+        IDs(:,2) = strcmp(rating,'Relatively Low');
+        IDs(:,3) = strcmp(rating,'Relatively Moderate');
+        IDs(:,4) = strcmp(rating,'Relatively High' );
+        IDs(:,5) = strcmp(rating,'Very High');
+
+%         IDs(:,6) = strcmp(rating,'Empty');
+
+%         IDs(:,7) = strcmp(rating,'No Rating');
+%         IDs(:,8) = strcmp(rating,'Not Applicable');
+%         IDs(:,9) = strcmp(rating,'Insufficient Data');
+    end
+
+    function [IDs] = geteGRID_IDs(rating)
+        IDs = false(size(rating,1),5);
+        IDs(:,1) = rating<250;
+        IDs(:,2) = (rating>=250).*(rating<500);
+        IDs(:,3) = (rating>=500).*(rating<750);
+        IDs(:,4) = (rating>=750).*(rating<1000);
+        IDs(:,5) = (rating>=1000).*(rating<1250);
+        IDs(:,6) = (rating>=1250).*(rating<1500);
+        IDs(:,7) = (rating>=1500).*(rating<1750);
+        IDs(:,8) = rating>=1750;
+    end
 
 end
