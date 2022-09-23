@@ -1,8 +1,12 @@
 function polyLayer(ax, nodes, event)
-% n_polys = size(nodes.NodeData,1);
 
 
 switch string(nodes.Text)
+    case 'Sequestration Resevouir'
+        geoplot(ax, nodes.NodeData,...
+            'Tag', nodes.Text,'displayname','1000-1500 lbs/MWh',...
+            FaceColor = '#25BE8B');
+
     case 'Social Vulnerability'
         [IDs] = getNRI_IDs(nodes.NodeData.SOVI_RATNG);
         plot_NRI(ax,IDs,nodes.NodeData)
@@ -31,65 +35,104 @@ switch string(nodes.Text)
         [IDs] = getNRI_IDs(nodes.NodeData.WFIR_RISKR);
         plot_NRI(ax,IDs,nodes.NodeData)
 
-    case 'Emissions [lbs CO2_e / MWh]'
+    case 'Power Sector Carbon Intensity [lbs CO2_e / MWh]'
         [IDs] = geteGRID_IDs(nodes.NodeData.lbspMWh_2020);
 
-        geoplot(ax, nodes.NodeData(IDs(:,1), :), FaceColor = '#FEFFFF');
-        geoplot(ax, nodes.NodeData(IDs(:,2), :), FaceColor = '#E3FFE8');
-        geoplot(ax, nodes.NodeData(IDs(:,3), :), FaceColor = '#a3ffb4');
-        geoplot(ax, nodes.NodeData(IDs(:,4), :), FaceColor = '#2cba00');
-        geoplot(ax, nodes.NodeData(IDs(:,5), :), FaceColor = '#a3ff00');
-        geoplot(ax, nodes.NodeData(IDs(:,6), :), FaceColor = '#fff400');
-        geoplot(ax, nodes.NodeData(IDs(:,7), :), FaceColor = '#ffa700');
-        geoplot(ax, nodes.NodeData(IDs(:,8), :), FaceColor = '#ff0000');
-    case 'Emissions Reduction'
-
+        geoplot(ax, nodes.NodeData(IDs(:,1), :),...
+            'displayname','< 250 lbs/MWh',...
+            'Tag', nodes.Text,...
+            'FaceColor','#FEFFFF');
+        geoplot(ax, nodes.NodeData(IDs(:,2), :),...
+            'displayname','250-500 lbs/MWh',...
+            'Tag', nodes.Text,...
+            'FaceColor', '#E3FFE8');
+        geoplot(ax, nodes.NodeData(IDs(:,3), :),...
+            'displayname','500-1000 lbs/MWh',...
+            'Tag', nodes.Text,...
+            'FaceColor', '#a3ffb4');
+        geoplot(ax, nodes.NodeData(IDs(:,4), :),...
+            'displayname','1000-1500 lbs/MWh',...
+            'Tag', nodes.Text,...
+            'FaceColor','#2cba00');
+        geoplot(ax, nodes.NodeData(IDs(:,5), :),...
+            'displayname','1500-2000 lbs/MWh',...
+            'Tag', nodes.Text,...
+            'FaceColor', '#a3ff00');
+        geoplot(ax, nodes.NodeData(IDs(:,6), :),...
+            'displayname','>2000 lbs/MWh',...
+            'Tag', nodes.Text,...
+            'FaceColor','#fff400');
+    case 'Population'
+        [IDs] = getPop_IDs(nodes.NodeData.POPULATION);
+        geoplot(ax, nodes.NodeData(IDs(:,1), :),...
+            'displayname','<4m',...
+            'Tag', nodes.Text,...
+            FaceColor = '#a3ff00');
+        geoplot(ax, nodes.NodeData(IDs(:,2), :),...
+            'displayname','4m-8m',...
+            'Tag', nodes.Text,...
+            FaceColor = '#fff400');
+        geoplot(ax, nodes.NodeData(IDs(:,3), :),...
+            'displayname','8m-10m',...
+            'Tag', nodes.Text,...
+            FaceColor = '#ffa700');
+        geoplot(ax, nodes.NodeData(IDs(:,4), :),...
+            'displayname','>10m',...
+            'Tag', nodes.Text,...
+            FaceColor = '#ff0000');
 
 end
 
 
-    function [] = plot_NRI(ax,IDs,data)
+    function [] = plot_NRI(ax,IDs,data,nodes)
         % "Very Low"
-        geoplot(ax, data(IDs(:,1), :), FaceColor = '#DAF7A6');
+        geoplot(ax, data(IDs(:,1), :),'Tag', nodes.Text,...
+            'displayname',"Very Low", FaceColor = '#DAF7A6');
         % "Relatively Low"
-        geoplot(ax, data(IDs(:,2), :), FaceColor = '#FFC300');
+        geoplot(ax, data(IDs(:,2), :),'Tag', nodes.Text,...
+            'displayname',"Relatively Low", FaceColor = '#FFC300');
         % "Relatively Moderate"
-        geoplot(ax, data(IDs(:,3), :), FaceColor = '#FF5733');
+        geoplot(ax, data(IDs(:,3), :),'Tag', nodes.Text,...
+            'displayname',"Relatively Moderate", FaceColor = '#FF5733');
         % "Relatively High"
-        geoplot(ax, data(IDs(:,4), :), FaceColor = '#C70039');
+        geoplot(ax, data(IDs(:,4), :),'Tag', nodes.Text,...
+            'displayname',"Relatively High", FaceColor = '#C70039');
         % "Very High"
-        geoplot(ax, data(IDs(:,5), :), FaceColor = '#900C3F');
-        %             % "Empty"
-        %                 geoplot(ax, nodes.NodeData(IDs(:,6), :), FaceColor = '#E8E8E8');
+        geoplot(ax, data(IDs(:,5), :),'Tag', nodes.Text,...
+            'displayname',"Very High", FaceColor = '#900C3F');
+        % "Empty"
+        %  geoplot(ax, nodes.NodeData(IDs(:,6), :), FaceColor = '#E8E8E8');
 
     end
 
-
     function [IDs] = getNRI_IDs(rating)
+        % other possible ratings that are not plotted are
+        % 'No Rating', 'Not Applicable', 'Insufficient Data'
+        % all of which are denoted with 'Empty' in this data
         IDs = false(size(rating,1),8);
         IDs(:,1) = strcmp(rating,'Very Low');
         IDs(:,2) = strcmp(rating,'Relatively Low');
         IDs(:,3) = strcmp(rating,'Relatively Moderate');
         IDs(:,4) = strcmp(rating,'Relatively High' );
         IDs(:,5) = strcmp(rating,'Very High');
-
-%         IDs(:,6) = strcmp(rating,'Empty');
-
-%         IDs(:,7) = strcmp(rating,'No Rating');
-%         IDs(:,8) = strcmp(rating,'Not Applicable');
-%         IDs(:,9) = strcmp(rating,'Insufficient Data');
     end
 
     function [IDs] = geteGRID_IDs(rating)
         IDs = false(size(rating,1),5);
         IDs(:,1) = rating<250;
         IDs(:,2) = (rating>=250).*(rating<500);
-        IDs(:,3) = (rating>=500).*(rating<750);
-        IDs(:,4) = (rating>=750).*(rating<1000);
-        IDs(:,5) = (rating>=1000).*(rating<1250);
-        IDs(:,6) = (rating>=1250).*(rating<1500);
-        IDs(:,7) = (rating>=1500).*(rating<1750);
-        IDs(:,8) = rating>=1750;
+        IDs(:,3) = (rating>=500).*(rating<1000);
+        IDs(:,4) = (rating>=1000).*(rating<1500);
+        IDs(:,5) = (rating>=1500).*(rating<2000);
+        IDs(:,6) = rating>=2000;
+    end
+
+    function [IDs] = getPop_IDs(rating)
+        IDs = false(size(rating,1),5);
+        IDs(:,1) = rating<4e6;
+        IDs(:,2) = (rating>=4e6).*(rating<8e6);
+        IDs(:,3) = (rating>=8e6).*(rating<10e6);
+        IDs(:,4) = rating>=10e6;
     end
 
 end

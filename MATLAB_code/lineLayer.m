@@ -6,7 +6,9 @@ for t = 1:size(event.Source.CheckedNodes)
 
         switch string(event.Source.CheckedNodes(t).Text)
             case "Pipelines"
-                geoplot(ax, checkedNode.NodeData, 'linewidth', 2, 'Tag', checkedNode.Text, Color = '#0EAD69');
+                geoplot(ax, checkedNode.NodeData, 'linewidth', 2,...
+                    'Tag', checkedNode.Text,'displayname','Pipelines',...
+                    Color = '#0EAD69');
         end
 
     end

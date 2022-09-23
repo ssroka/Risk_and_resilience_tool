@@ -19,49 +19,15 @@ classdef MapApp < matlab.apps.AppBase
         Node2_2     matlab.ui.container.TreeNode
         Node2_3     matlab.ui.container.TreeNode
         Node3     matlab.ui.container.TreeNode
-%         Node3_1     matlab.ui.container.TreeNode
-%         Node3_2     matlab.ui.container.TreeNode
-%         Node3_3     matlab.ui.container.TreeNode
         Node3_4     matlab.ui.container.TreeNode
-%         Node3_5     matlab.ui.container.TreeNode
-%         Node3_6     matlab.ui.container.TreeNode
-%         Node3_7     matlab.ui.container.TreeNode
         Node3_8     matlab.ui.container.TreeNode
-%         Node3_9     matlab.ui.container.TreeNode
-%         Node3_10     matlab.ui.container.TreeNode
-%         Node3_11     matlab.ui.container.TreeNode
         Node3_12     matlab.ui.container.TreeNode
         Node3_13     matlab.ui.container.TreeNode
-%         Node3_14     matlab.ui.container.TreeNode
-%         Node3_15     matlab.ui.container.TreeNode
-%         Node3_16     matlab.ui.container.TreeNode
         Node3_17     matlab.ui.container.TreeNode
-%         Node3_18     matlab.ui.container.TreeNode
         Node4     matlab.ui.container.TreeNode
         Node5      matlab.ui.container.TreeNode
         Node6     matlab.ui.container.TreeNode
-        Node7     matlab.ui.container.TreeNode
-        Node7_1     matlab.ui.container.TreeNode
-        Node7_2     matlab.ui.container.TreeNode
-        %         Node7     matlab.ui.container.TreeNode
-        %         Node7_1     matlab.ui.container.TreeNode
-        %         Node7_2     matlab.ui.container.TreeNode
-        %         Node7_3     matlab.ui.container.TreeNode
-        %         Node7_4     matlab.ui.container.TreeNode
-        %         Node7_5     matlab.ui.container.TreeNode
-        %         Node7_6     matlab.ui.container.TreeNode
-        %         Node7_7     matlab.ui.container.TreeNode
-        %         Node7_8     matlab.ui.container.TreeNode
-        %         Node7_9     matlab.ui.container.TreeNode
-        %         Node7_10     matlab.ui.container.TreeNode
-        %         Node7_11     matlab.ui.container.TreeNode
-        %         Node7_12     matlab.ui.container.TreeNode
-        %         Node7_13     matlab.ui.container.TreeNode
-        %         Node7_14     matlab.ui.container.TreeNode
-        %         Node7_15     matlab.ui.container.TreeNode
-        %         Node7_16     matlab.ui.container.TreeNode
         Node8     matlab.ui.container.TreeNode
-        Node9     matlab.ui.container.TreeNode
     end
 
     % Callbacks with handle components
@@ -156,12 +122,10 @@ classdef MapApp < matlab.apps.AppBase
             app.MiddlePanel.Layout.Column = [1 3];
             app.MiddlePanel.Scrollable = 'on';
 
-
             % Create Tree
             app.Tree = uitree(app.LeftPanel, 'checkbox');
             app.Tree.CheckedNodesChangedFcn = @(src,event) checkchange(src, event, app, gx);
             app.Tree.FontName = 'Helvetica';
-
 
             % Create nodes
             % Node 1 parent
@@ -175,13 +139,11 @@ classdef MapApp < matlab.apps.AppBase
             pwrplnt_GT = table2geotable(pwrplnt);
             app.Node1_1.NodeData = pwrplnt_GT;
 
-
             app.Node1_2 = uitreenode(app.Node1);
             app.Node1_2.Text = 'Cement Plant';
             cmntplnt = readtable("EPA_flight_GHG_cementplants_data.xls");
             cmntplnt_GT = table2geotable(cmntplnt);
             app.Node1_2.NodeData = cmntplnt_GT;
-
 
             app.Node1_3 = uitreenode(app.Node1);
             app.Node1_3.Text = 'Ethanol Plant';
@@ -199,7 +161,6 @@ classdef MapApp < matlab.apps.AppBase
             app.Node2 = uitreenode(app.Tree);
             app.Node2.Text = 'CCS Infrastructure';
 
-
             % Node 2 children
             app.Node2_1 = uitreenode(app.Node2);
             app.Node2_1.Text = 'Pipelines';
@@ -213,7 +174,6 @@ classdef MapApp < matlab.apps.AppBase
             njctn_GT = table2geotable(njctn);
             app.Node2_2.NodeData = njctn_GT;
 
-
             % IN DEVELOPMENT
             app.Node2_3 = uitreenode(app.Node2);
             app.Node2_3.Text = 'Sequestration Resevouir';
@@ -225,98 +185,29 @@ classdef MapApp < matlab.apps.AppBase
             app.Node3 = uitreenode(app.Tree);
             app.Node3.Text = 'Natural Hazards';
 
-            % --------------County Level Data --------------
-%             n_counties = 50; % only include the first 10 counties for efficiency
-%             nri = shaperead("NRI_Shapefile_Counties.shp", 'Attributes', {'Shape', 'Geometry', 'BoundingBox', 'X', 'Y', 'STATE', 'STATEABBRV', 'POPULATION', 'AREA', 'EAL_RATNG', 'AVLN_EALR', 'CFLD_EALR'...
-%                 'CWAV_EALR', 'DRGT_EALR', 'ERQK_EALR', 'HAIL_EALR', 'HWAV_EALR', 'HRCN_EALR', 'ISTM_EALR', 'LNDS_EALR', 'LTNG_EALR', 'RFLD_EALR', 'SWND_EALR', 'TRND_EALR', 'TSUN_EALR', 'VLCN_EALR', 'WFIR_EALR', 'WNTW_EALR'});
-%             crs_info = shapeinfo("NRI_Shapefile_Counties.shp");
-% 
-%             crs = crs_info.CoordinateReferenceSystem;
-%             nri_GT = struct2geotable(nri(1:n_counties), CoordinateReferenceSystem = crs);
-%             app.Node3.NodeData = nri_GT;
-%             sovi_resl = readtable("NRI_Table_Counties.csv");
-%             sovi = sovi_resl.SOVI_RATNG;
-%             sovi_T = cell2table(sovi(1:n_counties), "VariableNames", "SOVI_RATNG");
-%             resl = sovi_resl.RESL_RATNG;
-%             resl_T = cell2table(resl(1:n_counties), "VariableNames", "RESL_RATNG");
-
             % --------------State Level Data --------------
-            nri_full = shaperead("NRI_Shapefile_States.shp",...
-                'Attributes', {'Shape', 'Geometry', 'BoundingBox', 'X', 'Y','AREA',...
-                'STATE', 'STATEABBRV', 'POPULATION', 'AREA',...
+            nri_shp = shaperead("NRI_Shapefile_States.shp",...
+                'Attributes', {'AREA','STATE', 'STATEABBRV',...
+                'POPULATION', 'AREA',...
                 });
 
             crs_info = shapeinfo("NRI_Shapefile_States.shp");
 
-            [nri] = nri_full;%thin_polys(nri_full);
-
             crs = crs_info.CoordinateReferenceSystem;
-            nri_GT = struct2geotable(nri, CoordinateReferenceSystem = crs);
+            nri_GT = struct2geotable(nri_shp, CoordinateReferenceSystem = crs);
             nri_risk = readtable('NRI_STATE_A_WEIGHTED.csv','Delimiter', ',');
             nri_GT = [nri_GT nri_risk];
             app.Node3.NodeData = nri_GT;
-%             sovi_resl = readtable("NRI_Table_States.csv");
-%             sovi = sovi_resl.SOVI_RATNG;
-%             sovi_T = cell2table(sovi, "VariableNames", "SOVI_RATNG");
-%             resl = sovi_resl.RESL_RATNG;
-%             resl_T = cell2table(resl, "VariableNames", "RESL_RATNG");
 
-
-
-            % Node 3 children
-%             app.Node3_1 = uitreenode(app.Node3);
-%             app.Node3_1.Text = 'Avalanche';
-%             app.Node3_1.NodeData = nri_GT(:,["Shape","AVLN_EALR"]);
-
-
-%             app.Node3_2 = uitreenode(app.Node3);
-%             app.Node3_2.Text = 'Coastal Flooding';
-%             app.Node3_2.NodeData = nri_GT(:,["Shape","CFLD_EALR"]);
-
-
-%             app.Node3_3 = uitreenode(app.Node3);
-%             app.Node3_3.Text = 'Cold Wave';
-%             app.Node3_3.NodeData = nri_GT(:, [1, 13]) ;
-
-
+            % Node 3 Children
             app.Node3_4 = uitreenode(app.Node3);
             app.Node3_4.Text = 'Drought';
             app.Node3_4.NodeData =  nri_GT(:, ["Shape",'STATEABBRV',"DRGT_RISKR"]);
 
 
-%             app.Node3_5 = uitreenode(app.Node3);
-%             app.Node3_5.Text = 'Earthquake';
-%             app.Node3_5.NodeData = nri_GT(:, [1, 15]) ;
-
-
-%             app.Node3_6 = uitreenode(app.Node3);
-%             app.Node3_6.Text = 'Hail';
-%             app.Node3_6.NodeData =  nri_GT(:, [1, 16]) ;
-
-
-%             app.Node3_7 = uitreenode(app.Node3);
-%             app.Node3_7.Text = 'Heat Wave';
-%             app.Node3_7.NodeData =  nri_GT(:, [1, 17]) ;
-
-
             app.Node3_8 = uitreenode(app.Node3);
             app.Node3_8.Text = 'Hurricane';
             app.Node3_8.NodeData =   nri_GT(:, ["Shape",'STATEABBRV',"HRCN_RISKR"]);
-
-
-%             app.Node3_9 = uitreenode(app.Node3);
-%             app.Node3_9.Text = 'Ice Storm';
-%             app.Node3_9.NodeData =  nri_GT(:, [1, 19]) ;
-
-
-%             app.Node3_10 = uitreenode(app.Node3);
-%             app.Node3_10.Text = 'Landslide' ;
-%             app.Node3_10.NodeData =  nri_GT(:, [1, 20]) ;
-
-
-%             app.Node3_11 = uitreenode(app.Node3);
-%             app.Node3_11.Text = 'Lightning';
-%             app.Node3_11.NodeData =  nri_GT(:, [1, 21]) ;
 
 
             app.Node3_12 = uitreenode(app.Node3);
@@ -329,40 +220,30 @@ classdef MapApp < matlab.apps.AppBase
             app.Node3_13.NodeData =   nri_GT(:, ["Shape",'STATEABBRV',"SWND_RISKR"]);
 
 
-%             app.Node3_14 = uitreenode(app.Node3);
-%             app.Node3_14.Text = 'Tornado';
-%             app.Node3_14.NodeData =  nri_GT(:, [1, 24]) ;
-
-
-%             app.Node3_15 = uitreenode(app.Node3);
-%             app.Node3_15.Text = 'Tsunami';
-%             app.Node3_15.NodeData =  nri_GT(:, [1, 25]) ;
-
-
-%             app.Node3_16 = uitreenode(app.Node3);
-%             app.Node3_16.Text = 'Volcanic Activity';
-%             app.Node3_16.NodeData =  nri_GT(:, [1, 26]) ;
-
-
             app.Node3_17 = uitreenode(app.Node3);
             app.Node3_17.Text = 'Wildfire';
             app.Node3_17.NodeData =   nri_GT(:, ["Shape",'STATEABBRV',"WFIR_RISKR"]);
 
-
-%             app.Node3_18 = uitreenode(app.Node3);
-%             app.Node3_18.Text = 'Winter Weather';
-%             app.Node3_18.NodeData =  nri_GT(:, [1, 28]) ;
-
-
             % Node 4 parent
             app.Node4 = uitreenode(app.Tree);
-            app.Node4.Text = 'Power Sector Carbon Intensity';
-
+            app.Node4.Text = 'Power Sector Carbon Intensity [lbs CO2_e / MWh]';
+            eGRID_GT = readgeotable("eGRID2020_subregions.shp");
+            eGRID_CO2e = readtable("eGRID_CarbonIntensity_EPA.xlsx",...
+                'sheet',"SRCO2EQA",...
+                'range','B1:J28',...
+                'ReadVariableNames',true);
+            eGRID_lbs_MWh = readtable("eGRID_CarbonIntensity_EPA.xlsx",...
+                'sheet',"lbsperMWhr",...
+                'range', 'B2:J29',...
+                'ReadVariableNames',true);
+            % append CO2e and lbs/MWh to eGRID_GT
+            eGRID_GT =  [eGRID_GT eGRID_CO2e eGRID_lbs_MWh];
+            app.Node4.NodeData = eGRID_GT;
 
             % Node 5 parent
             app.Node5 = uitreenode(app.Tree);
             app.Node5.Text = 'Social Vulnerability';
-            sovi_GT = nri_GT(:,{'Shape','Geometry', 'BoundingBox', 'X', 'Y','STATEABBRV','SOVI_RATNG'});
+            sovi_GT = nri_GT(:,{'Shape','STATEABBRV','SOVI_RATNG'});
             app.Node5.NodeData = sovi_GT;
 
             % Node 6 parent
@@ -371,55 +252,17 @@ classdef MapApp < matlab.apps.AppBase
             resl_GT = nri_GT(:,{'Shape','STATEABBRV','RESL_RATNG'});
             app.Node6.NodeData = resl_GT;
 
-            % Node 7 parent
-            app.Node7 = uitreenode(app.Tree);
-            app.Node7.Text = 'eGRID Subregion';
-            eGRID_GT = readgeotable("eGRID2020_subregions.shp");
-            eGRID_CO2e = readtable("eGRID_CarbonIntensity_EPA.xlsx",...
-                'sheet',"SRCO2EQA",...
-                'range','B1:J28',...
-                'ReadVariableNames',true);
-
-            eGRID_lbs_MWh = readtable("eGRID_CarbonIntensity_EPA.xlsx",...
-                'sheet',"lbsperMWhr",...
-                'range', 'B2:J29',...
-                'ReadVariableNames',true);
-            % append CO2e and lbs/MWh to eGRID_GT
-            eGRID_GT =  [eGRID_GT eGRID_CO2e eGRID_lbs_MWh];
-            app.Node7.NodeData = eGRID_GT;
-
-            % get emissions
-            app.Node7_1 = uitreenode(app.Node7);
-            app.Node7_1.Text = 'Emissions [lbs CO2_e / MWh]';
-            app.Node7_1.NodeData = eGRID_GT;
-
-            app.Node7_2 = uitreenode(app.Node7);
-            app.Node7_2.Text = 'Emissions Reduction ';
-            app.Node7_2.NodeData = eGRID_GT;
-
-
-            % MCSC company locations
-            % adding_mcsc_companies;
-
-
             % Node 8 Parent
             app.Node8 = uitreenode(app.Tree);
-            app.Node8.Text = 'Populations';
-            pop_sz = readtable('ACSDT5Y2020.B01003_data_with_overlays_2022-04-27T113129.csv');
-
-
-            % Node 9 Parent
-            app.Node9 = uitreenode(app.Tree);
-            app.Node9.Text = 'Climate Zones';
-            % clmtzns = readgeotable("ClimateZones.shp");
-            % app.Node8.NodeData = clmtzns;
-
+            app.Node8.Text = 'Population';
+            app.Node8.NodeData = nri_GT(:, ["Shape",'STATEABBRV',"POPULATION"]);
 
             % Middle panel grid
             gl = uigridlayout(app.MiddlePanel, [6 7]);
             gl.ColumnSpacing = 5;
             gl.RowSpacing = 5;
             gl.Padding = [5 5 5 5];
+            bg = uibuttongroup(gl);
 
 
             % Distance from CCS
@@ -434,15 +277,16 @@ classdef MapApp < matlab.apps.AppBase
 
 
             % NRI
-            lbl_2 = uilabel(gl);
+%             lbl_2 = uilabel(gl);
+            lbl_2 = uitogglebutton(bg);
             lbl_2.Text = 'FEMA Risk Index:';
-            lbl2.FontName = 'Helvetica';
+            lbl_2.FontName = 'Helvetica';
             lbl_2.Layout.Row = 2;
             lbl_2.Layout.Column = [1 3];
-            ind = uidropdown(gl, 'Items', {'Very High', 'Relatively High', 'Relatively Moderate', 'Relatively Low', 'Very Low'}, 'Editable', 'off');
+            ind = uidropdown(gl, 'Items', {'None','Very High', 'Relatively High', 'Relatively Moderate', 'Relatively Low', 'Very Low'}, 'Editable', 'off');
             ind.Layout.Row = 2;
             ind.Layout.Column = [6 7];
-            rsk = uidropdown(gl, 'Items', {'Avalanche', 'Coastal Flooding', 'Cold Wave', 'Drought', 'Earthquake', 'Hail', 'Heat Wave', 'Hurricane', 'Ice Storm', 'Landslide', 'Lightning', 'Riverine Flooding', 'Strong Wind', 'Tornado', 'Tsunami', 'Volcanic Activity', 'Wildfire', 'Winter Weather'},...
+            rsk = uidropdown(gl, 'Items', {'<None>','Drought', 'Hurricane','Riverine Flooding', 'Strong Wind', 'Wildfire'},...
                 'Editable','off', 'Placeholder', 'Enter risk');
             rsk.Layout.Row = 2;
             rsk.Layout.Column = [4 5];
@@ -457,7 +301,6 @@ classdef MapApp < matlab.apps.AppBase
             emm = uieditfield(gl, 'numeric', 'Limits', [0 17.232898], 'Editable', 'on', 'Value', 0);
             emm.Layout.Row = 3;
             emm.Layout.Column = [6 7];
-
 
             % Facility age
             lbl_4 = uilabel(gl);
@@ -506,7 +349,7 @@ classdef MapApp < matlab.apps.AppBase
                 co2_emissions = app.MiddlePanel.Children.Children(7).Value;
                 %                 facility_age = app.MiddlePanel.Children.Children(9).Value;
                 %                 pop_distance = app.MiddlePanel.Children.Children(11).Value;
-
+                states_2_plot = app.Node3.NodeData
 
 
                 % only the first 10 point sources for testing efficiency
@@ -638,7 +481,6 @@ classdef MapApp < matlab.apps.AppBase
 
 
 
-
             % Function that plots/deletes when checkbox is
             % selected/deselected
             function checkchange(src, event, app, ax)
@@ -672,22 +514,22 @@ classdef MapApp < matlab.apps.AppBase
                             if strcmp(nodes(mm).NodeData.Shape.Geometry, "point")
                                 pointLayer(ax, nodes(mm))
 
-                                % plot if the node has polygon geometry
+                            % plot if the node has polygon geometry
                             elseif strcmp(nodes(mm).NodeData.Shape.Geometry, "polygon")
-%                                 polyLayer(ax, nodes(mm).NodeData, event)
                                 polyLayer(ax, nodes(mm), event)
 
-                                % plot lines
+                            % plot lines
                             else
                                 lineLayer(ax, nodes(mm), event)
 
                             end
+                            legend(ax,'-dynamiclegend')
 
                         end
 
                     end
 
-                    % if there are not any checked boxes, delete all objects
+                % if there are no checked boxes, delete all objects
                 else
 
                     for kk = 1:length(objs)
@@ -699,11 +541,6 @@ classdef MapApp < matlab.apps.AppBase
             end
         end
     end
-
-
-
-
-
 
 
 
