@@ -69,6 +69,7 @@ classdef MapApp < matlab.apps.AppBase
             % Create LeftPanel
             app.LeftPanel = uipanel(app.GridLayout);
             app.LeftPanel.FontName = 'Helvetica';
+            app.LeftPanel.FontSize = 14;
             app.LeftPanel.Title = 'Layers';
             app.LeftPanel.Layout.Row = [1 2];
             app.LeftPanel.Layout.Column = [1 3];
@@ -135,25 +136,29 @@ classdef MapApp < matlab.apps.AppBase
 
             % Node 1 children
             app.Node1_1 = uitreenode(app.Node1);
-            app.Node1_1.Text = 'Power Plant';
+            app.Node1_1.Text = 'Power Plants';
+            app.Node1_1.Tag = 'Power Plants';
             pwrplnt = readtable("EPA_flight_GHG_powerplants_data.xls");
             pwrplnt_GT = table2geotable(pwrplnt);
             app.Node1_1.NodeData = pwrplnt_GT;
 
             app.Node1_2 = uitreenode(app.Node1);
-            app.Node1_2.Text = 'Cement Plant';
+            app.Node1_2.Text = 'Cement Plants';
+            app.Node1_2.Tag = 'Cement Plants';
             cmntplnt = readtable("EPA_flight_GHG_cementplants_data.xls");
             cmntplnt_GT = table2geotable(cmntplnt);
             app.Node1_2.NodeData = cmntplnt_GT;
 
             app.Node1_3 = uitreenode(app.Node1);
-            app.Node1_3.Text = 'Ethanol Plant';
+            app.Node1_3.Text = 'Ethanol Plants';
+            app.Node1_3.Tag = 'Ethanol Plants';
             ethnlplnt = readtable("EPA_flight_GHG_ethanolplants_data.xls");
             ethnlplnt_GT = table2geotable(ethnlplnt);
             app.Node1_3.NodeData = ethnlplnt_GT;
 
             app.Node1_4 = uitreenode(app.Node1);
-            app.Node1_4.Text = 'Iron and Steel Plant';
+            app.Node1_4.Text = 'Iron and Steel Plants';
+            app.Node1_4.Tag = 'Iron and Steel Plants';
             steelplnt = readtable("EPA_flight_GHG_ironsteel.xls");
             steelplnt_GT = table2geotable(steelplnt);
             app.Node1_4.NodeData = steelplnt_GT;
@@ -165,12 +170,14 @@ classdef MapApp < matlab.apps.AppBase
             % Node 2 children
             app.Node2_1 = uitreenode(app.Node2);
             app.Node2_1.Text = 'Pipelines';
+            app.Node2_1.Tag = 'Pipelines';
             pplns_GT = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
             app.Node2_1.NodeData = pplns_GT;
 
             % IN DEVELOPMENT
             app.Node2_2 = uitreenode(app.Node2);
             app.Node2_2.Text = 'Injection Sites';
+            app.Node2_2.Tag = 'Injection Sites';
             njctn = readtable("NETL_CCS_injection_site_data.csv");
             njctn_GT = table2geotable(njctn);
             app.Node2_2.NodeData = njctn_GT;
@@ -178,6 +185,7 @@ classdef MapApp < matlab.apps.AppBase
             % IN DEVELOPMENT
             app.Node2_3 = uitreenode(app.Node2);
             app.Node2_3.Text = 'Sequestration Resevouir';
+            app.Node2_3.Tag = 'Sequestration Resevouir';
             basinTable = basinData;
             app.Node2_3.NodeData = basinTable;
 
@@ -203,26 +211,31 @@ classdef MapApp < matlab.apps.AppBase
             % Node 3 Children
             app.Node3_4 = uitreenode(app.Node3);
             app.Node3_4.Text = 'Drought';
+            app.Node3_4.Tag = 'Drought';
             app.Node3_4.NodeData =  nri_GT(:, ["Shape",'STATEABBRV',"DRGT_RISKR"]);
 
 
             app.Node3_8 = uitreenode(app.Node3);
             app.Node3_8.Text = 'Hurricane';
+            app.Node3_8.Tag = 'Hurricane';
             app.Node3_8.NodeData =   nri_GT(:, ["Shape",'STATEABBRV',"HRCN_RISKR"]);
 
 
             app.Node3_12 = uitreenode(app.Node3);
             app.Node3_12.Text = 'Riverine Flooding';
+            app.Node3_12.Tag = 'Riverine Flooding';
             app.Node3_12.NodeData =  nri_GT(:, ["Shape",'STATEABBRV',"RFLD_RISKR"]);
 
 
             app.Node3_13 = uitreenode(app.Node3);
             app.Node3_13.Text = 'Strong Wind';
+            app.Node3_13.Tag = 'Strong Wind';
             app.Node3_13.NodeData =   nri_GT(:, ["Shape",'STATEABBRV',"SWND_RISKR"]);
 
 
             app.Node3_17 = uitreenode(app.Node3);
             app.Node3_17.Text = 'Wildfire';
+            app.Node3_17.Tag = 'Wildfire';
             app.Node3_17.NodeData =   nri_GT(:, ["Shape",'STATEABBRV',"WFIR_RISKR"]);
 
             % Node 4 parent
@@ -256,6 +269,7 @@ classdef MapApp < matlab.apps.AppBase
             % Node 8 Parent
             app.Node8 = uitreenode(app.Tree);
             app.Node8.Text = 'Population';
+            app.Node8.Tag = 'Population';
             app.Node8.NodeData = nri_GT(:, ["Shape",'STATEABBRV',"POPULATION"]);
 
             % Middle panel grid
@@ -263,19 +277,21 @@ classdef MapApp < matlab.apps.AppBase
             gl.ColumnSpacing = 5;
             gl.RowSpacing = 5;
             gl.Padding = [5 5 5 5];
-            bg = uibuttongroup(gl);
-            bg.Layout.Column = [1 2];
-            bg.Layout.Row = [1 6];
+
 
 
             % Distance from CCS
-            tb_1 = uitogglebutton(bg);
-            tb_1.FontName = 'Helvetica';
-            tb_1.FontSize = 14;
-            tb_1.Text = sprintf('Distance from\nInjection Site','interpreter','Latex');
-            tb_1.Position = [8   360   100    50];
+            b_1 = uibutton(gl,'state');
+            b_1.FontName = 'Helvetica';
+            b_1.FontSize = 14;
+            b_1.Text = sprintf('Distance from\nInjection Site','interpreter','Latex');
+            b_1.Tag = 'dist_TF';
+            b_1.Layout.Row = 1;
+            b_1.Layout.Column = [1 2];
 
             ef_1 = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on');
+            ef_1.FontSize = 14;
+            ef_1.Tag = 'dist_num';
             ef_1.Layout.Row = 1;
             ef_1.Layout.Column = [4 5];
 
@@ -291,33 +307,42 @@ classdef MapApp < matlab.apps.AppBase
             lbl_1_2.FontSize = 18;
             lbl_1_2.Layout.Row = 1;
             lbl_1_2.Layout.Column = [6 7];
-            
+
 
             % NRI
-            tb_2 = uitogglebutton(bg);
-            tb_2.FontName = 'Helvetica';
-            tb_2.FontSize = 14;
-            tb_2.Text = sprintf('Natural\nHazard Risk','interpreter','Latex');
-            tb_2.Position = [8   290   100    50];
+            b_2 = uibutton(gl,'state');
+            b_2.FontName = 'Helvetica';
+            b_2.FontSize = 14;
+            b_2.Text = sprintf('Natural\nHazard Risk','interpreter','Latex');
+            b_2.Tag = 'nathaz_TF';
+            b_2.Layout.Row = 2;
+            b_2.Layout.Column = [1 2];
 
             dd_2_1 = uidropdown(gl, 'Items', {'None','Drought', 'Hurricane','Riverine Flooding', 'Strong Wind', 'Wildfire'},...
                 'Editable','off', 'Placeholder', 'Enter risk');
             dd_2_1.FontSize = 14;
+            dd_2_1.Tag = 'nathaz_type';
             dd_2_1.Layout.Row = 2;
             dd_2_1.Layout.Column = [4 5];
 
             dd_2_2 = uidropdown(gl, 'Items', {'None','Very High', 'Relatively High', 'Relatively Moderate', 'Relatively Low', 'Very Low'}, 'Editable', 'off');
+            dd_2_2.FontSize = 14;
+            dd_2_2.Tag = 'nathaz_level';
             dd_2_2.Layout.Row = 2;
             dd_2_2.Layout.Column = [6 7];
 
             % CO2 emissions
-            tb_3 = uitogglebutton(bg);
-            tb_3.FontName = 'Helvetica';
-            tb_3.FontSize = 18;
-            tb_3.Text = sprintf('Emissions','interpreter','Latex');
-            tb_3.Position = [8   220   100    50];
+            b_3 =  uibutton(gl,'state');
+            b_3.FontName = 'Helvetica';
+            b_3.FontSize = 18;
+            b_3.Text = sprintf('Emissions','interpreter','Latex');
+            b_3.Tag = 'em_TF';
+            b_3.Layout.Row = 3;
+            b_3.Layout.Column = [1 2];
 
             ef_3 = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on');
+            ef_3.FontSize = 14;
+            ef_3.Tag = 'em_num';
             ef_3.Layout.Row = 3;
             ef_3.Layout.Column = [4 5];
 
@@ -326,8 +351,8 @@ classdef MapApp < matlab.apps.AppBase
             lbl_3_1.HorizontalAlignment = 'center';
             lbl_3_1.FontSize = 18;
             lbl_3_1.Layout.Row = 3;
-            lbl_3_1.Layout.Column = 3;            
-            
+            lbl_3_1.Layout.Column = 3;
+
             lbl_3_2 = uilabel(gl);
             lbl_3_2.Text = 'MT CO2e';
             lbl_3_2.FontSize = 18;
@@ -335,180 +360,262 @@ classdef MapApp < matlab.apps.AppBase
             lbl_3_2.Layout.Column = [6 7];
 
             % Population
-            tb_4 = uitogglebutton(bg);
-            tb_4.FontName = 'Helvetica';
-            tb_4.FontSize = 18;
-            tb_4.Text = sprintf('Population','interpreter','Latex');
-            tb_4.Position = [8   150   100    50];
+            b_4 =  uibutton(gl,'state');
+            b_4.FontName = 'Helvetica';
+            b_4.FontSize = 18;
+            b_4.Text = sprintf('Population','interpreter','Latex');
+            b_4.Tag = 'pop_TF';
+            b_4.Layout.Row = 4;
+            b_4.Layout.Column = [1 2];
 
             ef_4 = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on');
+            ef_4.FontSize = 14;
+            ef_4.Tag = 'pop_num';
             ef_4.Layout.Row = 4;
             ef_4.Layout.Column = [4 5];
 
             dd_4 = uidropdown(gl, 'Items', {'<','>'});
             dd_4.FontSize = 18;
+            dd_4.Tag = 'pop_gt_lt';
             dd_4.Layout.Row = 4;
-            dd_4.Layout.Column = 3;            
-            
+            dd_4.Layout.Column = 3;
+
             lbl_4 = uilabel(gl);
             lbl_4.Text = 'million';
             lbl_4.FontSize = 18;
             lbl_4.Layout.Row = 4;
             lbl_4.Layout.Column = 6;
 
-
             % Update Map button
             b = uibutton(gl);
             b.Text = 'Update map';
+            b.FontSize = 14;
             b.FontName = 'Helvetica';
             b.Layout.Row = 6;
             b.Layout.Column = [1 7];
             b.ButtonPushedFcn =  {@updateMap, app, gx};
 
-
             % Display figure only when all components have been created
             app.UIFigure.Visible = 'on';
-
 
             % When "update map" button is pushed, get data in filter
             % fields, points currently plotted on the map, and then replot
             % according to new data
             function updateMap(src, event, app, ax)
+                cn = app.LeftPanel.Children(1).CheckedNodes;
+                if ~isempty(cn)
+                    % initialize filter fields
+                    states_2_plot_NH = [];
+                    states_2_plot_pop = [];
 
-                % get values in filter fields
-                CCS_distance = app.MiddlePanel.Children.Children(2).Value;
-                risk_level = app.MiddlePanel.Children.Children(4).Value;
-                risk_type = app.MiddlePanel.Children.Children(5).Value;
-                co2_emissions = app.MiddlePanel.Children.Children(7).Value;
-                %                 facility_age = app.MiddlePanel.Children.Children(9).Value;
-                %                 pop_distance = app.MiddlePanel.Children.Children(11).Value;
-                states_2_plot = app.Node3.NodeData
+                    % find the index of the child with the corresponding button
+                    dist_TF_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'dist_TF'));
+                    dist_TF = app.MiddlePanel.Children.Children(dist_TF_idx);
 
+                    nathaz_TF_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'nathaz_TF'));
+                    nathaz_TF = app.MiddlePanel.Children.Children(nathaz_TF_idx);
 
-                % only the first 10 point sources for testing efficiency
-                % (we would like to include all points in the final
-                % product)
-                for ii = 150:170
+                    pop_TF_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'pop_TF'));
+                    pop_TF = app.MiddlePanel.Children.Children(pop_TF_idx);
 
+                    em_TF_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'em_TF'));
+                    em_TF = app.MiddlePanel.Children.Children(em_TF_idx);
 
-                    % make a table of all the point sources
-                    T = [app.Node1.Children(1).NodeData; app.Node1.Children(2).NodeData; app.Node1.Children(3).NodeData];
+                    if dist_TF.Value
+                        dist_num_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'dist_num'));
+                        dist_num = app.MiddlePanel.Children.Children(dist_num_idx);
+                    end
 
-                    % get latitude and longitude of current point source
-                    latp = T{ii, 'LATITUDE'};
-                    lonp = T{ii, 'LONGITUDE'};
+                    if nathaz_TF.Value
+                        nathaz_type_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'nathaz_type'));
+                        nathaz_type = app.MiddlePanel.Children.Children(nathaz_type_idx);
+                        nathaz_level_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'nathaz_level'));
+                        nathaz_level = app.MiddlePanel.Children.Children(nathaz_level_idx);
 
-                    % select each line from the pipeline geotable
-                    for jj = 1:size(app.Node2.Children(1).NodeData)
+                        nathaz_data_struct = app.LeftPanel.Children.Children(3); % Natural hazard data is the third child of the tree
+                        nathaz_data_struct_idx = find(strcmp({nathaz_data_struct.Children.Tag},nathaz_type.Value));
+                        % the risk levels are in the third column of NodeData
+                        state_ids_NH = strcmp(table2array(nathaz_data_struct.Children(nathaz_data_struct_idx).NodeData(:,3)),nathaz_level.Value);
+                        % the state abbreviations are in the second column of NodeData
+                        states_2_plot_NH = nathaz_data_struct.Children(nathaz_data_struct_idx).NodeData(state_ids_NH,2);
+                    end
 
-                        % convert from miles to degrees
-                        r_deg = CCS_distance/69.2;
+                    if pop_TF.Value
+                        pop_num_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'pop_num'));
+                        pop_num = app.MiddlePanel.Children.Children(pop_num_idx);
 
-                        % create circle using lat and lon for the first point source
-                        [latc, lonc] = scircle1(latp, lonp, r_deg);
-
-
-                        info = shapeinfo("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
-                        p = info.CoordinateReferenceSystem.GeographicCRS;
-
-                        % make GT a table to extract the latitude and
-                        % longitude of the first line for the first point
-                        % source
-                        T_pipe = geotable2table(app.Node2_1.NodeData, ["Latitude","Longitude"]);
-                        [latl, lonl] = projinv(info.CoordinateReferenceSystem, T_pipe(jj,:).Latitude{1}, T_pipe(jj,:).Longitude{1});
-
-                        for nn = 24:26
-%                             nn = 1:size(app.Node2_2.NodeData)
-
-                            % IN DEVELOPMENT
-                            latin = app.Node2_2.NodeData{nn, {'Latitude'}};
-                            lonin = app.Node2_2.NodeData{nn, {'Longitude'}};
+                        pop_gt_lt_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'pop_gt_lt'));
+                        pop_gt_lt = app.MiddlePanel.Children.Children(pop_gt_lt_idx);
 
 
+                        pop_data_struct = app.LeftPanel.Children.Children(7); % Population data is the 8th child of the tree
+                        % the risk levels are in the third column of NodeData
+                        if strcmp(pop_gt_lt.Value,">")
+                            state_ids_pop = pop_data_struct.NodeData.POPULATION>pop_num.Value*1e6; % user entry is in millions => multiply by 1e6
+                        else
+                            state_ids_pop = pop_data_struct.NodeData.POPULATION<pop_num.Value*1e6; % user entry is in millions => multiply by 1e6
+                        end
+                        % the state abbreviations are in the second column of NodeData
+                        states_2_plot_pop = pop_data_struct.NodeData(state_ids_pop,2);
+                    end
 
-                            % if any part of the first line is within the radius of the first point source
-                            % then the first point source meets the user requirements
-                            if any(inpolygon(latl, lonl, latc, lonc)) && any(inpolygon(latin, lonin, latc, lonc))
+                    if em_TF.Value
+                        em_num_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'em_num'));
+                        em_num = app.MiddlePanel.Children.Children(em_num_idx);
+                    end
 
-                                % do the plant emissions of this plant meet the
-                                % value entered by user
-                                plnt_emissions = (T{ii, 'GHGQUANTITY_METRICTONSCO2e_'}/1000000);
+                    states_2_plot = unique([states_2_plot_NH;states_2_plot_pop]);
 
-                                % if the emissions of the first point source
-                                % meets (at least) the emissions value entered
-                                % by the user, then the first point source
-                                % satisfies the minimum requirement for
-                                % emissions
-                                if co2_emissions <= plnt_emissions
 
-                                    % check the risk selected by the user and
-                                    % plot the point sources that experience that natural hazard
-                                    switch string(risk_type)
-
-                                        % if the risk is avalanche, make the
-                                        % geoaxes, point source data, app
-                                        % components, avalanche data, the
-                                        % current point source, and the index
-                                        % value selected by user
-                                        case "Avalanche"
-                                            riskFilter(ax, T, app, app.Node3_1, risk_level, ii)
-
-                                        case "Coastal Flooding"
-                                            riskFilter(ax, T, app, app.Node3_2, risk_level, ii)
-
-                                        case "Cold Wave"
-                                            riskFilter(ax, T, app, app.Node3_3, risk_level, ii)
-
-                                        case "Drought"
-                                            riskFilter(ax, T, app, app.Node3_4, risk_level, ii)
-
-                                        case "Earthquake"
-                                            riskFilter(ax, T, app, app.Node3_5, risk_level, ii)
-
-                                        case "Hail"
-                                            riskFilter(ax, T, app, app.Node3_6, risk_level, ii)
-
-                                        case "Heat Wave"
-                                            riskFilter(ax, T, app, app.Node3_7, risk_level, ii)
-
-                                        case "Hurricane"
-                                            riskFilter(ax, T, app, app.Node3_8, risk_level, ii)
-
-                                        case "Ice Storm"
-                                            riskFilter(ax, T, app, app.Node3_9, risk_level, ii)
-
-                                        case "Landslide"
-                                            riskFilter(ax, T, app, app.Node3_10, risk_level, ii)
-
-                                        case "Lightning"
-                                            riskFilter(ax, T, app, app.Node3_11, risk_level, ii)
-
-                                        case "Riverine Flooding"
-                                            riskFilter(ax, T, app, app.Node3_12, risk_level, ii)
-
-                                        case "Strong Wind"
-                                            riskFilter(ax, T, app, app.Node3_13, risk_level, ii)
-
-                                        case "Tornado"
-                                            riskFilter(ax, T, app, app.Node3_14, risk_level, ii)
-
-                                        case "Tsunami"
-                                            riskFilter(ax, T, app, app.Node3_15, risk_level, ii)
-
-                                        case"Volcanic Activity"
-                                            riskFilter(ax, T, app, app.Node3_16, risk_level, ii)
-
-                                        case "Wildfire"
-                                            riskFilter(ax, T, app, app.Node3_17, risk_level, ii)
-
-                                        case"Winter Weather"
-                                            riskFilter(ax, T, app, app.Node3_18, risk_level, ii)
-                                    end
-                                end
+                    objs = get(ax, 'Children');
+                    if nathaz_TF.Value || pop_TF.Value || em_TF.Value
+                        % delete layer
+                        id_2_del = ismember({objs.Tag}, {cn.Text});
+                        delete(objs(id_2_del))
+                        for ii_point_srcs = 1:length(cn)
+                            % re-plot only filtered points
+                            if (nathaz_TF.Value || pop_TF.Value) && ~em_TF.Value
+                                pointLayer(ax, cn(ii_point_srcs),states_2_plot)
+                            else
+                                pointLayer(ax, cn(ii_point_srcs),states_2_plot,em_num.Value)
                             end
                         end
                     end
                 end
+
+                %                 CCS_distance = app.MiddlePanel.Children.Children(2).Value;
+                %                 risk_level = app.MiddlePanel.Children.Children(4).Value;
+                %                 risk_type = app.MiddlePanel.Children.Children(5).Value;
+                %                 co2_emissions = app.MiddlePanel.Children.Children(7).Value;
+                %                 %                 facility_age = app.MiddlePanel.Children.Children(9).Value;
+                %                 %                 pop_distance = app.MiddlePanel.Children.Children(11).Value;
+                %                 states_2_plot = app.Node3.NodeData;
+
+
+                %                 % only the first 10 point sources for testing efficiency
+                %                 % (we would like to include all points in the final
+                %                 % product)
+                %                 for ii = 150:170
+                %
+                %
+                %                     % make a table of all the point sources
+                %                     T = [app.Node1.Children(1).NodeData; app.Node1.Children(2).NodeData; app.Node1.Children(3).NodeData];
+                %
+                %                     % get latitude and longitude of current point source
+                %                     latp = T{ii, 'LATITUDE'};
+                %                     lonp = T{ii, 'LONGITUDE'};
+                %
+                %                     % select each line from the pipeline geotable
+                %                     for jj = 1:size(app.Node2.Children(1).NodeData)
+                %
+                %                         % convert from miles to degrees
+                %                         r_deg = CCS_distance/69.2;
+                %
+                %                         % create circle using lat and lon for the first point source
+                %                         [latc, lonc] = scircle1(latp, lonp, r_deg);
+                %
+                %
+                %                         info = shapeinfo("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
+                %                         p = info.CoordinateReferenceSystem.GeographicCRS;
+                %
+                %                         % make GT a table to extract the latitude and
+                %                         % longitude of the first line for the first point
+                %                         % source
+                %                         T_pipe = geotable2table(app.Node2_1.NodeData, ["Latitude","Longitude"]);
+                %                         [latl, lonl] = projinv(info.CoordinateReferenceSystem, T_pipe(jj,:).Latitude{1}, T_pipe(jj,:).Longitude{1});
+                %
+                %                         for nn = 24:26
+                %                             %                             nn = 1:size(app.Node2_2.NodeData)
+                %
+                %                             % IN DEVELOPMENT
+                %                             latin = app.Node2_2.NodeData{nn, {'Latitude'}};
+                %                             lonin = app.Node2_2.NodeData{nn, {'Longitude'}};
+                %
+                %
+                %
+                %                             % if any part of the first line is within the radius of the first point source
+                %                             % then the first point source meets the user requirements
+                %                             if any(inpolygon(latl, lonl, latc, lonc)) && any(inpolygon(latin, lonin, latc, lonc))
+                %
+                %                                 % do the plant emissions of this plant meet the
+                %                                 % value entered by user
+                %                                 plnt_emissions = (T{ii, 'GHGQUANTITY_METRICTONSCO2e_'}/1000000);
+                %
+                %                                 % if the emissions of the first point source
+                %                                 % meets (at least) the emissions value entered
+                %                                 % by the user, then the first point source
+                %                                 % satisfies the minimum requirement for
+                %                                 % emissions
+                %                                 if co2_emissions <= plnt_emissions
+                %
+                %                                     % check the risk selected by the user and
+                %                                     % plot the point sources that experience that natural hazard
+                %                                     switch string(risk_type)
+                %
+                %                                         % if the risk is avalanche, make the
+                %                                         % geoaxes, point source data, app
+                %                                         % components, avalanche data, the
+                %                                         % current point source, and the index
+                %                                         % value selected by user
+                %                                         case "Avalanche"
+                %                                             riskFilter(ax, T, app, app.Node3_1, risk_level, ii)
+                %
+                %                                         case "Coastal Flooding"
+                %                                             riskFilter(ax, T, app, app.Node3_2, risk_level, ii)
+                %
+                %                                         case "Cold Wave"
+                %                                             riskFilter(ax, T, app, app.Node3_3, risk_level, ii)
+                %
+                %                                         case "Drought"
+                %                                             riskFilter(ax, T, app, app.Node3_4, risk_level, ii)
+                %
+                %                                         case "Earthquake"
+                %                                             riskFilter(ax, T, app, app.Node3_5, risk_level, ii)
+                %
+                %                                         case "Hail"
+                %                                             riskFilter(ax, T, app, app.Node3_6, risk_level, ii)
+                %
+                %                                         case "Heat Wave"
+                %                                             riskFilter(ax, T, app, app.Node3_7, risk_level, ii)
+                %
+                %                                         case "Hurricane"
+                %                                             riskFilter(ax, T, app, app.Node3_8, risk_level, ii)
+                %
+                %                                         case "Ice Storm"
+                %                                             riskFilter(ax, T, app, app.Node3_9, risk_level, ii)
+                %
+                %                                         case "Landslide"
+                %                                             riskFilter(ax, T, app, app.Node3_10, risk_level, ii)
+                %
+                %                                         case "Lightning"
+                %                                             riskFilter(ax, T, app, app.Node3_11, risk_level, ii)
+                %
+                %                                         case "Riverine Flooding"
+                %                                             riskFilter(ax, T, app, app.Node3_12, risk_level, ii)
+                %
+                %                                         case "Strong Wind"
+                %                                             riskFilter(ax, T, app, app.Node3_13, risk_level, ii)
+                %
+                %                                         case "Tornado"
+                %                                             riskFilter(ax, T, app, app.Node3_14, risk_level, ii)
+                %
+                %                                         case "Tsunami"
+                %                                             riskFilter(ax, T, app, app.Node3_15, risk_level, ii)
+                %
+                %                                         case"Volcanic Activity"
+                %                                             riskFilter(ax, T, app, app.Node3_16, risk_level, ii)
+                %
+                %                                         case "Wildfire"
+                %                                             riskFilter(ax, T, app, app.Node3_17, risk_level, ii)
+                %
+                %                                         case"Winter Weather"
+                %                                             riskFilter(ax, T, app, app.Node3_18, risk_level, ii)
+                %                                     end
+                %                                 end
+                %                             end
+                %                         end
+                %                     end
+                %                 end
             end
 
 
@@ -547,11 +654,11 @@ classdef MapApp < matlab.apps.AppBase
                             if strcmp(nodes(mm).NodeData.Shape.Geometry, "point")
                                 pointLayer(ax, nodes(mm))
 
-                            % plot if the node has polygon geometry
+                                % plot if the node has polygon geometry
                             elseif strcmp(nodes(mm).NodeData.Shape.Geometry, "polygon")
                                 polyLayer(ax, nodes(mm), event)
 
-                            % plot lines
+                                % plot lines
                             else
                                 lineLayer(ax, nodes(mm), event)
 
@@ -562,7 +669,7 @@ classdef MapApp < matlab.apps.AppBase
 
                     end
 
-                % if there are no checked boxes, delete all objects
+                    % if there are no checked boxes, delete all objects
                 else
 
                     for kk = 1:length(objs)
