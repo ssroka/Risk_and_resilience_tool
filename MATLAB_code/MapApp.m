@@ -34,6 +34,7 @@ classdef MapApp < matlab.apps.AppBase
     methods (Access = private)
 
         function startupFcn(app)
+            clear;close all;clc
             cd('..')
             addpath(['.' filesep 'MATLAB_code' filesep])
             add_rm_custom_paths('add')
@@ -263,65 +264,97 @@ classdef MapApp < matlab.apps.AppBase
             gl.RowSpacing = 5;
             gl.Padding = [5 5 5 5];
             bg = uibuttongroup(gl);
+            bg.Layout.Column = [1 2];
+            bg.Layout.Row = [1 6];
 
 
             % Distance from CCS
-            lbl_1 = uilabel(gl);
-            lbl_1.FontName = 'Helvetica';
-            lbl_1.Text = 'Distance from CO2 pipelines and injection sites (miles):';
-            lbl_1.Layout.Row = 1;
-            lbl_1.Layout.Column = [1 5];
-            pip = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on');
-            pip.Layout.Row = 1;
-            pip.Layout.Column = [6 7];
+            tb_1 = uitogglebutton(bg);
+            tb_1.FontName = 'Helvetica';
+            tb_1.FontSize = 14;
+            tb_1.Text = sprintf('Distance from\nInjection Site','interpreter','Latex');
+            tb_1.Position = [8   360   100    50];
 
+            ef_1 = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on');
+            ef_1.Layout.Row = 1;
+            ef_1.Layout.Column = [4 5];
+
+            lbl_1_1 = uilabel(gl);
+            lbl_1_1.Text = '<';
+            lbl_1_1.HorizontalAlignment = 'center';
+            lbl_1_1.FontSize = 18;
+            lbl_1_1.Layout.Row = 1;
+            lbl_1_1.Layout.Column = 3;
+
+            lbl_1_2 = uilabel(gl);
+            lbl_1_2.Text = 'miles';
+            lbl_1_2.FontSize = 18;
+            lbl_1_2.Layout.Row = 1;
+            lbl_1_2.Layout.Column = [6 7];
+            
 
             % NRI
-%             lbl_2 = uilabel(gl);
-            lbl_2 = uitogglebutton(bg);
-            lbl_2.Text = 'FEMA Risk Index:';
-            lbl_2.FontName = 'Helvetica';
-            lbl_2.Layout.Row = 2;
-            lbl_2.Layout.Column = [1 3];
-            ind = uidropdown(gl, 'Items', {'None','Very High', 'Relatively High', 'Relatively Moderate', 'Relatively Low', 'Very Low'}, 'Editable', 'off');
-            ind.Layout.Row = 2;
-            ind.Layout.Column = [6 7];
-            rsk = uidropdown(gl, 'Items', {'<None>','Drought', 'Hurricane','Riverine Flooding', 'Strong Wind', 'Wildfire'},...
-                'Editable','off', 'Placeholder', 'Enter risk');
-            rsk.Layout.Row = 2;
-            rsk.Layout.Column = [4 5];
+            tb_2 = uitogglebutton(bg);
+            tb_2.FontName = 'Helvetica';
+            tb_2.FontSize = 14;
+            tb_2.Text = sprintf('Natural\nHazard Risk','interpreter','Latex');
+            tb_2.Position = [8   290   100    50];
 
+            dd_2_1 = uidropdown(gl, 'Items', {'None','Drought', 'Hurricane','Riverine Flooding', 'Strong Wind', 'Wildfire'},...
+                'Editable','off', 'Placeholder', 'Enter risk');
+            dd_2_1.FontSize = 14;
+            dd_2_1.Layout.Row = 2;
+            dd_2_1.Layout.Column = [4 5];
+
+            dd_2_2 = uidropdown(gl, 'Items', {'None','Very High', 'Relatively High', 'Relatively Moderate', 'Relatively Low', 'Very Low'}, 'Editable', 'off');
+            dd_2_2.Layout.Row = 2;
+            dd_2_2.Layout.Column = [6 7];
 
             % CO2 emissions
-            lbl_3 = uilabel(gl);
-            lbl_3.Text = 'CO2 emissions (MT CO2e):';
-            lbl_3.FontName = 'Helvetica';
-            lbl_3.Layout.Row = 3;
-            lbl_3.Layout.Column = [1 5];
-            emm = uieditfield(gl, 'numeric', 'Limits', [0 17.232898], 'Editable', 'on', 'Value', 0);
-            emm.Layout.Row = 3;
-            emm.Layout.Column = [6 7];
+            tb_3 = uitogglebutton(bg);
+            tb_3.FontName = 'Helvetica';
+            tb_3.FontSize = 18;
+            tb_3.Text = sprintf('Emissions','interpreter','Latex');
+            tb_3.Position = [8   220   100    50];
 
-            % Facility age
+            ef_3 = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on');
+            ef_3.Layout.Row = 3;
+            ef_3.Layout.Column = [4 5];
+
+            lbl_3_1 = uilabel(gl);
+            lbl_3_1.Text = '>';
+            lbl_3_1.HorizontalAlignment = 'center';
+            lbl_3_1.FontSize = 18;
+            lbl_3_1.Layout.Row = 3;
+            lbl_3_1.Layout.Column = 3;            
+            
+            lbl_3_2 = uilabel(gl);
+            lbl_3_2.Text = 'MT CO2e';
+            lbl_3_2.FontSize = 18;
+            lbl_3_2.Layout.Row = 3;
+            lbl_3_2.Layout.Column = [6 7];
+
+            % Population
+            tb_4 = uitogglebutton(bg);
+            tb_4.FontName = 'Helvetica';
+            tb_4.FontSize = 18;
+            tb_4.Text = sprintf('Population','interpreter','Latex');
+            tb_4.Position = [8   150   100    50];
+
+            ef_4 = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on');
+            ef_4.Layout.Row = 4;
+            ef_4.Layout.Column = [4 5];
+
+            dd_4 = uidropdown(gl, 'Items', {'<','>'});
+            dd_4.FontSize = 18;
+            dd_4.Layout.Row = 4;
+            dd_4.Layout.Column = 3;            
+            
             lbl_4 = uilabel(gl);
-            lbl_4.Text = 'Facility age (years):';
-            lbl_4.FontName = 'Helvetica';
+            lbl_4.Text = 'million';
+            lbl_4.FontSize = 18;
             lbl_4.Layout.Row = 4;
-            lbl_4.Layout.Column = [1 5];
-            age = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on', 'Value', 0);
-            age.Layout.Row = 4;
-            age.Layout.Column = [6 7];
-
-
-            % Distance from population
-            lbl_5 = uilabel(gl);
-            lbl_5.Text = 'Distance from populations (miles):';
-            lbl_5.FontName = 'Helvetica';
-            lbl_5.Layout.Row = 5;
-            lbl_5.Layout.Column = [1 5];
-            pop = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on', 'Value', 0);
-            pop.Layout.Row = 5;
-            pop.Layout.Column = [6 7];
+            lbl_4.Layout.Column = 6;
 
 
             % Update Map button
