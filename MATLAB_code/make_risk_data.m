@@ -1,5 +1,5 @@
 
-ccc
+clear;close all;clc
 
 cd('..')
 add_rm_custom_paths('add');
