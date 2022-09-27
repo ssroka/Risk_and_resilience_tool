@@ -404,9 +404,6 @@ classdef MapApp < matlab.apps.AppBase
             function updateMap(src, event, app, ax)
                 cn = app.LeftPanel.Children(1).CheckedNodes;
                 if ~isempty(cn)
-                    % initialize filter fields
-                    states_2_plot_NH = [];
-                    states_2_plot_pop = [];
 
                     % find the index of the child with the corresponding button
                     dist_TF_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'dist_TF'));
@@ -438,6 +435,8 @@ classdef MapApp < matlab.apps.AppBase
                         state_ids_NH = strcmp(table2array(nathaz_data_struct.Children(nathaz_data_struct_idx).NodeData(:,3)),nathaz_level.Value);
                         % the state abbreviations are in the second column of NodeData
                         states_2_plot_NH = table2array(nathaz_data_struct.Children(nathaz_data_struct_idx).NodeData(state_ids_NH,2));
+                    else
+                        states_2_plot_NH = [];
                     end
 
                     if pop_TF.Value
@@ -457,6 +456,8 @@ classdef MapApp < matlab.apps.AppBase
                         end
                         % the state abbreviations are in the second column of NodeData
                         states_2_plot_pop = table2array(pop_data_struct.NodeData(state_ids_pop,2));
+                    else
+                        states_2_plot_pop = [];
                     end
 
                     if em_TF.Value
