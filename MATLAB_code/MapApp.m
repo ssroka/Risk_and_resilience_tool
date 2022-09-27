@@ -308,7 +308,6 @@ classdef MapApp < matlab.apps.AppBase
             lbl_1_2.Layout.Row = 1;
             lbl_1_2.Layout.Column = [6 7];
 
-
             % NRI
             b_2 = uibutton(gl,'state');
             b_2.FontName = 'Helvetica';
@@ -462,23 +461,32 @@ classdef MapApp < matlab.apps.AppBase
                     if em_TF.Value
                         em_num_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'em_num'));
                         em_num = app.MiddlePanel.Children.Children(em_num_idx); 
+                    else
+                        em_num.Value = NaN;
                     end
 
-                    states_2_plot = unique([states_2_plot_NH;states_2_plot_pop]);
+                    if ~isempty(states_2_plot_NH) && ~isempty(states_2_plot_pop)
+                       states_2_plot = states_2_plot_NH(ismember(states_2_plot_NH,states_2_plot_pop));
+                    else
+                        states_2_plot = unique([states_2_plot_NH;states_2_plot_pop]);
+                    end
 
 
 
                     objs = get(ax, 'Children');
-                    if nathaz_TF.Value || pop_TF.Value || em_TF.Value
+                    if nathaz_TF.Value || pop_TF.Value || em_TF.Value || dist_TF.Value
                         % delete layer
                         id_2_del = ismember({objs.Tag}, {cn.Text});
                         delete(objs(id_2_del))
                         for ii_point_srcs = 1:length(cn)
                             % re-plot only filtered points
-                            if (nathaz_TF.Value || pop_TF.Value) && ~em_TF.Value
+                            if (nathaz_TF.Value || pop_TF.Value) && ~em_TF.Value &&  ~dist_TF.Value
                                 pointLayer(ax, cn(ii_point_srcs),states_2_plot)
-                            else
+                            elseif em_TF.Value  &&  ~dist_TF.Value
                                 pointLayer(ax, cn(ii_point_srcs),states_2_plot,em_num.Value*1e6)  % user entry is in Mega metric tons => multiply by 1e6, data is in metric tons
+                            else
+                                inject_lat_lon = [app.LeftPanel.Children.Children(2).Children(2).NodeData.Latitude app.LeftPanel.Children.Children(2).Children(2).NodeData.Longitude];
+                                pointLayer(ax, cn(ii_point_srcs),states_2_plot,em_num.Value*1e6,dist_num.Value,inject_lat_lon)  % user entry is in Mega metric tons => multiply by 1e6, data is in metric tons
                             end
                         end
                     end
@@ -531,7 +539,7 @@ classdef MapApp < matlab.apps.AppBase
                                 lineLayer(ax, nodes(mm), event)
 
                             end
-                            legend(ax,'-dynamiclegend')
+                            legend(ax,'-dynamiclegend','Fontsize',18)
 
                         end
 
