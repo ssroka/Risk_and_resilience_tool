@@ -1,4 +1,4 @@
-function polyLayer(ax, nodes, event)
+function polyLayer(ax, nodes)
 
 
 switch string(nodes.Text)
@@ -9,31 +9,31 @@ switch string(nodes.Text)
 
     case 'Social Vulnerability'
         [IDs] = getNRI_IDs(nodes.NodeData.SOVI_RATNG);
-        plot_NRI(ax,IDs,nodes.NodeData)
+        plot_NRI(ax,IDs,nodes.NodeData,nodes.Text)
 
     case  'Community Resilience'
         [IDs] = getNRI_IDs(nodes.NodeData.RESL_RATNG);
-        plot_NRI(ax,IDs,nodes.NodeData)
+        plot_NRI(ax,IDs,nodes.NodeData,nodes.Text)
 
     case 'Drought'
         [IDs] = getNRI_IDs(nodes.NodeData.DRGT_RISKR);
-        plot_NRI(ax,IDs,nodes.NodeData)
+        plot_NRI(ax,IDs,nodes.NodeData,nodes.Text)
 
     case 'Hurricane'
         [IDs] = getNRI_IDs(nodes.NodeData.HRCN_RISKR);
-        plot_NRI(ax,IDs,nodes.NodeData)
+        plot_NRI(ax,IDs,nodes.NodeData,nodes.Text)
 
     case 'Riverine Flooding'
         [IDs] = getNRI_IDs(nodes.NodeData.RFLD_RISKR);
-        plot_NRI(ax,IDs,nodes.NodeData)
+        plot_NRI(ax,IDs,nodes.NodeData,nodes.Text)
 
     case 'Strong Wind'
         [IDs] = getNRI_IDs(nodes.NodeData.SWND_RISKR);
-        plot_NRI(ax,IDs,nodes.NodeData)
+        plot_NRI(ax,IDs,nodes.NodeData,nodes.Text)
 
     case 'Wildfire'
         [IDs] = getNRI_IDs(nodes.NodeData.WFIR_RISKR);
-        plot_NRI(ax,IDs,nodes.NodeData)
+        plot_NRI(ax,IDs,nodes.NodeData,nodes.Text)
 
     case 'Power Sector Carbon Intensity [lbs CO2_e / MWh]'
         [IDs] = geteGRID_IDs(nodes.NodeData.lbspMWh_2020);
@@ -84,21 +84,21 @@ switch string(nodes.Text)
 end
 
 
-    function [] = plot_NRI(ax,IDs,data,nodes)
+    function [] = plot_NRI(ax,IDs,data,TagText)
         % "Very Low"
-        geoplot(ax, data(IDs(:,1), :),'Tag', nodes.Text,...
+        geoplot(ax, data(IDs(:,1), :),'Tag', TagText,...
             'displayname',"Very Low", FaceColor = '#DAF7A6');
         % "Relatively Low"
-        geoplot(ax, data(IDs(:,2), :),'Tag', nodes.Text,...
+        geoplot(ax, data(IDs(:,2), :),'Tag', TagText,...
             'displayname',"Relatively Low", FaceColor = '#FFC300');
         % "Relatively Moderate"
-        geoplot(ax, data(IDs(:,3), :),'Tag', nodes.Text,...
+        geoplot(ax, data(IDs(:,3), :),'Tag', TagText,...
             'displayname',"Relatively Moderate", FaceColor = '#FF5733');
         % "Relatively High"
-        geoplot(ax, data(IDs(:,4), :),'Tag', nodes.Text,...
+        geoplot(ax, data(IDs(:,4), :),'Tag', TagText,...
             'displayname',"Relatively High", FaceColor = '#C70039');
         % "Very High"
-        geoplot(ax, data(IDs(:,5), :),'Tag', nodes.Text,...
+        geoplot(ax, data(IDs(:,5), :),'Tag', TagText,...
             'displayname',"Very High", FaceColor = '#900C3F');
         % "Empty"
         %  geoplot(ax, nodes.NodeData(IDs(:,6), :), FaceColor = '#E8E8E8');

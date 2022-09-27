@@ -437,7 +437,7 @@ classdef MapApp < matlab.apps.AppBase
                         % the risk levels are in the third column of NodeData
                         state_ids_NH = strcmp(table2array(nathaz_data_struct.Children(nathaz_data_struct_idx).NodeData(:,3)),nathaz_level.Value);
                         % the state abbreviations are in the second column of NodeData
-                        states_2_plot_NH = nathaz_data_struct.Children(nathaz_data_struct_idx).NodeData(state_ids_NH,2);
+                        states_2_plot_NH = table2array(nathaz_data_struct.Children(nathaz_data_struct_idx).NodeData(state_ids_NH,2));
                     end
 
                     if pop_TF.Value
@@ -456,15 +456,16 @@ classdef MapApp < matlab.apps.AppBase
                             state_ids_pop = pop_data_struct.NodeData.POPULATION<pop_num.Value*1e6; % user entry is in millions => multiply by 1e6
                         end
                         % the state abbreviations are in the second column of NodeData
-                        states_2_plot_pop = pop_data_struct.NodeData(state_ids_pop,2);
+                        states_2_plot_pop = table2array(pop_data_struct.NodeData(state_ids_pop,2));
                     end
 
                     if em_TF.Value
                         em_num_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'em_num'));
-                        em_num = app.MiddlePanel.Children.Children(em_num_idx);
+                        em_num = app.MiddlePanel.Children.Children(em_num_idx); 
                     end
 
                     states_2_plot = unique([states_2_plot_NH;states_2_plot_pop]);
+
 
 
                     objs = get(ax, 'Children');
@@ -477,7 +478,7 @@ classdef MapApp < matlab.apps.AppBase
                             if (nathaz_TF.Value || pop_TF.Value) && ~em_TF.Value
                                 pointLayer(ax, cn(ii_point_srcs),states_2_plot)
                             else
-                                pointLayer(ax, cn(ii_point_srcs),states_2_plot,em_num.Value)
+                                pointLayer(ax, cn(ii_point_srcs),states_2_plot,em_num.Value*1e6)  % user entry is in Mega metric tons => multiply by 1e6, data is in metric tons
                             end
                         end
                     end
@@ -523,7 +524,7 @@ classdef MapApp < matlab.apps.AppBase
 
                                 % plot if the node has polygon geometry
                             elseif strcmp(nodes(mm).NodeData.Shape.Geometry, "polygon")
-                                polyLayer(ax, nodes(mm), event)
+                                polyLayer(ax, nodes(mm))
 
                                 % plot lines
                             else
