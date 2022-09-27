@@ -162,6 +162,7 @@ classdef MapApp < matlab.apps.AppBase
             steelplnt = readtable("EPA_flight_GHG_ironsteel.xls");
             steelplnt_GT = table2geotable(steelplnt);
             app.Node1_4.NodeData = steelplnt_GT;
+            % iron and steel plants cannot be filtered yet
 
             % Node 2 Parent
             app.Node2 = uitreenode(app.Tree);
