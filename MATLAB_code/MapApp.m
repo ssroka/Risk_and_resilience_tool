@@ -462,25 +462,25 @@ classdef MapApp < matlab.apps.AppBase
 
                     if em_TF.Value
                         em_num_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'em_num'));
-                        em_num = app.MiddlePanel.Children.Children(em_num_idx); 
+                        em_num = app.MiddlePanel.Children.Children(em_num_idx);
                     else
                         em_num.Value = NaN;
                     end
 
                     if ~isempty(states_2_plot_NH) && ~isempty(states_2_plot_pop)
-                       states_2_plot = states_2_plot_NH(ismember(states_2_plot_NH,states_2_plot_pop));
+                        states_2_plot = states_2_plot_NH(ismember(states_2_plot_NH,states_2_plot_pop));
                     else
                         states_2_plot = unique([states_2_plot_NH;states_2_plot_pop]);
                     end
 
 
 
-                    objs = get(ax, 'Children');
+                    pt_srcs = findobj(ax,'Type','Point');%get(ax, 'Children');
                     if nathaz_TF.Value || pop_TF.Value || em_TF.Value || dist_TF.Value
-                        % delete layer
-                        id_2_del = ismember({objs.Tag}, {cn.Text});
-                        delete(objs(id_2_del))
-                        for ii_point_srcs = 1:length(cn)
+                        for ii_point_srcs = 1:length(pt_srcs)
+                            % delete layer
+                            id_2_del = ismember({objs.Tag}, {cn.Text});
+                            delete(objs(id_2_del))
                             % re-plot only filtered points
                             if (nathaz_TF.Value || pop_TF.Value) && ~em_TF.Value &&  ~dist_TF.Value
                                 pointLayer(ax, cn(ii_point_srcs),states_2_plot)
