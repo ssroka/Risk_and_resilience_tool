@@ -32,7 +32,7 @@ switch string(nodes.Text)
     case "Power Plants"
 
         if  filter_flag% if there was a filter
-            MEC = '#FFC300';
+            MEC = '#000000';
         else
             MEC = '#FF513D';
         end
@@ -43,7 +43,7 @@ switch string(nodes.Text)
     case "Cement Plants"
 
         if filter_flag
-            MEC = '#FFC300';
+            MEC = '#000000';
         else
             MEC = '#3D6AFF';
         end
@@ -55,7 +55,7 @@ switch string(nodes.Text)
     case "Ethanol Plants"
 
         if filter_flag
-            MEC ='#FFC300';
+            MEC ='#000000';
         else
             MEC ='#FFD23F';
         end
@@ -66,7 +66,7 @@ switch string(nodes.Text)
     case "Iron and Steel Plants"
 
         if filter_flag
-            MEC = '#FFC300';
+            MEC = '#000000';
         else
             MEC = '#00A300';
         end

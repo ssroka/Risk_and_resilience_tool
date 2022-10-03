@@ -403,7 +403,15 @@ classdef MapApp < matlab.apps.AppBase
             % according to new data
             function updateMap(src, event, app, ax)
                 cn = app.LeftPanel.Children(1).CheckedNodes;
-                if ~isempty(cn)
+                pt_srcs = []; % initialize point source layers
+                all_layers = get(ax,'Children'); % all plotted data layers
+                for ii_data_layers = 1:length(all_layers) % loop thorugh all layers and see which are point layers
+                    if strcmp(class(all_layers(ii_data_layers)),'map.graphics.chart.primitive.Point')
+                        pt_srcs = [pt_srcs;all_layers(ii_data_layers)];
+                    end
+                end
+
+                if ~isempty(pt_srcs) % don't filter pointlessly
 
                     % find the index of the child with the corresponding button
                     dist_TF_idx = find(strcmp({app.MiddlePanel.Children.Children(:).Tag}, 'dist_TF'));
@@ -475,20 +483,19 @@ classdef MapApp < matlab.apps.AppBase
 
 
 
-                    pt_srcs = findobj(ax,'Type','Point');%get(ax, 'Children');
                     if nathaz_TF.Value || pop_TF.Value || em_TF.Value || dist_TF.Value
                         for ii_point_srcs = 1:length(pt_srcs)
                             % delete layer
-                            id_2_del = ismember({objs.Tag}, {cn.Text});
-                            delete(objs(id_2_del))
+                            cn_idx = find(ismember({cn.Text},pt_srcs(ii_point_srcs).Tag));
+                            delete(pt_srcs(ii_point_srcs))
                             % re-plot only filtered points
                             if (nathaz_TF.Value || pop_TF.Value) && ~em_TF.Value &&  ~dist_TF.Value
-                                pointLayer(ax, cn(ii_point_srcs),states_2_plot)
+                                pointLayer(ax, cn(cn_idx),states_2_plot)
                             elseif em_TF.Value  &&  ~dist_TF.Value
-                                pointLayer(ax, cn(ii_point_srcs),states_2_plot,em_num.Value*1e6)  % user entry is in Mega metric tons => multiply by 1e6, data is in metric tons
+                                pointLayer(ax, cn(cn_idx),states_2_plot,em_num.Value*1e6)  % user entry is in Mega metric tons => multiply by 1e6, data is in metric tons
                             else
                                 inject_lat_lon = [app.LeftPanel.Children.Children(2).Children(2).NodeData.Latitude app.LeftPanel.Children.Children(2).Children(2).NodeData.Longitude];
-                                pointLayer(ax, cn(ii_point_srcs),states_2_plot,em_num.Value*1e6,dist_num.Value,inject_lat_lon)  % user entry is in Mega metric tons => multiply by 1e6, data is in metric tons
+                                pointLayer(ax, cn(cn_idx),states_2_plot,em_num.Value*1e6,dist_num.Value,inject_lat_lon)  % user entry is in Mega metric tons => multiply by 1e6, data is in metric tons
                             end
                         end
                     end
