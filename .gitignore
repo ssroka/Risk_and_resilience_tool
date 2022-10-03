@@ -9,6 +9,7 @@
 *.asv
 *.mlx
 *.txt
+!README*.txt
 *.shp
 *.cpg
 *.dbf
