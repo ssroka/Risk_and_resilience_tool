@@ -185,8 +185,8 @@ classdef MapApp < matlab.apps.AppBase
 
             % IN DEVELOPMENT
             app.Node2_3 = uitreenode(app.Node2);
-            app.Node2_3.Text = 'Sequestration Resevouir';
-            app.Node2_3.Tag = 'Sequestration Resevouir';
+            app.Node2_3.Text = 'Sequestration Reservouir';
+            app.Node2_3.Tag = 'Sequestration Reservouir';
             basinTable = basinData;
             app.Node2_3.NodeData = basinTable;
 
@@ -354,7 +354,7 @@ classdef MapApp < matlab.apps.AppBase
             lbl_3_1.Layout.Column = 3;
 
             lbl_3_2 = uilabel(gl);
-            lbl_3_2.Text = 'MT CO2e';
+            lbl_3_2.Text = 'MT CO2e/year';
             lbl_3_2.FontSize = 18;
             lbl_3_2.Layout.Row = 3;
             lbl_3_2.Layout.Column = [6 7];
