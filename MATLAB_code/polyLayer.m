@@ -2,7 +2,7 @@ function polyLayer(ax, nodes)
 
 
 switch string(nodes.Text)
-    case 'Sequestration Resevouir'
+    case 'Sequestration Reservouir'
         geoplot(ax, nodes.NodeData,...
             'Tag', nodes.Text,'displayname','Sequestration Reservoir',...
             FaceColor = '#25BE8B');
