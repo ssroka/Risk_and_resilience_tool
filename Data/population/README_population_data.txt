@@ -16,3 +16,7 @@ total_population_place.csv -> variables: geoid, place, population
 NationalProjections_ProjectedTotalPopulation_2020-2040_Updated12-2018.xls
 Source: https://demographics.coopercenter.org/national-population-projections/
 Org: University of Virginia Weldon Cooper Center for Public Service
+
+"USCensus_small_states.zip"
+Source: https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html
+Org: US Census Bureau 
