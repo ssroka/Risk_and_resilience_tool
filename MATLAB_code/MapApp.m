@@ -88,9 +88,9 @@ classdef MapApp < matlab.apps.AppBase
             % Create GeoAxes
             gx = geoaxes(app.RightPanel, 'Basemap', 'darkwater', 'NextPlot', 'add');
             gx.Title.FontName = 'Helvetica';
-            gx.Title.String = 'Map'; % display label, come up with better name
+            gx.Title.String = 'CARBON Tool'; % display label, come up with better name
             gx.Title.FontSize = 18;
-            gx.Subtitle.String = sprintf('An interactive, user friendly map to display relevant power sector data\n and support better business decisions regarding CCS and resiliency retrofitting');
+            gx.Subtitle.String = sprintf('An interactive map to support better business decisions regarding CCS and resiliency retrofitting');
             gx.Subtitle.FontName = 'Helvetica';
             gx.Subtitle.FontSize = 16;
             gx.Subtitle.FontAngle = 'italic';
