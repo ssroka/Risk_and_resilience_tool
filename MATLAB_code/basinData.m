@@ -1,3 +1,15 @@
+%{
+CARBON Tool
+
+This is an auxiliary file that loads in CO2 sink data
+
+Author: Abigail Idiculla
+Project Supervisor: Sydney Sroka
+MIT Climate and Sustainability Consortium
+
+%}
+% -------------------------------------------------------------------------
+
 function [basinTable] = basinData()
 
 % This function reads in shape files of saline basins and outputs a

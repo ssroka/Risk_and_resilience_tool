@@ -1,3 +1,15 @@
+%{
+CARBON Tool
+
+This is the main file for an app that creates an interactive, user-friendly
+map to support business decisions regarding CCS and resiliency retrofitting
+
+Author: Abigail Idiculla
+Project Supervisor: Sydney Sroka
+MIT Climate and Sustainability Consortium
+
+%}
+% -------------------------------------------------------------------------
 classdef MapApp < matlab.apps.AppBase
     % MapApp This is the base class of an App which contains methods needed by Apps.
 
@@ -110,7 +122,7 @@ classdef MapApp < matlab.apps.AppBase
             % Create BottomPanel
             app.BottomPanel = uipanel(app.GridLayout);
             app.BottomPanel.FontName = 'Helvetica';
-            app.BottomPanel.Title = 'Calculator';
+            app.BottomPanel.Title = '';
             app.BottomPanel.Layout.Row = [6 7];
             app.BottomPanel.Layout.Column = [1 3];
             app.BottomPanel.Scrollable = 'on';

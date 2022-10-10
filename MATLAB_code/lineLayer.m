@@ -1,3 +1,15 @@
+%{
+CARBON Tool
+
+This is an auxiliary file to plot line data
+
+Author: Abigail Idiculla
+Project Supervisor: Sydney Sroka
+MIT Climate and Sustainability Consortium
+
+%}
+% -------------------------------------------------------------------------
+
 function lineLayer(ax, checkedNode, event)
 
 for t = 1:size(event.Source.CheckedNodes)

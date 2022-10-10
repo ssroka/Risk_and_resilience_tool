@@ -1,3 +1,14 @@
+%{
+CARBON Tool
+
+This is an auxiliary file that sets up file paths
+
+Author: Abigail Idiculla
+Project Supervisor: Sydney Sroka
+MIT Climate and Sustainability Consortium
+
+%}
+% -------------------------------------------------------------------------
 function add_rm_custom_paths(add_rm_string)
 
 custom_paths = {

@@ -1,3 +1,14 @@
+%{
+CARBON Tool
+
+This is an auxiliary file to plot polygon data
+
+Author: Abigail Idiculla
+Project Supervisor: Sydney Sroka
+MIT Climate and Sustainability Consortium
+
+%}
+% -------------------------------------------------------------------------
 function polyLayer(ax, nodes)
 
 
