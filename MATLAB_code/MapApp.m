@@ -417,8 +417,11 @@ classdef MapApp < matlab.apps.AppBase
                 cn = app.LeftPanel.Children(1).CheckedNodes;
                 pt_srcs = []; % initialize point source layers
                 all_layers = get(ax,'Children'); % all plotted data layers
+                all_pt_src_names = {app.LeftPanel.Children(1).Children(1).Children(:).Text};
                 for ii_data_layers = 1:length(all_layers) % loop thorugh all layers and see which are point layers
-                    if strcmp(class(all_layers(ii_data_layers)),'map.graphics.chart.primitive.Point')
+                    point_type_flag = strcmp(class(all_layers(ii_data_layers)),'map.graphics.chart.primitive.Point');
+                    point_source_flag = ismember(all_layers(ii_data_layers).Tag,all_pt_src_names);
+                    if point_type_flag && point_source_flag
                         pt_srcs = [pt_srcs;all_layers(ii_data_layers)];
                     end
                 end
