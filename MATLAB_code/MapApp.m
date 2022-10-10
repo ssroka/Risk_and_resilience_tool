@@ -207,49 +207,64 @@ classdef MapApp < matlab.apps.AppBase
             app.Node3 = uitreenode(app.Tree);
             app.Node3.Text = 'Natural Hazards';
 
-            % --------------State Level Data --------------
+            % State Level Risk Data 
             nri_shp = shaperead("NRI_Shapefile_States.shp",...
                 'Attributes', {'AREA','STATE', 'STATEABBRV',...
                 'POPULATION', 'AREA',...
                 });
 
             crs_info = shapeinfo("NRI_Shapefile_States.shp");
-
             crs = crs_info.CoordinateReferenceSystem;
             nri_GT = struct2geotable(nri_shp, CoordinateReferenceSystem = crs);
+
             nri_risk = readtable('NRI_STATE_A_WEIGHTED.csv','Delimiter', ',');
             nri_GT = [nri_GT nri_risk];
+
+            % ------------- New state shapefiles -------------
+            % replace state shapes with more compact shape files from the census
+            state_struct = shaperead('cb_2018_us_state_20m.shp','Attributes',{'STUSPS'});
+            crs_info = shapeinfo("cb_2018_us_state_20m.shp");
+            crs = crs_info.CoordinateReferenceSystem;
+            % this CRS is geographic so we need to ID the coords b/c they
+            % won't be recognized as geographic otherwise
+            state_GT = struct2geotable(state_struct,'geographic',["Y" "X"],CoordinateReferenceSystem = crs); 
+            nri_state_order = zeros(size(nri_GT,1),1);
+            for ii_state = 1:size(nri_GT,1) % replace state shape files with smaller ones from the US Census
+                nri_state_order(ii_state) = find(ismember(state_GT.STUSPS,nri_GT.STATEABBRV(ii_state)));
+            end
+            % ------------------------------------------------
+
             app.Node3.NodeData = nri_GT;
 
             % Node 3 Children
             app.Node3_4 = uitreenode(app.Node3);
             app.Node3_4.Text = 'Drought';
             app.Node3_4.Tag = 'Drought';
-            app.Node3_4.NodeData =  nri_GT(:, ["Shape",'STATEABBRV',"DRGT_RISKR"]);
+            app.Node3_4.NodeData =  [state_GT(nri_state_order,"Shape") nri_GT(:, ['STATEABBRV',"DRGT_RISKR"])];
 
 
             app.Node3_8 = uitreenode(app.Node3);
             app.Node3_8.Text = 'Hurricane';
             app.Node3_8.Tag = 'Hurricane';
-            app.Node3_8.NodeData =   nri_GT(:, ["Shape",'STATEABBRV',"HRCN_RISKR"]);
+            app.Node3_8.NodeData =   [state_GT(nri_state_order,"Shape") nri_GT(:, ['STATEABBRV',"HRCN_RISKR"])];
 
 
             app.Node3_12 = uitreenode(app.Node3);
             app.Node3_12.Text = 'Riverine Flooding';
             app.Node3_12.Tag = 'Riverine Flooding';
-            app.Node3_12.NodeData =  nri_GT(:, ["Shape",'STATEABBRV',"RFLD_RISKR"]);
+            app.Node3_12.NodeData =  [state_GT(nri_state_order,"Shape") nri_GT(:, ['STATEABBRV',"RFLD_RISKR"])];
 
 
             app.Node3_13 = uitreenode(app.Node3);
             app.Node3_13.Text = 'Strong Wind';
             app.Node3_13.Tag = 'Strong Wind';
-            app.Node3_13.NodeData =   nri_GT(:, ["Shape",'STATEABBRV',"SWND_RISKR"]);
+            app.Node3_13.NodeData =  [state_GT(nri_state_order,"Shape") nri_GT(:, ['STATEABBRV',"SWND_RISKR"])];
 
 
             app.Node3_17 = uitreenode(app.Node3);
             app.Node3_17.Text = 'Wildfire';
             app.Node3_17.Tag = 'Wildfire';
-            app.Node3_17.NodeData =   nri_GT(:, ["Shape",'STATEABBRV',"WFIR_RISKR"]);
+            app.Node3_17.NodeData = [state_GT(nri_state_order,"Shape")  nri_GT(:, ['STATEABBRV',"WFIR_RISKR"])];
 
             % Node 4 parent
             app.Node4 = uitreenode(app.Tree);
@@ -270,20 +285,20 @@ classdef MapApp < matlab.apps.AppBase
             % Node 5 parent
             app.Node5 = uitreenode(app.Tree);
             app.Node5.Text = 'Social Vulnerability';
-            sovi_GT = nri_GT(:,{'Shape','STATEABBRV','SOVI_RATNG'});
+            sovi_GT = [state_GT(nri_state_order,"Shape") nri_GT(:,{'STATEABBRV','SOVI_RATNG'})];
             app.Node5.NodeData = sovi_GT;
 
             % Node 6 parent
             app.Node6 = uitreenode(app.Tree);
             app.Node6.Text = 'Community Resilience';
-            resl_GT = nri_GT(:,{'Shape','STATEABBRV','RESL_RATNG'});
+            resl_GT = [state_GT(nri_state_order,"Shape") nri_GT(:,{'STATEABBRV','RESL_RATNG'})];
             app.Node6.NodeData = resl_GT;
 
             % Node 8 Parent
             app.Node8 = uitreenode(app.Tree);
             app.Node8.Text = 'Population';
             app.Node8.Tag = 'Population';
-            app.Node8.NodeData = nri_GT(:, ["Shape",'STATEABBRV',"POPULATION"]);
+            app.Node8.NodeData = [state_GT(nri_state_order,"Shape") nri_GT(:, ['STATEABBRV',"POPULATION"])];
 
             % Middle panel grid
             gl = uigridlayout(app.MiddlePanel, [6 7]);

@@ -16,7 +16,8 @@ custom_paths = {
 
     ['.' filesep 'Data' filesep 'point_sources' filesep ],
     ['.' filesep 'Data' filesep 'point_sources' filesep 'PowerPlants_US_EIA' filesep ],
-    
+    ['.' filesep 'Data' filesep 'USCensus_small_states' filesep ],
+
     ['.' filesep 'Data' filesep 'population' filesep ],
     ['.' filesep 'Data' filesep 'population' filesep 'ACSDT5Y2020.B01003_2022-07-22T175938' filesep ],
     ['.' filesep 'Data' filesep 'population' filesep 'cb_2021_us_cbsa_20m' filesep ],
