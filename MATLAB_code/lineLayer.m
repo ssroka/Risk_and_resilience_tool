@@ -20,7 +20,7 @@ for t = 1:size(event.Source.CheckedNodes)
             case "Pipelines"
                 geoplot(ax, checkedNode.NodeData, 'linewidth', 2,...
                     'Tag', checkedNode.Text,'displayname','Pipelines',...
-                    Color = '#0EAD69');
+                    Color = '#0f0e0d');
         end
 
     end
