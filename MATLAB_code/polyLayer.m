@@ -110,7 +110,7 @@ end
             'displayname',sprintf('Relatively High %s',TagText), FaceColor = '#C70039');
         % "Very High"
         geoplot(ax, data(IDs(:,5), :),'Tag', TagText,...
-            'displayname',sprintf('Very High %s',TagText), FaceColor = '#900C3F');
+            'displayname',sprintf('Very High %s',TagText), FaceColor = '#702963');
         % "Empty"
         %  geoplot(ax, nodes.NodeData(IDs(:,6), :), FaceColor = '#E8E8E8');
 

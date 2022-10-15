@@ -11,3 +11,7 @@ Org: US Department of Transportation
 "HGL_Pipelines_US_EIA.zip"
 Source: https://www.eia.gov/maps/layer_info-m.php
 Org: EIA
+
+
+CO2 pipelines
+https://www.energy.gov/sites/prod/files/2015/04/f22/QER%20Analysis%20-%20A%20Review%20of%20the%20CO2%20Pipeline%20Infrastructure%20in%20the%20U.S_0.pdf

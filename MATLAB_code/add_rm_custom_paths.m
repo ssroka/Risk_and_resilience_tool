@@ -36,6 +36,7 @@ custom_paths = {
     ['.' filesep 'Data' filesep 'member_facilities' filesep ],
     
     ['.' filesep 'Data' filesep 'grid_greeness' filesep ],
+    ['.' filesep 'Data' filesep 'grid_greeness' filesep 'ISO'],
     
     ['.' filesep 'Data' filesep 'environmental_social_risks' filesep ],
     ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'NRI_Shapefile_States' filesep ],

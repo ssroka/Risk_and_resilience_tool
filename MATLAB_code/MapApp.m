@@ -269,6 +269,11 @@ classdef MapApp < matlab.apps.AppBase
             % Node 4 parent
             app.Node4 = uitreenode(app.Tree);
             app.Node4.Text = 'Power Sector Carbon Intensity [lbs CO2_e / MWh]';
+
+            g = shaperead('Independent_System_Operators.shp');
+            crs_info = shapeinfo('Independent_System_Operators.shp');
+            g_GT = struct2geotable(g,'CoordinateReferenceSystem',crs_info.CoordinateReferenceSystem);
+
             eGRID_GT = readgeotable("eGRID2020_subregions.shp");
             eGRID_CO2e = readtable("eGRID_CarbonIntensity_EPA.xlsx",...
                 'sheet',"SRCO2EQA",...
@@ -578,7 +583,7 @@ classdef MapApp < matlab.apps.AppBase
                                 lineLayer(ax, nodes(mm), event)
 
                             end
-                            legend(ax,'-dynamiclegend','Fontsize',18)
+                            legend(ax,'-dynamiclegend','Fontsize',24)
 
                         end
 
