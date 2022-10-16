@@ -28,6 +28,8 @@ classdef MapApp < matlab.apps.AppBase
         Node1_4      matlab.ui.container.TreeNode
         Node2     matlab.ui.container.TreeNode
         Node2_1     matlab.ui.container.TreeNode
+        Node2_1_1     matlab.ui.container.TreeNode
+        Node2_1_2     matlab.ui.container.TreeNode
         Node2_2     matlab.ui.container.TreeNode
         Node2_3     matlab.ui.container.TreeNode
         Node3     matlab.ui.container.TreeNode
@@ -185,9 +187,27 @@ classdef MapApp < matlab.apps.AppBase
             % Node 2 children
             app.Node2_1 = uitreenode(app.Node2);
             app.Node2_1.Text = 'Pipelines';
-            app.Node2_1.Tag = 'Pipelines';
-            pplns_GT = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
-            app.Node2_1.NodeData = pplns_GT;
+            %app.Node2_1.Tag = 'Pipelines';
+            %fractracker pipelines ignore for now
+            %pplns_GT = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
+            %app.Node2_1.NodeData = pplns_GT;
+
+            app.Node2_1_1 = uitreenode(app.Node2_1);
+            app.Node2_1_1.Text = 'Operational Pipelines';
+            app.Node2_1_1.Tag = 'Operational';
+            operational_T = shaperead("operational_pipelines.shp");
+            operational_GT = struct2geotable(operational_T,'geographic',["Y" "X"], CoordinateReferenceSystem=geocrs(4269)); %NAD83
+            % see link for CRS https://epsg.org/search/by-name?sessionkey=qi7z76madw&searchedTerms=nad83
+            app.Node2_1_1.NodeData = operational_GT;
+
+            app.Node2_1_2 = uitreenode(app.Node2_1);
+            app.Node2_1_2.Text = 'Planned Pipelines';
+            app.Node2_1_2.Tag = 'Planned';
+            planned_T = shaperead("planned_pipelines.shp");
+            planned_GT = struct2geotable(planned_T,'geographic',["Y" "X"], CoordinateReferenceSystem=geocrs(4269)); %NAD83
+            % see link for CRS https://epsg.org/search/by-name?sessionkey=qi7z76madw&searchedTerms=nad83
+            app.Node2_1_2.NodeData = planned_GT;
+            
 
             % IN DEVELOPMENT
             app.Node2_2 = uitreenode(app.Node2);
@@ -209,7 +229,7 @@ classdef MapApp < matlab.apps.AppBase
             app.Node3 = uitreenode(app.Tree);
             app.Node3.Text = 'Natural Hazards';
 
-            % State Level Risk Data
+            % State Level Risk Data 
             nri_shp = shaperead("NRI_Shapefile_States.shp",...
                 'Attributes', {'AREA','STATE', 'STATEABBRV',...
                 'POPULATION', 'AREA',...
@@ -229,7 +249,7 @@ classdef MapApp < matlab.apps.AppBase
             crs = crs_info.CoordinateReferenceSystem;
             % this CRS is geographic so we need to ID the coords b/c they
             % won't be recognized as geographic otherwise
-            state_GT = struct2geotable(state_struct,'geographic',["Y" "X"],CoordinateReferenceSystem = crs);
+            state_GT = struct2geotable(state_struct,'geographic',["Y" "X"],CoordinateReferenceSystem = crs); 
             nri_state_order = zeros(size(nri_GT,1),1);
             for ii_state = 1:size(nri_GT,1) % replace state shape files with smaller ones from the US Census
                 nri_state_order(ii_state) = find(ismember(state_GT.STUSPS,nri_GT.STATEABBRV(ii_state)));
@@ -596,7 +616,7 @@ classdef MapApp < matlab.apps.AppBase
                                 lineLayer(ax, nodes(mm), event)
 
                             end
-                            legend(ax,'-dynamiclegend','Fontsize',24)
+                            legend(ax,'-dynamiclegend','Fontsize',18)
 
                         end
 
