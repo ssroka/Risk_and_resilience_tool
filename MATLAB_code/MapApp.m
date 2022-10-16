@@ -37,6 +37,8 @@ classdef MapApp < matlab.apps.AppBase
         Node3_13     matlab.ui.container.TreeNode
         Node3_17     matlab.ui.container.TreeNode
         Node4     matlab.ui.container.TreeNode
+        Node4_1     matlab.ui.container.TreeNode
+        Node4_2     matlab.ui.container.TreeNode
         Node5      matlab.ui.container.TreeNode
         Node6     matlab.ui.container.TreeNode
         Node8     matlab.ui.container.TreeNode
@@ -268,7 +270,7 @@ classdef MapApp < matlab.apps.AppBase
 
             % Node 4 parent
             app.Node4 = uitreenode(app.Tree);
-            app.Node4.Text = 'Power Sector Carbon Intensity [lbs CO2_e / MWh]';
+            app.Node4.Text = 'Grid Carbon Intensity [lbs CO2/ MWh]';
             [nerc_GT] = getGridData();
 
             %             eGRID_GT = readgeotable("eGRID2020_subregions.shp");
@@ -284,8 +286,19 @@ classdef MapApp < matlab.apps.AppBase
             %             eGRID_GT =  [eGRID_GT eGRID_CO2e eGRID_lbs_MWh];
             %             app.Node4.NodeData = eGRID_GT;
 
-            app.Node4.NodeData = nerc_GT(:,{'Shape','CI_2021'});
+            app.Node4.NodeData = nerc_GT;
             % app.Node4.NodeData = nerc_GT(:,{'Shape','CI_2050'});
+
+            app.Node4_1 = uitreenode(app.Node4);
+            app.Node4_1.Text = '2021';
+            app.Node4_1.Tag = '2021';
+            app.Node4_1.NodeData = nerc_GT(:,{'Shape','CI_2021'});
+
+            app.Node4_2 = uitreenode(app.Node4);
+            app.Node4_2.Text = '2050 projection';
+            app.Node4_2.Tag = '2021 projection';
+            app.Node4_2.NodeData = nerc_GT(:,{'Shape','CI_2050'});
+
 
             % Node 5 parent
             app.Node5 = uitreenode(app.Tree);
