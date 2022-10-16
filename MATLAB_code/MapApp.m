@@ -207,7 +207,7 @@ classdef MapApp < matlab.apps.AppBase
             app.Node3 = uitreenode(app.Tree);
             app.Node3.Text = 'Natural Hazards';
 
-            % State Level Risk Data 
+            % State Level Risk Data
             nri_shp = shaperead("NRI_Shapefile_States.shp",...
                 'Attributes', {'AREA','STATE', 'STATEABBRV',...
                 'POPULATION', 'AREA',...
@@ -227,7 +227,7 @@ classdef MapApp < matlab.apps.AppBase
             crs = crs_info.CoordinateReferenceSystem;
             % this CRS is geographic so we need to ID the coords b/c they
             % won't be recognized as geographic otherwise
-            state_GT = struct2geotable(state_struct,'geographic',["Y" "X"],CoordinateReferenceSystem = crs); 
+            state_GT = struct2geotable(state_struct,'geographic',["Y" "X"],CoordinateReferenceSystem = crs);
             nri_state_order = zeros(size(nri_GT,1),1);
             for ii_state = 1:size(nri_GT,1) % replace state shape files with smaller ones from the US Census
                 nri_state_order(ii_state) = find(ismember(state_GT.STUSPS,nri_GT.STATEABBRV(ii_state)));
@@ -269,23 +269,23 @@ classdef MapApp < matlab.apps.AppBase
             % Node 4 parent
             app.Node4 = uitreenode(app.Tree);
             app.Node4.Text = 'Power Sector Carbon Intensity [lbs CO2_e / MWh]';
+            [nerc_GT] = getGridData();
 
-            g = shaperead('Independent_System_Operators.shp');
-            crs_info = shapeinfo('Independent_System_Operators.shp');
-            g_GT = struct2geotable(g,'CoordinateReferenceSystem',crs_info.CoordinateReferenceSystem);
+            %             eGRID_GT = readgeotable("eGRID2020_subregions.shp");
+            %             eGRID_CO2e = readtable("eGRID_CarbonIntensity_EPA.xlsx",...
+            %                 'sheet',"SRCO2EQA",...
+            %                 'range','B1:J28',...
+            %                 'ReadVariableNames',true);
+            %             eGRID_lbs_MWh = readtable("eGRID_CarbonIntensity_EPA.xlsx",...
+            %                 'sheet',"lbsperMWhr",...
+            %                 'range', 'B2:J29',...
+            %                 'ReadVariableNames',true);
+            %             % append CO2e and lbs/MWh to eGRID_GT
+            %             eGRID_GT =  [eGRID_GT eGRID_CO2e eGRID_lbs_MWh];
+            %             app.Node4.NodeData = eGRID_GT;
 
-            eGRID_GT = readgeotable("eGRID2020_subregions.shp");
-            eGRID_CO2e = readtable("eGRID_CarbonIntensity_EPA.xlsx",...
-                'sheet',"SRCO2EQA",...
-                'range','B1:J28',...
-                'ReadVariableNames',true);
-            eGRID_lbs_MWh = readtable("eGRID_CarbonIntensity_EPA.xlsx",...
-                'sheet',"lbsperMWhr",...
-                'range', 'B2:J29',...
-                'ReadVariableNames',true);
-            % append CO2e and lbs/MWh to eGRID_GT
-            eGRID_GT =  [eGRID_GT eGRID_CO2e eGRID_lbs_MWh];
-            app.Node4.NodeData = eGRID_GT;
+            app.Node4.NodeData = nerc_GT(:,{'Shape','CI_2021'});
+            % app.Node4.NodeData = nerc_GT(:,{'Shape','CI_2050'});
 
             % Node 5 parent
             app.Node5 = uitreenode(app.Tree);

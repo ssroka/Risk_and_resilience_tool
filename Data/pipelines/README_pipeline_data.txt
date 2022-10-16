@@ -18,3 +18,10 @@ CO2 pipelines
 "OHWVPA_potential_pipelines_data.zip"
 Source: https://app.box.com/s/i7w2tm3tlp4fqmoe3pzelyjx5gbjj2lk/folder/160335615910
 Org. Fractracker
+
+Pipelines as of 2015 NETL
+https://www.energy.gov/sites/prod/files/2015/04/f22/QER%20Analysis%20-%20A%20Review%20of%20the%20CO2%20Pipeline%20Infrastructure%20in%20the%20U.S_0.pdf
+
+https://www.kindermorgan.com/Operations/CO2/Index
+
+https://summitcarbonsolutions.com/project-footprint/
