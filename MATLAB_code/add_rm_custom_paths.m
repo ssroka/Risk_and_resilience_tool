@@ -32,12 +32,13 @@ custom_paths = {
     ['.' filesep 'Data' filesep 'pipelines' filesep 'NaturalGas_InterIntrastate_Pipelines_US_EIA' filesep ],
     ['.' filesep 'Data' filesep 'pipelines' filesep 'HGL_Pipelines_US_EIA' filesep ],
     ['.' filesep 'Data' filesep 'pipelines' filesep  'CrudeOil_Pipelines_US_EIA' filesep ],
+    ['.' filesep 'Data' filesep 'pipelines' filesep  'CO2_pipeline_data_DOE' filesep ],
     
     ['.' filesep 'Data' filesep 'member_facilities' filesep ],
     
     ['.' filesep 'Data' filesep 'grid_greeness' filesep ],
     ['.' filesep 'Data' filesep 'grid_greeness' filesep 'ISO'],
-    ['.' filesep 'Data' filesep 'grid_greeness' filesep 'NERC'],
+    ['.' filesep 'Data' filesep 'grid_greeness' filesep 'NERC_Regions'],
     
     ['.' filesep 'Data' filesep 'environmental_social_risks' filesep ],
     ['.' filesep 'Data' filesep 'environmental_social_risks' filesep 'NRI_Shapefile_States' filesep ],

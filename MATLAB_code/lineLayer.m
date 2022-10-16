@@ -14,13 +14,18 @@ function lineLayer(ax, checkedNode, event)
 
 for t = 1:size(event.Source.CheckedNodes)
 
-    if any(event.Source.CheckedNodes(t) == event.Source.Children(2).Children)
+    if any(event.Source.CheckedNodes(t) == event.Source.Children(2).Children(1).Children)
 
         switch string(event.Source.CheckedNodes(t).Text)
-            case "Pipelines"
-                geoplot(ax, checkedNode.NodeData, 'linewidth', 2,...
-                    'Tag', checkedNode.Text,'displayname','Pipelines',...
+            case "Operational Pipelines"
+                geoplot(ax, checkedNode.NodeData, 'linewidth', 2, 'linestyle', '-',...
+                    'Tag', checkedNode.Text,'displayname','Operational Pipelines',...
                     Color = '#0f0e0d');
+            case "Planned Pipelines"
+                geoplot(ax, checkedNode.NodeData, 'linewidth', 2, 'linestyle', ':',...
+                    'Tag', checkedNode.Text,'displayname','Planned Pipelines',...
+                    Color = '#0f0e0d');
+
         end
 
     end
