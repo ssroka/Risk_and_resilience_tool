@@ -12,11 +12,7 @@ MIT Climate and Sustainability Consortium
 
 function lineLayer(ax, checkedNode, event)
 
-for t = 1:size(event.Source.CheckedNodes)
-
-    if any(event.Source.CheckedNodes(t) == event.Source.Children(2).Children(1).Children)
-
-        switch string(event.Source.CheckedNodes(t).Text)
+        switch string(checkedNodes(t).Text)
             case "Operational Pipelines"
                 geoplot(ax, checkedNode.NodeData, 'linewidth', 2, 'linestyle', '-',...
                     'Tag', checkedNode.Text,'displayname','Operational Pipelines',...
@@ -29,9 +25,5 @@ for t = 1:size(event.Source.CheckedNodes)
 
         end
 
-    end
-
-
-end
 
 end
