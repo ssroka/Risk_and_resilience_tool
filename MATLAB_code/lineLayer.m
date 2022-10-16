@@ -12,7 +12,7 @@ MIT Climate and Sustainability Consortium
 
 function lineLayer(ax, checkedNode, event)
 
-        switch string(checkedNodes(t).Text)
+        switch string(checkedNodes.Text)
             case "Operational Pipelines"
                 geoplot(ax, checkedNode.NodeData, 'linewidth', 2, 'linestyle', '-',...
                     'Tag', checkedNode.Text,'displayname','Operational Pipelines',...
