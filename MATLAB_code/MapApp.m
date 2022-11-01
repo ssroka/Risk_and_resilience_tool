@@ -209,7 +209,6 @@ classdef MapApp < matlab.apps.AppBase
             app.Node2_1_2.NodeData = planned_GT;
             
 
-            % IN DEVELOPMENT
             app.Node2_2 = uitreenode(app.Node2);
             app.Node2_2.Text = 'Injection Sites';
             app.Node2_2.Tag = 'Injection Sites';
@@ -217,7 +216,6 @@ classdef MapApp < matlab.apps.AppBase
             njctn_GT = table2geotable(njctn);
             app.Node2_2.NodeData = njctn_GT;
 
-            % IN DEVELOPMENT
             app.Node2_3 = uitreenode(app.Node2);
             app.Node2_3.Text = 'Sequestration Reservouir';
             app.Node2_3.Tag = 'Sequestration Reservouir';
@@ -293,21 +291,7 @@ classdef MapApp < matlab.apps.AppBase
             app.Node4.Text = 'Grid Carbon Intensity [lbs CO2/ MWh]';
             [nerc_GT] = getGridData();
 
-            %             eGRID_GT = readgeotable("eGRID2020_subregions.shp");
-            %             eGRID_CO2e = readtable("eGRID_CarbonIntensity_EPA.xlsx",...
-            %                 'sheet',"SRCO2EQA",...
-            %                 'range','B1:J28',...
-            %                 'ReadVariableNames',true);
-            %             eGRID_lbs_MWh = readtable("eGRID_CarbonIntensity_EPA.xlsx",...
-            %                 'sheet',"lbsperMWhr",...
-            %                 'range', 'B2:J29',...
-            %                 'ReadVariableNames',true);
-            %             % append CO2e and lbs/MWh to eGRID_GT
-            %             eGRID_GT =  [eGRID_GT eGRID_CO2e eGRID_lbs_MWh];
-            %             app.Node4.NodeData = eGRID_GT;
-
             app.Node4.NodeData = nerc_GT;
-            % app.Node4.NodeData = nerc_GT(:,{'Shape','CI_2050'});
 
             app.Node4_1 = uitreenode(app.Node4);
             app.Node4_1.Text = '2021';
@@ -315,7 +299,7 @@ classdef MapApp < matlab.apps.AppBase
             app.Node4_1.NodeData = nerc_GT(:,{'Shape','CI_2021'});
 
             app.Node4_2 = uitreenode(app.Node4);
-            app.Node4_2.Text = '2050 projection';
+            app.Node4_2.Text = '2050 projection'; 
             app.Node4_2.Tag = '2021 projection';
             app.Node4_2.NodeData = nerc_GT(:,{'Shape','CI_2050'});
 

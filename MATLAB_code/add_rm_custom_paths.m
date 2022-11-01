@@ -124,6 +124,8 @@ custom_paths = {
 
     ['.' filesep 'Data' filesep 'CCUS_infrastructure' filesep ],
     ['.' filesep 'Data' filesep 'CCUS_infrastructure' filesep 'National_carbon_capture_technology_data' filesep ],
+
+    ['.' filesep 'Data' filesep 'USCensus_small_counties']
         
     };
 
