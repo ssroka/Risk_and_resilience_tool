@@ -1,11 +1,4 @@
-
-% clear;close all;clc
-% cd('..')
-% addpath(['.' filesep 'MATLAB_code' filesep])
-% add_rm_custom_paths('add');
-% cd('MATLAB_code')
-function [nri_small_county_GT] = get_NRI_thin_counties()
-
+function [nri_cell_array] = get_NRI_thin_counties()
 
 % County Level Risk Data
 nri_county_struct = shaperead("NRI_Shapefile_Counties.shp",...
@@ -44,13 +37,9 @@ end
 % we're going to switch
 N_small = size(small_county_GT,1);
 
-% dummy_column = repmat(small_county_GT(1,["Shape","Geometry","BoundingBox","X","Y"]),N_NRI,1); % initialize
-% dummy_column.Properties.VariableNames = "NewShape";
-% % initialize the table with the NRI table
-% nri_small_county_GT = [nri_county_GT(:,["Shape","STATEABBRV"]) dummy_column];
 
-nri_small_county_GT = [cell2table(newShape_cell_array) nri_county_GT(:,["STATEABBRV","COUNTYFIPS"])];
-nri_small_county_GT.Properties.VariableNames{1} = 'Shape';
+% initialize final cell array with the nri shapefiles
+nri_cell_array = newShape_cell_array;
 % replace the NRI shape files wherever possible with the smaller shape files
 for i = 1:N_small
     % find all the places in the small counties table with the state of the ith entry of the  NRI table
@@ -61,8 +50,8 @@ for i = 1:N_small
     % county table
     indx_nri = find(state&county_number);
     if ~isempty(indx_nri)
-        nri_small_county_GT(indx_nri,1) = small_county_GT(i,["Shape"]);
+        nri_cell_array{indx_nri} = small_county_GT{i,1};
     end
 end
-
+disp('debugg')
 end

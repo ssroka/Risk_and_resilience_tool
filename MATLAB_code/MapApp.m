@@ -72,7 +72,7 @@ classdef MapApp < matlab.apps.AppBase
             % Create UIFigure
             app.UIFigure = uifigure;
             app.UIFigure.Name = 'Map';
-            app.UIFigure.WindowState = 'fullscreen';
+            app.UIFigure.WindowState = 'maximized';
 
 
             % Create GridLayout
@@ -227,6 +227,15 @@ classdef MapApp < matlab.apps.AppBase
             app.Node3 = uitreenode(app.Tree);
             app.Node3.Text = 'Natural Hazards';
 
+            
+            county_risk_struct = shaperead("NRI_Shapefile_Counties.shp");
+            county_risk_info = shapeinfo("NRI_Shapefile_Counties.shp");
+            county_risk__crs = county_risk_info.CoordinateReferenceSystem;
+            nri_county_GT = struct2geotable(county_risk_struct, CoordinateReferenceSystem = county_risk__crs);
+
+            Shape = get_NRI_thin_counties(); % cell array of thinned polygons for the counties
+            nri_county_risk_GT = [cell2table(Shape) nri_county_GT(:,["STATEABBRV","DRGT_RISKR","HRCN_RISKR","RFLD_RISKR","SWND_RISKR","WFIR_RISKR"])];
+
 %             % State Level Risk Data 
 %             nri_state_struct = shaperead("NRI_Shapefile_States.shp",...
 %                 'Attributes', {'AREA','STATE', 'STATEABBRV',...
@@ -255,37 +264,37 @@ classdef MapApp < matlab.apps.AppBase
 %             ------------------------------------------------
 
 
-           % app.Node3.NodeData = nri_GT;
+            app.Node3.NodeData = nri_county_GT;
 
-%             % Node 3 Children
-%             app.Node3_4 = uitreenode(app.Node3);
-%             app.Node3_4.Text = 'Drought';
-%             app.Node3_4.Tag = 'Drought';
-%             %app.Node3_4.NodeData =  [state_GT(nri_state_order,"Shape") nri_GT(:, ['STATEABBRV',"DRGT_RISKR"])];
-% 
-% 
-%             app.Node3_8 = uitreenode(app.Node3);
-%             app.Node3_8.Text = 'Hurricane';
-%             app.Node3_8.Tag = 'Hurricane';
-%             %app.Node3_8.NodeData =   [state_GT(nri_state_order,"Shape") nri_GT(:, ['STATEABBRV',"HRCN_RISKR"])];
-% 
-% 
-%             app.Node3_12 = uitreenode(app.Node3);
-%             app.Node3_12.Text = 'Riverine Flooding';
-%             app.Node3_12.Tag = 'Riverine Flooding';
-%             app.Node3_12.NodeData =  [state_GT(nri_state_order,"Shape") nri_GT(:, ['STATEABBRV',"RFLD_RISKR"])];
-% 
-% 
-%             app.Node3_13 = uitreenode(app.Node3);
-%             app.Node3_13.Text = 'Strong Wind';
-%             app.Node3_13.Tag = 'Strong Wind';
-%             app.Node3_13.NodeData =  [state_GT(nri_state_order,"Shape") nri_GT(:, ['STATEABBRV',"SWND_RISKR"])];
-% 
-% 
-%             app.Node3_17 = uitreenode(app.Node3);
-%             app.Node3_17.Text = 'Wildfire';
-%             app.Node3_17.Tag = 'Wildfire';
-%             app.Node3_17.NodeData = [state_GT(nri_state_order,"Shape")  nri_GT(:, ['STATEABBRV',"WFIR_RISKR"])];
+            % Node 3 Children
+            app.Node3_4 = uitreenode(app.Node3);
+            app.Node3_4.Text = 'Drought';
+            app.Node3_4.Tag = 'Drought';
+            app.Node3_4.NodeData =  nri_county_risk_GT(:, ['Shape','STATEABBRV',"DRGT_RISKR"]);
+
+
+            app.Node3_8 = uitreenode(app.Node3);
+            app.Node3_8.Text = 'Hurricane';
+            app.Node3_8.Tag = 'Hurricane';
+            app.Node3_8.NodeData =   nri_county_risk_GT(:, ['Shape','STATEABBRV',"HRCN_RISKR"]);
+
+
+            app.Node3_12 = uitreenode(app.Node3);
+            app.Node3_12.Text = 'Riverine Flooding';
+            app.Node3_12.Tag = 'Riverine Flooding';
+            app.Node3_12.NodeData =  nri_county_risk_GT(:, ['Shape','STATEABBRV',"RFLD_RISKR"]);
+
+
+            app.Node3_13 = uitreenode(app.Node3);
+            app.Node3_13.Text = 'Strong Wind';
+            app.Node3_13.Tag = 'Strong Wind';
+            app.Node3_13.NodeData =  nri_county_risk_GT(:, ['Shape','STATEABBRV',"SWND_RISKR"]);
+
+
+            app.Node3_17 = uitreenode(app.Node3);
+            app.Node3_17.Text = 'Wildfire';
+            app.Node3_17.Tag = 'Wildfire';
+            app.Node3_17.NodeData = nri_county_risk_GT(:, ['Shape','STATEABBRV',"WFIR_RISKR"]);
 
             % Node 4 parent
             app.Node4 = uitreenode(app.Tree);
