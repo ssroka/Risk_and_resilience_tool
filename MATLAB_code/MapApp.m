@@ -58,6 +58,8 @@ classdef MapApp < matlab.apps.AppBase
 
             % TURNING OFF POLYLINEZ UNSUPPORTED WARNING
             warning('off','map:shapefile:unsupportedType')
+            warning('off', 'map:shapefile:missingDBF')
+            warning('off', 'MATLAB:table:ModifiedAndSavedVarnames')
         end
 
     end
@@ -195,7 +197,7 @@ classdef MapApp < matlab.apps.AppBase
             app.Node2_1_1 = uitreenode(app.Node2_1);
             app.Node2_1_1.Text = 'Operational Pipelines';
             app.Node2_1_1.Tag = 'Operational Pipelines';
-            operational_T = shaperead("operational_pipelines.shp");
+            operational_T = shaperead('operational_pipelines.shp');
             operational_GT = struct2geotable(operational_T,'geographic',["Y" "X"], CoordinateReferenceSystem=geocrs(4269)); %NAD83
             % see link for CRS https://epsg.org/search/by-name?sessionkey=qi7z76madw&searchedTerms=nad83
             app.Node2_1_1.NodeData = operational_GT;
@@ -203,7 +205,7 @@ classdef MapApp < matlab.apps.AppBase
             app.Node2_1_2 = uitreenode(app.Node2_1);
             app.Node2_1_2.Text = 'Planned Pipelines';
             app.Node2_1_2.Tag = 'Planned Pipelines';
-            planned_T = shaperead("planned_pipelines.shp");
+            planned_T = shaperead('planned_pipelines.shp');
             planned_GT = struct2geotable(planned_T,'geographic',["Y" "X"], CoordinateReferenceSystem=geocrs(4269)); %NAD83
             % see link for CRS https://epsg.org/search/by-name?sessionkey=qi7z76madw&searchedTerms=nad83
             app.Node2_1_2.NodeData = planned_GT;
