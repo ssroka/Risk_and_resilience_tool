@@ -33,6 +33,7 @@ classdef MapApp < matlab.apps.AppBase
         Node2_2     matlab.ui.container.TreeNode
         Node2_3     matlab.ui.container.TreeNode
         Node3     matlab.ui.container.TreeNode
+        Node3_1     matlab.ui.container.TreeNode
         Node3_4     matlab.ui.container.TreeNode
         Node3_8     matlab.ui.container.TreeNode
         Node3_12     matlab.ui.container.TreeNode
@@ -236,7 +237,7 @@ classdef MapApp < matlab.apps.AppBase
             nri_county_GT = struct2geotable(county_risk_struct, CoordinateReferenceSystem = county_risk__crs);
 
             Shape = get_NRI_thin_counties(); % cell array of thinned polygons for the counties
-            nri_county_risk_GT = [cell2table(Shape) nri_county_GT(:,["STATEABBRV","DRGT_RISKR","HRCN_RISKR","RFLD_RISKR","SWND_RISKR","WFIR_RISKR"])];
+            nri_county_risk_GT = [cell2table(Shape) nri_county_GT(:,["STATEABBRV","DRGT_RISKR","HRCN_RISKR","RFLD_RISKR","SWND_RISKR","WFIR_RISKR", "ERQK_RISKR"])];
 
 %             % State Level Risk Data 
 %             nri_state_struct = shaperead("NRI_Shapefile_States.shp",...
@@ -269,6 +270,12 @@ classdef MapApp < matlab.apps.AppBase
             app.Node3.NodeData = nri_county_GT;
 
             % Node 3 Children
+
+            app.Node3_1 = uitreenode(app.Node3);
+            app.Node3_1.Text = 'Earthquake';
+            app.Node3_1.Tag = 'Earthquake';
+            app.Node3_1.NodeData =  nri_county_risk_GT(:, ['Shape','STATEABBRV',"ERQK_RISKR"]);
+  
             app.Node3_4 = uitreenode(app.Node3);
             app.Node3_4.Text = 'Drought';
             app.Node3_4.Tag = 'Drought';
@@ -316,21 +323,21 @@ classdef MapApp < matlab.apps.AppBase
             app.Node4_2.NodeData = nerc_GT(:,{'Shape','CI_2050'});
 
 
-%             % Node 5 parent
-%             app.Node5 = uitreenode(app.Tree);
-%             app.Node5.Text = 'Social Vulnerability';
+            % Node 5 parent
+            app.Node5 = uitreenode(app.Tree);
+            app.Node5.Text = 'Social Vulnerability';
 %             sovi_GT = [state_GT(nri_state_order,"Shape") nri_GT(:,{'STATEABBRV','SOVI_RATNG'})];
 %             app.Node5.NodeData = sovi_GT;
 % 
-%             % Node 6 parent
-%             app.Node6 = uitreenode(app.Tree);
-%             app.Node6.Text = 'Community Resilience';
+            % Node 6 parent
+            app.Node6 = uitreenode(app.Tree);
+            app.Node6.Text = 'Community Resilience';
 %             resl_GT = [state_GT(nri_state_order,"Shape") nri_GT(:,{'STATEABBRV','RESL_RATNG'})];
 %             app.Node6.NodeData = resl_GT;
 
-%             % Node 8 Parent
-%             app.Node8 = uitreenode(app.Tree);
-%             app.Node8.Text = 'Population';
+            % Node 8 Parent
+            app.Node8 = uitreenode(app.Tree);
+            app.Node8.Text = 'Population';
 %             app.Node8.Tag = 'Population';
 %             app.Node8.NodeData = [state_GT(nri_state_order,"Shape") nri_GT(:, ['STATEABBRV',"POPULATION"])];
 
@@ -378,7 +385,7 @@ classdef MapApp < matlab.apps.AppBase
             b_2.Layout.Row = 2;
             b_2.Layout.Column = [1 2];
 
-            dd_2_1 = uidropdown(gl, 'Items', {'None','Drought', 'Hurricane','Riverine Flooding', 'Strong Wind', 'Wildfire'},...
+            dd_2_1 = uidropdown(gl, 'Items', {'None','Earthquake', 'Drought', 'Hurricane','Riverine Flooding', 'Strong Wind', 'Wildfire'},...
                 'Editable','off', 'Placeholder', 'Enter risk');
             dd_2_1.FontSize = 14;
             dd_2_1.Tag = 'nathaz_type';

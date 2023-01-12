@@ -26,6 +26,10 @@ switch string(nodes.Text)
         [IDs] = getNRI_IDs(nodes.NodeData.RESL_RATNG);
         plot_NRI(ax,IDs,nodes.NodeData,nodes.Text)
 
+    case 'Earthquake'
+        [IDs] = getNRI_IDs(nodes.NodeData.ERQK_RISKR);
+        plot_NRI(ax,IDs,nodes.NodeData,nodes.Text)
+
     case 'Drought'
         [IDs] = getNRI_IDs(nodes.NodeData.DRGT_RISKR);
         plot_NRI(ax,IDs,nodes.NodeData,nodes.Text)
