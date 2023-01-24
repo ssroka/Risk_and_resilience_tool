@@ -315,6 +315,12 @@ classdef MapApp < matlab.apps.AppBase
             app.Node4_2.Tag = '2021 projection';
             app.Node4_2.NodeData = nerc_GT(:,{'Shape','CI_2050'});
 
+            % Node 5 parent
+            app.Node5 = uitreenode(app.Tree);
+            app.Node5.Text = 'NDVI';
+            [NDVI_GT] = getNDVIData();
+            app.Node5.NodeData = NDVI_GT;
+
 
 %             % Node 5 parent
 %             app.Node5 = uitreenode(app.Tree);
@@ -345,7 +351,7 @@ classdef MapApp < matlab.apps.AppBase
             b_1 = uibutton(gl,'state');
             b_1.FontName = 'Helvetica';
             b_1.FontSize = 14;
-            b_1.Text = sprintf('Distance from\nInjection Site','interpreter','Latex');
+            b_1.Text = sprintf('Distance to\nInjection','interpreter','Latex');
             b_1.Tag = 'dist_TF';
             b_1.Layout.Row = 1;
             b_1.Layout.Column = [1 2];
@@ -394,7 +400,7 @@ classdef MapApp < matlab.apps.AppBase
             % CO2 emissions
             b_3 =  uibutton(gl,'state');
             b_3.FontName = 'Helvetica';
-            b_3.FontSize = 18;
+            b_3.FontSize = 16;
             b_3.Text = sprintf('Emissions','interpreter','Latex');
             b_3.Tag = 'em_TF';
             b_3.Layout.Row = 3;
@@ -422,7 +428,7 @@ classdef MapApp < matlab.apps.AppBase
             % Population
             b_4 =  uibutton(gl,'state');
             b_4.FontName = 'Helvetica';
-            b_4.FontSize = 18;
+            b_4.FontSize = 16;
             b_4.Text = sprintf('Population','interpreter','Latex');
             b_4.Tag = 'pop_TF';
             b_4.Layout.Row = 4;
