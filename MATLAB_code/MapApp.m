@@ -45,6 +45,7 @@ classdef MapApp < matlab.apps.AppBase
         Node5      matlab.ui.container.TreeNode
         Node6     matlab.ui.container.TreeNode
         Node8     matlab.ui.container.TreeNode
+        Node9   matlab.ui.container.TreeNode
     end
 
     % Callbacks with handle components
@@ -346,6 +347,15 @@ classdef MapApp < matlab.apps.AppBase
             app.Node8.Text = 'Population';
 %             app.Node8.Tag = 'Population';
 %             app.Node8.NodeData = [state_GT(nri_state_order,"Shape") nri_GT(:, ['STATEABBRV',"POPULATION"])];
+
+            % Node 9 Parent
+            app.Node9 = uitreenode(app.Tree);
+            app.Node9.Text = 'Transportation Routes';
+            app.Node9.Tag = 'Transportation Routes';
+            roads_T = shaperead('Highways_(2019).shp');
+            roads_GT = struct2geotable(roads_T,'geographic',["Y" "X"], CoordinateReferenceSystem = geocrs(4269)); %NAD83
+            % see link for CRS https://epsg.org/search/by-name?sessionkey=qi7z76madw&searchedTerms=nad83
+            app.Node9.NodeData = roads_GT;
 
             % Middle panel grid
             gl = uigridlayout(app.MiddlePanel, [6 7]);
