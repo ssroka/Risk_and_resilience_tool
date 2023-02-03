@@ -44,6 +44,7 @@ classdef MapApp < matlab.apps.AppBase
         Node4_2     matlab.ui.container.TreeNode
         Node5      matlab.ui.container.TreeNode
         Node6     matlab.ui.container.TreeNode
+        Node7     matlab.ui.container.TreeNode
         Node8     matlab.ui.container.TreeNode
         Node9   matlab.ui.container.TreeNode
     end
@@ -192,9 +193,6 @@ classdef MapApp < matlab.apps.AppBase
             app.Node2_1 = uitreenode(app.Node2);
             app.Node2_1.Text = 'Pipelines';
             %app.Node2_1.Tag = 'Pipelines';
-            %fractracker pipelines ignore for now
-            %pplns_GT = readgeotable("OHWVPA_PotentialCO2PipelineRoutes_051022.shp");
-            %app.Node2_1.NodeData = pplns_GT;
 
             app.Node2_1_1 = uitreenode(app.Node2_1);
             app.Node2_1_1.Text = 'Operational Pipelines';
@@ -211,7 +209,6 @@ classdef MapApp < matlab.apps.AppBase
             planned_GT = struct2geotable(planned_T,'geographic',["Y" "X"], CoordinateReferenceSystem=geocrs(4269)); %NAD83
             % see link for CRS https://epsg.org/search/by-name?sessionkey=qi7z76madw&searchedTerms=nad83
             app.Node2_1_2.NodeData = planned_GT;
-            
 
             app.Node2_2 = uitreenode(app.Node2);
             app.Node2_2.Text = 'Injection Sites';
@@ -230,45 +227,9 @@ classdef MapApp < matlab.apps.AppBase
             % Node 3 Parent
             app.Node3 = uitreenode(app.Tree);
             app.Node3.Text = 'Natural Hazards';
-
-            
-            county_risk_struct = shaperead("NRI_Shapefile_Counties.shp");
-            county_risk_info = shapeinfo("NRI_Shapefile_Counties.shp");
-            county_risk__crs = county_risk_info.CoordinateReferenceSystem;
-            nri_county_GT = struct2geotable(county_risk_struct, CoordinateReferenceSystem = county_risk__crs);
-
-            Shape = get_NRI_thin_counties(); % cell array of thinned polygons for the counties
-            nri_county_risk_GT = [cell2table(Shape) nri_county_GT(:,["STATEABBRV","DRGT_RISKR","HRCN_RISKR","RFLD_RISKR","SWND_RISKR","WFIR_RISKR", "ERQK_RISKR"])];
-
-%             % State Level Risk Data 
-%             nri_state_struct = shaperead("NRI_Shapefile_States.shp",...
-%                 'Attributes', {'AREA','STATE', 'STATEABBRV',...
-%                 'POPULATION', 'AREA',...
-%                 });
-% 
-%             crs_info1 = shapeinfo("NRI_Shapefile_States.shp");
-%             crs1 = crs_info1.CoordinateReferenceSystem;
-%             nri_state_GT = struct2geotable(nri_state_struct, CoordinateReferenceSystem = crs1);
-% 
-%             nri_state_risk = readtable('NRI_STATE_A_WEIGHTED.csv','Delimiter', ',');
-%             nri_state_GT = [nri_state_GT nri_state_risk];
-% 
-%             ------------- New state shapefiles -------------
-%             % replace state shapes with more compact shape files from the census
-%             state_struct = shaperead('cb_2018_us_state_20m.shp','Attributes',{'STUSPS'});
-%             crs_info2 = shapeinfo("cb_2018_us_state_20m.shp");
-%             crs2 = crs_info2.CoordinateReferenceSystem;
-%             % this CRS is geographic so we need to ID the coords b/c they
-%             % won't be recognized as geographic otherwise
-%             state_GT = struct2geotable(state_struct,'geographic',["Y" "X"],CoordinateReferenceSystem = crs2); 
-%             nri_state_order = zeros(size(nri_state_GT,1),1);
-%             for ii_state = 1:size(nri_state_GT,1) % replace state shape files with smaller ones from the US Census
-%                 nri_state_order(ii_state) = find(ismember(state_GT.STUSPS,nri_state_GT.STATEABBRV(ii_state)));
-%             end
-%             ------------------------------------------------
-
-
-            app.Node3.NodeData = nri_county_GT;
+            nri_county_risk = shaperead('nri_county_risk.shp');
+            nri_county_risk_GT = struct2geotable(nri_county_risk,'geographic',["Y","X"], CoordinateReferenceSystem = geocrs(4269));
+            app.Node3.NodeData = nri_county_risk_GT;
 
             % Node 3 Children
 
@@ -329,31 +290,30 @@ classdef MapApp < matlab.apps.AppBase
             [NDVI_GT] = getNDVIData();
             app.Node5.NodeData = NDVI_GT;
 
-
             % Node 5 parent
-            app.Node5 = uitreenode(app.Tree);
-            app.Node5.Text = 'Social Vulnerability';
-%             sovi_GT = [state_GT(nri_state_order,"Shape") nri_GT(:,{'STATEABBRV','SOVI_RATNG'})];
-%             app.Node5.NodeData = sovi_GT;
+            app.Node6 = uitreenode(app.Tree);
+            app.Node6.Text = 'Social Vulnerability';
+            app.Node6.Tag = 'Social Vulnerability';
+            app.Node6.NodeData = nri_county_risk_GT(:, ['Shape','STATEABBRV',"SOVI_RATNG"]);
 % 
             % Node 6 parent
-            app.Node6 = uitreenode(app.Tree);
-            app.Node6.Text = 'Community Resilience';
-%             resl_GT = [state_GT(nri_state_order,"Shape") nri_GT(:,{'STATEABBRV','RESL_RATNG'})];
-%             app.Node6.NodeData = resl_GT;
+            app.Node7 = uitreenode(app.Tree);
+            app.Node7.Text = 'Community Resilience';
+            app.Node7.Tag = 'Community Resilience';
+            app.Node7.NodeData = nri_county_risk_GT(:, ['Shape','STATEABBRV',"RESL_RATNG"]);
 
             % Node 8 Parent
             app.Node8 = uitreenode(app.Tree);
             app.Node8.Text = 'Population';
-%             app.Node8.Tag = 'Population';
-%             app.Node8.NodeData = [state_GT(nri_state_order,"Shape") nri_GT(:, ['STATEABBRV',"POPULATION"])];
+            app.Node8.Tag = 'Population';
+            app.Node8.NodeData = nri_county_risk_GT(:, ['Shape','STATEABBRV',"POPULATION"]);
 
             % Node 9 Parent
             app.Node9 = uitreenode(app.Tree);
             app.Node9.Text = 'Transportation Routes';
             app.Node9.Tag = 'Transportation Routes';
-            roads_T = shaperead('Highways_(2019).shp');
-            roads_GT = struct2geotable(roads_T,'geographic',["Y" "X"], CoordinateReferenceSystem = geocrs(4269)); %NAD83
+            roads_s = shaperead('tl_2021_us_primaryroads.shp');
+            roads_GT = struct2geotable(roads_s, 'geographic',["Y" "X"], CoordinateReferenceSystem = geocrs(4269)); %NAD83
             % see link for CRS https://epsg.org/search/by-name?sessionkey=qi7z76madw&searchedTerms=nad83
             app.Node9.NodeData = roads_GT;
 
