@@ -223,6 +223,9 @@ classdef MapApp < matlab.apps.AppBase
             basinTable = basinData;
             app.Node2_3.NodeData = basinTable;
 
+            % This is just to call this function once to create the ClimRR data,
+            % eventually the geotable should just be its own file in the Data folder
+            %             get_ClimRR_thin_counties()
 
             % Node 3 Parent
             app.Node3 = uitreenode(app.Tree);
