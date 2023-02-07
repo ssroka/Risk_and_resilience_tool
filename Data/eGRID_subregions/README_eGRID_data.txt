@@ -1,6 +1,6 @@
-C:\Users\Abigail Idiculla\Documents\CCUS_mapping\Data\eGRID_subregions
+C:\Users\Abigail Idiculla\Documents\CCUS_mapping\Data\eGRID subregions
 
-"eGRID2020_subregions.shp"
-Source: https://www.epa.gov/egrid/egrid-mapping-files
-Org: EPA
-	eGRID subregion shapefile link: 
+EPA
+
+	eGRID subregion shapefile link: https://www.epa.gov/egrid/egrid-mapping-files
+	eGRID subregion shapefile data file: "eGRID2020_subregions.shp"

@@ -1,6 +1,5 @@
 function [nerc_GT] = getGridData()
 % output is lbs CO2/MWh for each NERC
-% Note that the projected amounts correspond to the EIA Reference Case
 %
 % note that the row ids for g are currently hardcoded rather than keyword
 % searched

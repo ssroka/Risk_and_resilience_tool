@@ -1,4 +1,3 @@
-
 d = dir;
 n = length(d);
 
@@ -7,4 +6,6 @@ for i = 1:n
         unzip(d(i).name,d(i).name(1:end-4))
     end
 end
+
+
 

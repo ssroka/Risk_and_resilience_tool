@@ -1,9 +1,9 @@
-C:\Users\Abigail Idiculla\Documents\CCUS_mapping\Data\CCUS_infrastructure
+C:\Users\Abigail Idiculla\Documents\CCUS_mapping\Data\CCS infrastructure
 
-"NETL_CCS_Injection_site_data.xlsx"
-Source: https://www.netl.doe.gov/coal/carbon-storage/worldwide-ccs-database
-Org: National energy technology laboratory
+National energy technology laboratory
+	CCS Interactive Database link: https://www.netl.doe.gov/coal/carbon-storage/worldwide-ccs-database
+	CCS Interactive Database data file: "NETL_CCS_Injection_site_data.xlsx"
 	
-"CATF_CCS_database.xlsx"
-Source: US Carbon Capture Activity and Project Map link: 
-Org: Clean Air Task Forcehttps://www.catf.us/ccsmapus/
+Clean Air Task Force
+	US Carbon Capture Activity and Project Map link: https://www.catf.us/ccsmapus/
+	US Carbon Capture Activity and Project Map data file: "CATF_CCS_database.xlsx"

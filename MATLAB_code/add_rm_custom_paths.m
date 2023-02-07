@@ -42,7 +42,10 @@ custom_paths = {
 
     ['.' filesep 'Data' filesep 'ClimRR' filesep ],
     ['.' filesep 'Data' filesep 'ClimRR' filesep 'GridCellsShapefile' filesep ],
-    
+    ['.' filesep 'Data' filesep 'Roads' filesep ],
+    ['.' filesep 'Data' filesep 'Roads' filesep 'Highways_(2019)' filesep],
+    ['.' filesep 'Data' filesep 'Roads' filesep 'tl_2021_us_primaryroads' filesep],
+        
     ['.' filesep 'Data' filesep 'grid_greeness' filesep ],
     ['.' filesep 'Data' filesep 'grid_greeness' filesep 'ISO'],
     ['.' filesep 'Data' filesep 'grid_greeness' filesep 'NERC_Regions'],
