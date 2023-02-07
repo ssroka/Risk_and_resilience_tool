@@ -25,3 +25,5 @@ https://www.energy.gov/sites/prod/files/2015/04/f22/QER%20Analysis%20-%20A%20Rev
 https://www.kindermorgan.com/Operations/CO2/Index
 
 https://summitcarbonsolutions.com/project-footprint/
+
+https://www.gem.wiki/Bison_Gas_Pipeline#:~:text=The%20pipeline%20originally%20had%20407,billion%20cubic%20feet%20per%20day.

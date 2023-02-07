@@ -53,5 +53,4 @@ for i = 1:N_small
         nri_cell_array{indx_nri} = small_county_GT{i,1};
     end
 end
-disp('debugg')
 end

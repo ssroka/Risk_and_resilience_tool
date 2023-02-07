@@ -266,6 +266,10 @@ classdef MapApp < matlab.apps.AppBase
 %             end
 %             ------------------------------------------------
 
+% This is just to call this function once to create the ClimRR data,
+% eventually the geotable should just be its own file in the Data folder
+%             get_ClimRR_thin_counties()
+
 
             app.Node3.NodeData = nri_county_GT;
 

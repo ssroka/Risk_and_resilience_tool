@@ -37,7 +37,11 @@ custom_paths = {
     ['.' filesep 'Data' filesep 'pipelines' filesep  'CO2_pipeline_data_DOE' filesep ],
     
     ['.' filesep 'Data' filesep 'member_facilities' filesep ],
+
     ['.' filesep 'Data' filesep 'NDVI' filesep ],
+
+    ['.' filesep 'Data' filesep 'ClimRR' filesep ],
+    ['.' filesep 'Data' filesep 'ClimRR' filesep 'GridCellsShapefile' filesep ],
     
     ['.' filesep 'Data' filesep 'grid_greeness' filesep ],
     ['.' filesep 'Data' filesep 'grid_greeness' filesep 'ISO'],
