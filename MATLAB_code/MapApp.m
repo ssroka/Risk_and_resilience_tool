@@ -313,13 +313,12 @@ classdef MapApp < matlab.apps.AppBase
             app.Node8.NodeData = nri_county_risk_GT(:, ['Shape','STATEABBRV',"POPULATION"]);
 
 %             % Node 9 Parent
-%             app.Node9 = uitreenode(app.Tree);
-%             app.Node9.Text = 'Transportation Routes';
-%             app.Node9.Tag = 'Transportation Routes';
-%             roads_s = shaperead('tl_2021_us_primaryroads.shp');
-%             roads_GT = struct2geotable(roads_s, 'geographic',["Y" "X"], CoordinateReferenceSystem = geocrs(4269)); %NAD83
-%             % see link for CRS https://epsg.org/search/by-name?sessionkey=qi7z76madw&searchedTerms=nad83
-%             app.Node9.NodeData = roads_GT;
+            app.Node9 = uitreenode(app.Tree);
+            app.Node9.Text = 'Transportation Routes';
+            app.Node9.Tag = 'Transportation Routes';
+            roads_s = shaperead('interstates.shp');
+            roads_GT = struct2geotable(roads_s); 
+            app.Node9.NodeData = roads_GT;
 
             % Middle panel grid
             gl = uigridlayout(app.MiddlePanel, [6 7]);
