@@ -51,7 +51,7 @@ switch string(nodes.Text)
         plot_NRI(ax,IDs,nodes.NodeData,nodes.Text)
 
     case 'NDVI'
-        [IDs] = geteNDVI_IDs(nodes.NodeData.NDVI);
+        [IDs] = getNDVI_IDs(nodes.NodeData.NDVI);
 
         geoplot(ax, nodes.NodeData(IDs(:,1), :),...
             'displayname','NDVI < 0',...
@@ -73,6 +73,7 @@ switch string(nodes.Text)
             'displayname','NDVI 0.75-1',...
             'Tag', nodes.Text,...
             'FaceColor', '#0A7029');
+
     case '2021'
         [IDs] = geteGRID_IDs(nodes.NodeData.CI_2021);
 
@@ -210,8 +211,8 @@ end
         IDs(:,4) = rating>=10e6;
     end
 
-    function [IDs] = geteNDVI_IDs(NDVI_val)
-        NDVI_val = cell2mat(NDVI_val);
+    function [IDs] = getNDVI_IDs(NDVI_val)
+        %NDVI_val = cell2mat(NDVI_val);
         IDs = false(size(NDVI_val,1),6);
         IDs(:,1) = NDVI_val<0;
         IDs(:,2) = (NDVI_val>=0).*(NDVI_val<0.25);

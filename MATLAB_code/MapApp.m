@@ -291,8 +291,9 @@ classdef MapApp < matlab.apps.AppBase
             % Node 5 parent
             app.Node5 = uitreenode(app.Tree);
             app.Node5.Text = 'NDVI';
-            [NDVI_GT] = getNDVIData();
-            app.Node5.NodeData = NDVI_GT;
+            NDVI_GT = load('NDVI_small_county.mat');
+            %[NDVI_GT] = getNDVIData();
+            app.Node5.NodeData = NDVI_GT.NDVI_mat;
 
             % Node 5 parent
             app.Node6 = uitreenode(app.Tree);
@@ -316,8 +317,7 @@ classdef MapApp < matlab.apps.AppBase
             app.Node9 = uitreenode(app.Tree);
             app.Node9.Text = 'Transportation Routes';
             app.Node9.Tag = 'Transportation Routes';
-            roads_s = shaperead('interstates.shp');
-            roads_GT = struct2geotable(roads_s); 
+            roads_GT = load('roads_GT_I.mat');
             app.Node9.NodeData = roads_GT;
 
             % Middle panel grid
