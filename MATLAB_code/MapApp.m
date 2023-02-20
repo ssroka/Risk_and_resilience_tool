@@ -47,6 +47,17 @@ classdef MapApp < matlab.apps.AppBase
         Node7     matlab.ui.container.TreeNode
         Node8     matlab.ui.container.TreeNode
         Node9   matlab.ui.container.TreeNode
+        Node10      matlab.ui.container.TreeNode
+        Node10_1      matlab.ui.container.TreeNode
+        Node10_1_1      matlab.ui.container.TreeNode
+        Node10_1_2      matlab.ui.container.TreeNode
+        Node10_2      matlab.ui.container.TreeNode
+        Node10_2_1      matlab.ui.container.TreeNode
+        Node10_2_2      matlab.ui.container.TreeNode
+        Node10_3      matlab.ui.container.TreeNode
+        Node10_3_1      matlab.ui.container.TreeNode
+        Node10_3_2      matlab.ui.container.TreeNode
+        
     end
 
     % Callbacks with handle components
@@ -291,8 +302,9 @@ classdef MapApp < matlab.apps.AppBase
             % Node 5 parent
             app.Node5 = uitreenode(app.Tree);
             app.Node5.Text = 'NDVI';
-            [NDVI_GT] = getNDVIData();
-            app.Node5.NodeData = NDVI_GT;
+            NDVI_GT = load('NDVI_small_county.mat');
+            %[NDVI_GT] = getNDVIData();
+            app.Node5.NodeData = NDVI_GT.NDVI_mat;
 
             % Node 5 parent
             app.Node6 = uitreenode(app.Tree);
@@ -316,9 +328,61 @@ classdef MapApp < matlab.apps.AppBase
             app.Node9 = uitreenode(app.Tree);
             app.Node9.Text = 'Transportation Routes';
             app.Node9.Tag = 'Transportation Routes';
-            roads_s = shaperead('interstates.shp');
-            roads_GT = struct2geotable(roads_s); 
+            roads_GT = load('roads_GT_I.mat');
             app.Node9.NodeData = roads_GT;
+            
+            % Node 10 parent
+            app.Node10 = uitreenode(app.Tree);
+            app.Node10.Text = 'Projected Risk (~2050)';
+
+            % Node 10 children
+            app.Node10_1 = uitreenode(app.Node10);
+            app.Node10_1.Text = 'Max Seasonal Temperature';
+            app.Node10_1.Tag = 'Max Seasonal Temperature';
+
+            %app.Node10_1_1.NodeData = 
+            app.Node10_1_1 = uitreenode(app.Node10_1);
+            app.Node10_1_1.Text = 'RCP 4.5';
+            app.Node10_1_1.Tag = 'RCP 4.5';
+            %app.Node10_1_2.NodeData = 
+
+            app.Node10_1_2 = uitreenode(app.Node10_1);
+            app.Node10_1_2.Text = 'RCP 8.5';
+            app.Node10_1_2.Tag = 'RCP 8.5';
+            %app.Node10_1.NodeData = 
+
+            app.Node10_2 = uitreenode(app.Node10);
+            app.Node10_2.Text = 'No Precipitation';
+            app.Node10_2.Tag = 'No Precipitation';
+            %app.Node10_2.NodeData = 
+
+            %app.Node10_1_1.NodeData = 
+            app.Node10_2_1 = uitreenode(app.Node10_2);
+            app.Node10_2_1.Text = 'RCP 4.5';
+            app.Node10_2_1.Tag = 'RCP 4.5';
+            %app.Node10_2_2.NodeData = 
+
+            app.Node10_2_2 = uitreenode(app.Node10_2);
+            app.Node10_2_2.Text = 'RCP 8.5';
+            app.Node10_2_2.Tag = 'RCP 8.5';
+            %app.Node10_1.NodeData = 
+
+            app.Node10_3 = uitreenode(app.Node10);
+            app.Node10_3.Text = 'Cooling Days';
+            app.Node10_3.Tag = 'Cooling Days';
+            %app.Node10_3.NodeData = 
+
+            %app.Node10_1_1.NodeData = 
+            app.Node10_3_1 = uitreenode(app.Node10_3);
+            app.Node10_3_1.Text = 'RCP 4.5';
+            app.Node10_3_1.Tag = 'RCP 4.5';
+            %app.Node10_3_2.NodeData = 
+
+            app.Node10_3_2 = uitreenode(app.Node10_3);
+            app.Node10_3_2.Text = 'RCP 8.5';
+            app.Node10_3_2.Tag = 'RCP 8.5';
+            %app.Node10_1.NodeData = 
+
 
             % Middle panel grid
             gl = uigridlayout(app.MiddlePanel, [6 7]);
