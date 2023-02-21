@@ -1,5 +1,15 @@
-function [climrr_cell_array] = get_ClimRR_thin_counties()
 
+create_S_mat_flag = false;
+create_county_data_flag = true;
+
+addpath('../Data/ClimRR/GridCellsShapefile/')
+addpath('../Data/ClimRR/')
+
+if create_S_mat_flag
+
+% ================================================================
+%% Create matrix to convert ClimRR pixels to county data
+% ================================================================
 % County Level Risk Data
 climrr_county_struct = shaperead("GridCells.shp",...
     'Attributes', {'Crossmodel'});
@@ -20,7 +30,7 @@ small_county_GT = struct2geotable(small_county_struct,'geographic',["Y","X"], Co
 %N_sml_cnty = size(small_county_GT,1);
 
 %% convert all of the mappolyshapes to geopolyshapes
-
+% takes 30 minutes to run
 newShape_cell_array = cell(N_climrr,3);
 
 for i = 1:N_climrr
@@ -51,12 +61,45 @@ for ii = 1:N_climrr
     end
 end
 
+end
 
+if create_county_data_flag
 
+load('row_col_ind_ClimRR_S','S')
 
+S_mean = S./repmat(sum(S,2),1,size(S,2));
 
+% max seasonal temp
+T_max_raw = readtable('AnnualTemperatureMaximum.csv');
+
+T_correct_order = zeros(size(S,2),1);
+for i = 1:size(T_max_raw,1)
+[~,Loc] = ismember(climrr_county_GT.Crossmodel,T_max_raw.Crossmodel(i,1));
+
+end
+
+T_max_45 = S_mean*T_max.rcp45_midc;
+T_max_85 = S_mean*T_max.rcp85_midc;
+
+% no precip
+no_prec = readtable('ConsecutiveDayswithNoPrecipitation.csv');
+
+no_prec_45 = S_mean*no_prec.rcp45_midc;
+no_prec_85 = S_mean*no_prec.rcp85_midc;
+
+save('climrr_data_2_plot')
+
+% 
+% % max seasonal temp
+% T_max_seasonal = readtable('SeasonalTemperatureMaximum.csv');
+% 
+% 
+
+%
 
 
 
 
 end
+
+

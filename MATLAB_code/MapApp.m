@@ -302,7 +302,7 @@ classdef MapApp < matlab.apps.AppBase
             % Node 5 parent
             app.Node5 = uitreenode(app.Tree);
             app.Node5.Text = 'NDVI';
-            NDVI_GT = load('NDVI_small_county.mat');
+            NDVI_GT = load('NDVI_small_county_new.mat');
             %[NDVI_GT] = getNDVIData();
             app.Node5.NodeData = NDVI_GT.NDVI_mat;
 
@@ -326,9 +326,11 @@ classdef MapApp < matlab.apps.AppBase
 
 %             % Node 9 Parent
             app.Node9 = uitreenode(app.Tree);
-            app.Node9.Text = 'Transportation Routes';
-            app.Node9.Tag = 'Transportation Routes';
-            roads_GT = load('roads_GT_I.mat');
+            app.Node9.Text = 'Interstates';
+            app.Node9.Tag = 'Interstates';
+            tmp_struct = load('roads_GT_I.mat','roads_GT_I');
+            roads_GT = tmp_struct.roads_GT_I;
+            clear tmp_struct
             app.Node9.NodeData = roads_GT;
             
             % Node 10 parent
