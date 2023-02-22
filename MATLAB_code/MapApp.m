@@ -506,42 +506,42 @@ classdef MapApp < matlab.apps.AppBase
             b.Layout.Column = [1 7];
             b.ButtonPushedFcn =  {@updateMap_point_src, app, gx};
 
-%             % Bottom grid panel
-%             gl_b = uigridlayout(app.BottomPanel, [3 7]);
-%             gl_b.ColumnSpacing = 5;
-%             gl_b.RowSpacing = 5;
-%             gl_b.Padding = [5 5 5 5];
-% 
-%             % NRI
-%             b_b3 = uibutton(gl_b,'state');
-%             b_b3.FontName = 'Helvetica';
-%             b_b3.FontSize = 14;
-%             b_b3.Text = sprintf('Natural\nHazard Risk','interpreter','Latex');
-%             b_b3.Tag = 'nathaz_TF';
-%             b_b3.Layout.Row = 1;
-%             b_b3.Layout.Column = [1 2];
-% 
-%             dd_3_1 = uidropdown(gl_b, 'Items', {'None','Earthquake','Drought', 'Hurricane','Riverine Flooding', 'Strong Wind', 'Wildfire'},...
-%                 'Editable','off', 'Placeholder', 'Enter risk');
-%             dd_3_1.FontSize = 14;
-%             dd_3_1.Tag = 'nathaz_type';
-%             dd_3_1.Layout.Row = 1;
-%             dd_3_1.Layout.Column = [4 5];
-% 
-%             dd_3_2 = uidropdown(gl_b, 'Items', {'None','Very High', 'Relatively High', 'Relatively Moderate', 'Relatively Low', 'Very Low'}, 'Editable', 'off');
-%             dd_3_2.FontSize = 14;
-%             dd_3_2.Tag = 'nathaz_level';
-%             dd_3_2.Layout.Row = 1;
-%             dd_3_2.Layout.Column = [6 7];
-% 
-%             % Update Map button
-%             b_b = uibutton(gl_b);
-%             b_b.Text = 'Update NDVI';
-%             b_b.FontSize = 14;
-%             b_b.FontName = 'Helvetica';
-%             b_b.Layout.Row = 5;
-%             b_b.Layout.Column = [1 7];
-%             b_b.ButtonPushedFcn =  {@updateMap_NDVI, app, gx};
+            % Bottom grid panel
+            gl_b = uigridlayout(app.BottomPanel, [3 7]);
+            gl_b.ColumnSpacing = 5;
+            gl_b.RowSpacing = 5;
+            gl_b.Padding = [5 5 5 5];
+
+            % NRI
+            b_b3 = uibutton(gl_b,'state');
+            b_b3.FontName = 'Helvetica';
+            b_b3.FontSize = 14;
+            b_b3.Text = sprintf('Natural\nHazard Risk','interpreter','Latex');
+            b_b3.Tag = 'nathaz_TF';
+            b_b3.Layout.Row = 1;
+            b_b3.Layout.Column = [1 2];
+
+            dd_3_1 = uidropdown(gl_b, 'Items', {'None','Earthquake','Drought', 'Hurricane','Riverine Flooding', 'Strong Wind', 'Wildfire'},...
+                'Editable','off', 'Placeholder', 'Enter risk');
+            dd_3_1.FontSize = 14;
+            dd_3_1.Tag = 'nathaz_type';
+            dd_3_1.Layout.Row = 1;
+            dd_3_1.Layout.Column = [4 5];
+
+            dd_3_2 = uidropdown(gl_b, 'Items', {'None','Very High', 'Relatively High', 'Relatively Moderate', 'Relatively Low', 'Very Low'}, 'Editable', 'off');
+            dd_3_2.FontSize = 14;
+            dd_3_2.Tag = 'nathaz_level';
+            dd_3_2.Layout.Row = 1;
+            dd_3_2.Layout.Column = [6 7];
+
+            % Update Map button
+            b_b = uibutton(gl_b);
+            b_b.Text = 'Update NDVI';
+            b_b.FontSize = 14;
+            b_b.FontName = 'Helvetica';
+            b_b.Layout.Row = 3;
+            b_b.Layout.Column = [1 7];
+            b_b.ButtonPushedFcn =  {@updateMap_NDVI, app, gx};
 
             % Display figure only when all components have been created
             app.UIFigure.Visible = 'on';
@@ -658,12 +658,12 @@ classdef MapApp < matlab.apps.AppBase
             % according to new data
             function updateMap_NDVI(src, event, app, ax)
                 cn = app.LeftPanel.Children(1).CheckedNodes;
-                poly_src = []; % initialize point source layers
+                poly_src = []; % initialize polygon layers
                 all_layers = get(ax,'Children'); % all plotted data layers
                 all_pt_src_names = {app.LeftPanel.Children(1).Children(1).Children(:).Text};
-                for ii_data_layers = 1:length(all_layers) % loop thorugh all layers and see which are point layers
+                for ii_data_layers = 1:length(all_layers) % loop thorugh all layers and see which are polygon layers
                     poly_type_flag = strcmp(class(all_layers(ii_data_layers)),'map.graphics.chart.primitive.Polygon');
-                    poly_source_flag = ismember(all_layers(ii_data_layers).Tag,all_pt_src_names);
+                    poly_source_flag = strcmp(all_layers(ii_data_layers).Tag,'NDVI');
                     if poly_type_flag && poly_source_flag
                         poly_src = [poly_src;all_layers(ii_data_layers)];
                     end
@@ -688,21 +688,17 @@ classdef MapApp < matlab.apps.AppBase
                     states_2_plot_NH = [];
                 end
 
+                % no other filters yet, so just set equal
+                states_2_plot = states_2_plot_NH;
+
                 if nathaz_TF.Value
-                    for ii_point_srcs = 1:length(pt_srcs)
+                    for ii_poly_srcs = 1:length(poly_src)
                         % delete layer
-                        cn_idx = find(ismember({cn.Text},pt_srcs(ii_point_srcs).Tag));
-                        delete(pt_srcs(ii_point_srcs))
+                        cn_idx = find(ismember({cn.Text},poly_src(ii_poly_srcs).Tag));
+                        delete(poly_src(ii_poly_srcs))
                         % re-plot only filtered points
-                        if (nathaz_TF.Value || pop_TF.Value) && ~em_TF.Value &&  ~dist_TF.Value
-                            pointLayer(ax, cn(cn_idx),states_2_plot)
-                        elseif em_TF.Value  &&  ~dist_TF.Value
-                            pointLayer(ax, cn(cn_idx),states_2_plot,em_num.Value*1e6)  % user entry is in Mega metric tons => multiply by 1e6, data is in metric tons
-                        else
-                            inject_lat_lon = [app.LeftPanel.Children.Children(2).Children(2).NodeData.Latitude app.LeftPanel.Children.Children(2).Children(2).NodeData.Longitude];
-                            pointLayer(ax, cn(cn_idx),states_2_plot,em_num.Value*1e6,dist_num.Value,inject_lat_lon)  % user entry is in Mega metric tons => multiply by 1e6, data is in metric tons
-                        end
                     end
+                    polyLayer(ax, cn(cn_idx),states_2_plot)
                 end
             end
 
