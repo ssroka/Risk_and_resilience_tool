@@ -57,7 +57,7 @@ classdef MapApp < matlab.apps.AppBase
         Node10_3      matlab.ui.container.TreeNode
         Node10_3_1      matlab.ui.container.TreeNode
         Node10_3_2      matlab.ui.container.TreeNode
-        
+
     end
 
     % Callbacks with handle components
@@ -142,7 +142,7 @@ classdef MapApp < matlab.apps.AppBase
             % Create BottomPanel
             app.BottomPanel = uipanel(app.GridLayout);
             app.BottomPanel.FontName = 'Helvetica';
-            app.BottomPanel.Title = '';
+            app.BottomPanel.Title = 'Filter Vegetation Index...';
             app.BottomPanel.Layout.Row = [6 7];
             app.BottomPanel.Layout.Column = [1 3];
             app.BottomPanel.Scrollable = 'on';
@@ -252,7 +252,7 @@ classdef MapApp < matlab.apps.AppBase
             app.Node3_1.Text = 'Earthquake';
             app.Node3_1.Tag = 'Earthquake';
             app.Node3_1.NodeData =  nri_county_risk_GT(:, ['Shape','CountyNS',"ERQK_RISKR"]);
-  
+
             app.Node3_4 = uitreenode(app.Node3);
             app.Node3_4.Text = 'Drought';
             app.Node3_4.Tag = 'Drought';
@@ -295,7 +295,7 @@ classdef MapApp < matlab.apps.AppBase
             app.Node4_1.NodeData = nerc_GT(:,{'Shape','CI_2021'});
 
             app.Node4_2 = uitreenode(app.Node4);
-            app.Node4_2.Text = '2050 projection'; 
+            app.Node4_2.Text = '2050 projection';
             app.Node4_2.Tag = '2021 projection';
             app.Node4_2.NodeData = nerc_GT(:,{'Shape','CI_2050'});
 
@@ -311,7 +311,7 @@ classdef MapApp < matlab.apps.AppBase
             app.Node6.Text = 'Social Vulnerability';
             app.Node6.Tag = 'Social Vulnerability';
             app.Node6.NodeData = nri_county_risk_GT(:, ['Shape','CountyNS',"SOVI_RATNG"]);
-% 
+            %
             % Node 6 parent
             app.Node7 = uitreenode(app.Tree);
             app.Node7.Text = 'Community Resilience';
@@ -324,7 +324,7 @@ classdef MapApp < matlab.apps.AppBase
             app.Node8.Tag = 'Population';
             app.Node8.NodeData = nri_county_risk_GT(:, ['Shape','CountyNS',"POPULATION"]);
 
-%             % Node 9 Parent
+            %             % Node 9 Parent
             app.Node9 = uitreenode(app.Tree);
             app.Node9.Text = 'Interstates';
             app.Node9.Tag = 'Interstates';
@@ -332,7 +332,7 @@ classdef MapApp < matlab.apps.AppBase
             roads_GT = tmp_struct.roads_GT_I;
             clear tmp_struct
             app.Node9.NodeData = roads_GT;
-            
+
             % Node 10 parent
             app.Node10 = uitreenode(app.Tree);
             app.Node10.Text = 'Projected Risk (~2050)';
@@ -342,56 +342,55 @@ classdef MapApp < matlab.apps.AppBase
             app.Node10_1.Text = 'Max Seasonal Temperature';
             app.Node10_1.Tag = 'Max Seasonal Temperature';
 
-            %app.Node10_1_1.NodeData = 
+            %app.Node10_1_1.NodeData =
             app.Node10_1_1 = uitreenode(app.Node10_1);
             app.Node10_1_1.Text = 'RCP 4.5';
             app.Node10_1_1.Tag = 'RCP 4.5';
-            %app.Node10_1_2.NodeData = 
+            %app.Node10_1_2.NodeData =
 
             app.Node10_1_2 = uitreenode(app.Node10_1);
             app.Node10_1_2.Text = 'RCP 8.5';
             app.Node10_1_2.Tag = 'RCP 8.5';
-            %app.Node10_1.NodeData = 
+            %app.Node10_1.NodeData =
 
             app.Node10_2 = uitreenode(app.Node10);
             app.Node10_2.Text = 'No Precipitation';
             app.Node10_2.Tag = 'No Precipitation';
-            %app.Node10_2.NodeData = 
+            %app.Node10_2.NodeData =
 
-            %app.Node10_1_1.NodeData = 
+            %app.Node10_1_1.NodeData =
             app.Node10_2_1 = uitreenode(app.Node10_2);
             app.Node10_2_1.Text = 'RCP 4.5';
             app.Node10_2_1.Tag = 'RCP 4.5';
-            %app.Node10_2_2.NodeData = 
+            %app.Node10_2_2.NodeData =
 
             app.Node10_2_2 = uitreenode(app.Node10_2);
             app.Node10_2_2.Text = 'RCP 8.5';
             app.Node10_2_2.Tag = 'RCP 8.5';
-            %app.Node10_1.NodeData = 
+            %app.Node10_1.NodeData =
 
             app.Node10_3 = uitreenode(app.Node10);
             app.Node10_3.Text = 'Cooling Days';
             app.Node10_3.Tag = 'Cooling Days';
-            %app.Node10_3.NodeData = 
+            %app.Node10_3.NodeData =
 
-            %app.Node10_1_1.NodeData = 
+            %app.Node10_1_1.NodeData =
             app.Node10_3_1 = uitreenode(app.Node10_3);
             app.Node10_3_1.Text = 'RCP 4.5';
             app.Node10_3_1.Tag = 'RCP 4.5';
-            %app.Node10_3_2.NodeData = 
+            %app.Node10_3_2.NodeData =
 
             app.Node10_3_2 = uitreenode(app.Node10_3);
             app.Node10_3_2.Text = 'RCP 8.5';
             app.Node10_3_2.Tag = 'RCP 8.5';
-            %app.Node10_1.NodeData = 
+            %app.Node10_1.NodeData =
 
 
             % Middle panel grid
-            gl = uigridlayout(app.MiddlePanel, [6 7]);
+            gl = uigridlayout(app.MiddlePanel, [5 7]);
             gl.ColumnSpacing = 5;
             gl.RowSpacing = 5;
             gl.Padding = [5 5 5 5];
-
 
             % Distance from CCS
             b_1 = uibutton(gl,'state');
@@ -500,12 +499,49 @@ classdef MapApp < matlab.apps.AppBase
 
             % Update Map button
             b = uibutton(gl);
-            b.Text = 'Update map';
+            b.Text = 'Update point sources';
             b.FontSize = 14;
             b.FontName = 'Helvetica';
-            b.Layout.Row = 6;
+            b.Layout.Row = 5;
             b.Layout.Column = [1 7];
-            b.ButtonPushedFcn =  {@updateMap, app, gx};
+            b.ButtonPushedFcn =  {@updateMap_point_src, app, gx};
+
+%             % Bottom grid panel
+%             gl_b = uigridlayout(app.BottomPanel, [3 7]);
+%             gl_b.ColumnSpacing = 5;
+%             gl_b.RowSpacing = 5;
+%             gl_b.Padding = [5 5 5 5];
+% 
+%             % NRI
+%             b_b3 = uibutton(gl_b,'state');
+%             b_b3.FontName = 'Helvetica';
+%             b_b3.FontSize = 14;
+%             b_b3.Text = sprintf('Natural\nHazard Risk','interpreter','Latex');
+%             b_b3.Tag = 'nathaz_TF';
+%             b_b3.Layout.Row = 1;
+%             b_b3.Layout.Column = [1 2];
+% 
+%             dd_3_1 = uidropdown(gl_b, 'Items', {'None','Earthquake','Drought', 'Hurricane','Riverine Flooding', 'Strong Wind', 'Wildfire'},...
+%                 'Editable','off', 'Placeholder', 'Enter risk');
+%             dd_3_1.FontSize = 14;
+%             dd_3_1.Tag = 'nathaz_type';
+%             dd_3_1.Layout.Row = 1;
+%             dd_3_1.Layout.Column = [4 5];
+% 
+%             dd_3_2 = uidropdown(gl_b, 'Items', {'None','Very High', 'Relatively High', 'Relatively Moderate', 'Relatively Low', 'Very Low'}, 'Editable', 'off');
+%             dd_3_2.FontSize = 14;
+%             dd_3_2.Tag = 'nathaz_level';
+%             dd_3_2.Layout.Row = 1;
+%             dd_3_2.Layout.Column = [6 7];
+% 
+%             % Update Map button
+%             b_b = uibutton(gl_b);
+%             b_b.Text = 'Update NDVI';
+%             b_b.FontSize = 14;
+%             b_b.FontName = 'Helvetica';
+%             b_b.Layout.Row = 5;
+%             b_b.Layout.Column = [1 7];
+%             b_b.ButtonPushedFcn =  {@updateMap_NDVI, app, gx};
 
             % Display figure only when all components have been created
             app.UIFigure.Visible = 'on';
@@ -513,7 +549,7 @@ classdef MapApp < matlab.apps.AppBase
             % When "update map" button is pushed, get data in filter
             % fields, points currently plotted on the map, and then replot
             % according to new data
-            function updateMap(src, event, app, ax)
+            function updateMap_point_src(src, event, app, ax)
                 cn = app.LeftPanel.Children(1).CheckedNodes;
                 pt_srcs = []; % initialize point source layers
                 all_layers = get(ax,'Children'); % all plotted data layers
@@ -573,9 +609,9 @@ classdef MapApp < matlab.apps.AppBase
                         pop_data_struct = app.LeftPanel.Children.Children(8); % Population data is the 8th child of the tree
                         % the risk levels are in the third column of NodeData
                         if strcmp(pop_gt_lt.Value,">")
-                            state_ids_pop = pop_data_struct.NodeData.POPULATION>pop_num.Value; 
+                            state_ids_pop = pop_data_struct.NodeData.POPULATION>pop_num.Value;
                         else
-                            state_ids_pop = pop_data_struct.NodeData.POPULATION<pop_num.Value; 
+                            state_ids_pop = pop_data_struct.NodeData.POPULATION<pop_num.Value;
                         end
                         % the state abbreviations are in the second column of NodeData
                         states_2_plot_pop = table2array(pop_data_struct.NodeData(state_ids_pop,2));
@@ -617,9 +653,58 @@ classdef MapApp < matlab.apps.AppBase
                 end
 
             end
+            % When "update map" button is pushed, get data in filter
+            % fields, points currently plotted on the map, and then replot
+            % according to new data
+            function updateMap_NDVI(src, event, app, ax)
+                cn = app.LeftPanel.Children(1).CheckedNodes;
+                poly_src = []; % initialize point source layers
+                all_layers = get(ax,'Children'); % all plotted data layers
+                all_pt_src_names = {app.LeftPanel.Children(1).Children(1).Children(:).Text};
+                for ii_data_layers = 1:length(all_layers) % loop thorugh all layers and see which are point layers
+                    poly_type_flag = strcmp(class(all_layers(ii_data_layers)),'map.graphics.chart.primitive.Polygon');
+                    poly_source_flag = ismember(all_layers(ii_data_layers).Tag,all_pt_src_names);
+                    if poly_type_flag && poly_source_flag
+                        poly_src = [poly_src;all_layers(ii_data_layers)];
+                    end
+                end
+                % find the index of the child with the corresponding button
+                nathaz_TF_idx = find(strcmp({app.BottomPanel.Children.Children(:).Tag}, 'nathaz_TF'));
+                nathaz_TF = app.BottomPanel.Children.Children(nathaz_TF_idx);
 
+                if nathaz_TF.Value
+                    nathaz_type_idx = find(strcmp({app.BottomPanel.Children.Children(:).Tag}, 'nathaz_type'));
+                    nathaz_type = app.BottomPanel.Children.Children(nathaz_type_idx);
+                    nathaz_level_idx = find(strcmp({app.BottomPanel.Children.Children(:).Tag}, 'nathaz_level'));
+                    nathaz_level = app.BottomPanel.Children.Children(nathaz_level_idx);
 
+                    nathaz_data_struct = app.LeftPanel.Children.Children(3); % Natural hazard data is the third child of the tree
+                    nathaz_data_struct_idx = find(strcmp({nathaz_data_struct.Children.Tag},nathaz_type.Value));
+                    % the risk levels are in the third column of NodeData
+                    state_ids_NH = strcmp(table2array(nathaz_data_struct.Children(nathaz_data_struct_idx).NodeData(:,3)),nathaz_level.Value);
+                    % the state abbreviations are in the second column of NodeData
+                    states_2_plot_NH = table2array(nathaz_data_struct.Children(nathaz_data_struct_idx).NodeData(state_ids_NH,2));
+                else
+                    states_2_plot_NH = [];
+                end
 
+                if nathaz_TF.Value
+                    for ii_point_srcs = 1:length(pt_srcs)
+                        % delete layer
+                        cn_idx = find(ismember({cn.Text},pt_srcs(ii_point_srcs).Tag));
+                        delete(pt_srcs(ii_point_srcs))
+                        % re-plot only filtered points
+                        if (nathaz_TF.Value || pop_TF.Value) && ~em_TF.Value &&  ~dist_TF.Value
+                            pointLayer(ax, cn(cn_idx),states_2_plot)
+                        elseif em_TF.Value  &&  ~dist_TF.Value
+                            pointLayer(ax, cn(cn_idx),states_2_plot,em_num.Value*1e6)  % user entry is in Mega metric tons => multiply by 1e6, data is in metric tons
+                        else
+                            inject_lat_lon = [app.LeftPanel.Children.Children(2).Children(2).NodeData.Latitude app.LeftPanel.Children.Children(2).Children(2).NodeData.Longitude];
+                            pointLayer(ax, cn(cn_idx),states_2_plot,em_num.Value*1e6,dist_num.Value,inject_lat_lon)  % user entry is in Mega metric tons => multiply by 1e6, data is in metric tons
+                        end
+                    end
+                end
+            end
 
             % Function that plots/deletes when checkbox is
             % selected/deselected
