@@ -75,7 +75,7 @@ T_max_raw = readtable('AnnualTemperatureMaximum.csv');
 T_correct_order = zeros(size(S,2),1);
 for i = 1:size(T_max_raw,1)
 [~,Loc] = ismember(climrr_county_GT.Crossmodel,T_max_raw.Crossmodel(i,1));
-
+T_correct_order(Loc,1) = T_max_raw.Crossmodel(i,1);
 end
 
 T_max_45 = S_mean*T_max.rcp45_midc;

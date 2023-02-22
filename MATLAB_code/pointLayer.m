@@ -16,7 +16,7 @@ function pointLayer(ax, nodes,states_2_plot,emmissions_min,dist_max,inject_lat_l
 ids2plt = true(size(nodes.NodeData,1),1);
 
 if nargin>2 && ~isempty(states_2_plot)
-    ids2plt = ids2plt & ismember(nodes.NodeData.STATE,states_2_plot);
+    ids2plt = ids2plt & ismember(nodes.NodeData.CountyNS,states_2_plot);
 end
 
 if nargin>3 && ~isnan(emmissions_min)

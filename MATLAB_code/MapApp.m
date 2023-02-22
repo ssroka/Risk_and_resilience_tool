@@ -170,31 +170,26 @@ classdef MapApp < matlab.apps.AppBase
             app.Node1_1 = uitreenode(app.Node1);
             app.Node1_1.Text = 'Power Plants';
             app.Node1_1.Tag = 'Power Plants';
-            pwrplnt = readtable("EPA_flight_GHG_powerplants_data.xls");
-            pwrplnt_GT = table2geotable(pwrplnt);
-            app.Node1_1.NodeData = pwrplnt_GT;
+            load('pwrplnt_county_GT.mat','pwrplnt_county_GT')
+            app.Node1_1.NodeData = pwrplnt_county_GT;
 
             app.Node1_2 = uitreenode(app.Node1);
             app.Node1_2.Text = 'Cement Plants';
             app.Node1_2.Tag = 'Cement Plants';
-            cmntplnt = readtable("EPA_flight_GHG_cementplants_data.xls");
-            cmntplnt_GT = table2geotable(cmntplnt);
-            app.Node1_2.NodeData = cmntplnt_GT;
+            load('cmntplnt_county_GT.mat','cmntplnt_county_GT')
+            app.Node1_2.NodeData = cmntplnt_county_GT;
 
             app.Node1_3 = uitreenode(app.Node1);
             app.Node1_3.Text = 'Ethanol Plants';
             app.Node1_3.Tag = 'Ethanol Plants';
-            ethnlplnt = readtable("EPA_flight_GHG_ethanolplants_data.xls");
-            ethnlplnt_GT = table2geotable(ethnlplnt);
-            app.Node1_3.NodeData = ethnlplnt_GT;
+            load('ethnlplnt_county_GT.mat','ethnlplnt_county_GT')
+            app.Node1_3.NodeData = ethnlplnt_county_GT;
 
             app.Node1_4 = uitreenode(app.Node1);
             app.Node1_4.Text = 'Iron and Steel Plants';
             app.Node1_4.Tag = 'Iron and Steel Plants';
-            steelplnt = readtable("EPA_flight_GHG_ironsteel.xls");
-            steelplnt_GT = table2geotable(steelplnt);
-            app.Node1_4.NodeData = steelplnt_GT;
-            % iron and steel plants cannot be filtered yet
+            load('steelplnt_county_GT.mat','steelplnt_county_GT')
+            app.Node1_4.NodeData = steelplnt_county_GT;
 
             % Node 2 Parent
             app.Node2 = uitreenode(app.Tree);
@@ -242,8 +237,10 @@ classdef MapApp < matlab.apps.AppBase
             app.Node3 = uitreenode(app.Tree);
             app.Node3.Text = 'Natural Hazards';
 
-            nri_county_risk = shaperead('nri_county_risk.shp');
-            nri_county_risk_GT = struct2geotable(nri_county_risk,'geographic',["Y","X"], CoordinateReferenceSystem = geocrs(4269));
+            tmp_risk = load('nri_county_risk.mat','nri_county_risk_GT');
+            nri_county_risk_GT = tmp_risk.nri_county_risk_GT;
+            clear tmp_risk
+%             nri_county_risk_GT = struct2geotable(nri_county_risk,'geographic',["Y","X"], CoordinateReferenceSystem = geocrs(4269));
             app.Node3.NodeData = nri_county_risk_GT;
 
             % Node 3 Children
@@ -251,36 +248,36 @@ classdef MapApp < matlab.apps.AppBase
             app.Node3_1 = uitreenode(app.Node3);
             app.Node3_1.Text = 'Earthquake';
             app.Node3_1.Tag = 'Earthquake';
-            app.Node3_1.NodeData =  nri_county_risk_GT(:, ['Shape','STATEABBRV',"ERQK_RISKR"]);
+            app.Node3_1.NodeData =  nri_county_risk_GT(:, ['Shape','CountyNS',"ERQK_RISKR"]);
   
             app.Node3_4 = uitreenode(app.Node3);
             app.Node3_4.Text = 'Drought';
             app.Node3_4.Tag = 'Drought';
-            app.Node3_4.NodeData =  nri_county_risk_GT(:, ['Shape','STATEABBRV',"DRGT_RISKR"]);
+            app.Node3_4.NodeData =  nri_county_risk_GT(:, ['Shape','CountyNS',"DRGT_RISKR"]);
 
 
             app.Node3_8 = uitreenode(app.Node3);
             app.Node3_8.Text = 'Hurricane';
             app.Node3_8.Tag = 'Hurricane';
-            app.Node3_8.NodeData =   nri_county_risk_GT(:, ['Shape','STATEABBRV',"HRCN_RISKR"]);
+            app.Node3_8.NodeData =   nri_county_risk_GT(:, ['Shape','CountyNS',"HRCN_RISKR"]);
 
 
             app.Node3_12 = uitreenode(app.Node3);
             app.Node3_12.Text = 'Riverine Flooding';
             app.Node3_12.Tag = 'Riverine Flooding';
-            app.Node3_12.NodeData =  nri_county_risk_GT(:, ['Shape','STATEABBRV',"RFLD_RISKR"]);
+            app.Node3_12.NodeData =  nri_county_risk_GT(:, ['Shape','CountyNS',"RFLD_RISKR"]);
 
 
             app.Node3_13 = uitreenode(app.Node3);
             app.Node3_13.Text = 'Strong Wind';
             app.Node3_13.Tag = 'Strong Wind';
-            app.Node3_13.NodeData =  nri_county_risk_GT(:, ['Shape','STATEABBRV',"SWND_RISKR"]);
+            app.Node3_13.NodeData =  nri_county_risk_GT(:, ['Shape','CountyNS',"SWND_RISKR"]);
 
 
             app.Node3_17 = uitreenode(app.Node3);
             app.Node3_17.Text = 'Wildfire';
             app.Node3_17.Tag = 'Wildfire';
-            app.Node3_17.NodeData = nri_county_risk_GT(:, ['Shape','STATEABBRV',"WFIR_RISKR"]);
+            app.Node3_17.NodeData = nri_county_risk_GT(:, ['Shape','CountyNS',"WFIR_RISKR"]);
 
             % Node 4 parent
             app.Node4 = uitreenode(app.Tree);
@@ -310,19 +307,19 @@ classdef MapApp < matlab.apps.AppBase
             app.Node6 = uitreenode(app.Tree);
             app.Node6.Text = 'Social Vulnerability';
             app.Node6.Tag = 'Social Vulnerability';
-            app.Node6.NodeData = nri_county_risk_GT(:, ['Shape','STATEABBRV',"SOVI_RATNG"]);
+            app.Node6.NodeData = nri_county_risk_GT(:, ['Shape','CountyNS',"SOVI_RATNG"]);
 % 
             % Node 6 parent
             app.Node7 = uitreenode(app.Tree);
             app.Node7.Text = 'Community Resilience';
             app.Node7.Tag = 'Community Resilience';
-            app.Node7.NodeData = nri_county_risk_GT(:, ['Shape','STATEABBRV',"RESL_RATNG"]);
+            app.Node7.NodeData = nri_county_risk_GT(:, ['Shape','CountyNS',"RESL_RATNG"]);
 
             % Node 8 Parent
             app.Node8 = uitreenode(app.Tree);
             app.Node8.Text = 'Population';
             app.Node8.Tag = 'Population';
-            app.Node8.NodeData = nri_county_risk_GT(:, ['Shape','STATEABBRV',"POPULATION"]);
+            app.Node8.NodeData = nri_county_risk_GT(:, ['Shape','CountyNS',"POPULATION"]);
 
 %             % Node 9 Parent
             app.Node9 = uitreenode(app.Tree);

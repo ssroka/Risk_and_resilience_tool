@@ -13,7 +13,7 @@ N_NRI = size(nri_county_GT,1);
 
 %%  New county shapefiles
 % replace county shapes with more compact shape files from the census
-small_county_struct = shaperead('cb_2021_us_county_20m.shp','Attributes',{'STATE_NAME','STUSPS', 'COUNTYFP'});
+small_county_struct = shaperead('cb_2021_us_county_20m.shp','Attributes',{'STATE_NAME','STUSPS', 'COUNTYFP','COUNTYNS'});
 crs_info_sml_cnty = shapeinfo("cb_2021_us_county_20m.shp");
 crs_sml_cnty = crs_info_sml_cnty.CoordinateReferenceSystem;
 small_county_GT = struct2geotable(small_county_struct,'geographic',["Y","X"], CoordinateReferenceSystem = crs_sml_cnty);
@@ -39,6 +39,7 @@ N_small = size(small_county_GT,1);
 
 % initialize final cell array with the nri shapefiles
 Shape = newShape_cell_array;
+CountyNS = cell(N_NRI,1);
 % replace the NRI shape files wherever possible with the smaller shape files
 for i = 1:N_small
     % find all the places in the small counties table with the state of the ith entry of the  NRI table
@@ -50,10 +51,11 @@ for i = 1:N_small
     indx_nri = find(state&county_number);
     if ~isempty(indx_nri)
         Shape{indx_nri} = small_county_GT{i,1};
+        CountyNS{indx_nri} = small_county_GT.COUNTYNS{i};
     end
 end
 
 
-nri_county_risk_GT = [cell2table(Shape) nri_county_GT(:,["STATEABBRV","DRGT_RISKR","HRCN_RISKR","RFLD_RISKR","SWND_RISKR","WFIR_RISKR", "ERQK_RISKR", "RESL_RATNG", "SOVI_RATNG", "POPULATION"])];
-
-shapewrite(nri_county_risk_GT,'../Data/environmental_social_risks/nri_county_risk.shp'); 
+nri_county_risk_GT = [cell2table(Shape) cell2table(CountyNS) nri_county_GT(:,["STATEABBRV","DRGT_RISKR","HRCN_RISKR","RFLD_RISKR","SWND_RISKR","WFIR_RISKR", "ERQK_RISKR", "RESL_RATNG", "SOVI_RATNG", "POPULATION"])];
+% save('../Data/environmental_social_risks/nri_county_risk.mat','nri_county_risk_GT')
+shapewrite(nri_county_risk_GT,'../Data/environmental_social_risks/nri_county_risk_new.shp'); 
