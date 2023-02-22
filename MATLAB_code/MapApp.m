@@ -237,10 +237,13 @@ classdef MapApp < matlab.apps.AppBase
             app.Node3 = uitreenode(app.Tree);
             app.Node3.Text = 'Natural Hazards';
 
-            tmp_risk = load('nri_county_risk.mat','nri_county_risk_GT');
-            nri_county_risk_GT = tmp_risk.nri_county_risk_GT;
-            clear tmp_risk
-%             nri_county_risk_GT = struct2geotable(nri_county_risk,'geographic',["Y","X"], CoordinateReferenceSystem = geocrs(4269));
+            load('nri_county_risk.mat','nri_county_risk_GT');
+            for i = 1:size(nri_county_risk_GT,1)
+                if isa(nri_county_risk_GT.CountyNS{i},'double')
+                    nri_county_risk_GT.CountyNS{i} = '';
+                end
+            end
+            %             nri_county_risk_GT = struct2geotable(nri_county_risk,'geographic',["Y","X"], CoordinateReferenceSystem = geocrs(4269));
             app.Node3.NodeData = nri_county_risk_GT;
 
             % Node 3 Children
@@ -477,7 +480,7 @@ classdef MapApp < matlab.apps.AppBase
             b_4.Layout.Row = 4;
             b_4.Layout.Column = [1 2];
 
-            ef_4 = uieditfield(gl, 'numeric', 'Limits', [0 1000], 'Editable', 'on');
+            ef_4 = uieditfield(gl, 'numeric', 'Editable', 'on');
             ef_4.FontSize = 14;
             ef_4.Tag = 'pop_num';
             ef_4.Layout.Row = 4;
@@ -490,7 +493,7 @@ classdef MapApp < matlab.apps.AppBase
             dd_4.Layout.Column = 3;
 
             lbl_4 = uilabel(gl);
-            lbl_4.Text = 'million';
+            lbl_4.Text = 'people';
             lbl_4.FontSize = 18;
             lbl_4.Layout.Row = 4;
             lbl_4.Layout.Column = 6;
@@ -567,12 +570,12 @@ classdef MapApp < matlab.apps.AppBase
                         pop_gt_lt = app.MiddlePanel.Children.Children(pop_gt_lt_idx);
 
 
-                        pop_data_struct = app.LeftPanel.Children.Children(7); % Population data is the 8th child of the tree
+                        pop_data_struct = app.LeftPanel.Children.Children(8); % Population data is the 8th child of the tree
                         % the risk levels are in the third column of NodeData
                         if strcmp(pop_gt_lt.Value,">")
-                            state_ids_pop = pop_data_struct.NodeData.POPULATION>pop_num.Value*1e6; % user entry is in millions => multiply by 1e6
+                            state_ids_pop = pop_data_struct.NodeData.POPULATION>pop_num.Value; 
                         else
-                            state_ids_pop = pop_data_struct.NodeData.POPULATION<pop_num.Value*1e6; % user entry is in millions => multiply by 1e6
+                            state_ids_pop = pop_data_struct.NodeData.POPULATION<pop_num.Value; 
                         end
                         % the state abbreviations are in the second column of NodeData
                         states_2_plot_pop = table2array(pop_data_struct.NodeData(state_ids_pop,2));
