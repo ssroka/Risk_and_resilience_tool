@@ -120,7 +120,7 @@ classdef MapApp < matlab.apps.AppBase
             % Create GeoAxes
             gx = geoaxes(app.RightPanel, 'Basemap', 'darkwater', 'NextPlot', 'add');
             gx.Title.FontName = 'Helvetica';
-            gx.Title.String = 'CARBON Tool'; % display label, come up with better name
+            gx.Title.String = 'MCSC Geospatial Interactive Mapping Tool'; % display label, come up with better name
             gx.Title.FontSize = 18;
             gx.Subtitle.String = sprintf('An interactive map to support better business decisions regarding CCS and resiliency retrofitting');
             gx.Subtitle.FontName = 'Helvetica';
@@ -251,36 +251,36 @@ classdef MapApp < matlab.apps.AppBase
             app.Node3_1 = uitreenode(app.Node3);
             app.Node3_1.Text = 'Earthquake';
             app.Node3_1.Tag = 'Earthquake';
-            app.Node3_1.NodeData =  nri_county_risk_GT(:, ['Shape','CountyNS',"ERQK_RISKR"]);
+            app.Node3_1.NodeData =  nri_county_risk_GT(:, ["Shape","CountyNS","ERQK_RISKR"]);
 
             app.Node3_4 = uitreenode(app.Node3);
             app.Node3_4.Text = 'Drought';
             app.Node3_4.Tag = 'Drought';
-            app.Node3_4.NodeData =  nri_county_risk_GT(:, ['Shape','CountyNS',"DRGT_RISKR"]);
+            app.Node3_4.NodeData =  nri_county_risk_GT(:, ["Shape","CountyNS","DRGT_RISKR"]);
 
 
             app.Node3_8 = uitreenode(app.Node3);
             app.Node3_8.Text = 'Hurricane';
             app.Node3_8.Tag = 'Hurricane';
-            app.Node3_8.NodeData =   nri_county_risk_GT(:, ['Shape','CountyNS',"HRCN_RISKR"]);
+            app.Node3_8.NodeData =   nri_county_risk_GT(:, ["Shape","CountyNS","HRCN_RISKR"]);
 
 
             app.Node3_12 = uitreenode(app.Node3);
             app.Node3_12.Text = 'Riverine Flooding';
             app.Node3_12.Tag = 'Riverine Flooding';
-            app.Node3_12.NodeData =  nri_county_risk_GT(:, ['Shape','CountyNS',"RFLD_RISKR"]);
+            app.Node3_12.NodeData =  nri_county_risk_GT(:, ["Shape","CountyNS","RFLD_RISKR"]);
 
 
             app.Node3_13 = uitreenode(app.Node3);
             app.Node3_13.Text = 'Strong Wind';
             app.Node3_13.Tag = 'Strong Wind';
-            app.Node3_13.NodeData =  nri_county_risk_GT(:, ['Shape','CountyNS',"SWND_RISKR"]);
+            app.Node3_13.NodeData =  nri_county_risk_GT(:, ["Shape","CountyNS","SWND_RISKR"]);
 
 
             app.Node3_17 = uitreenode(app.Node3);
             app.Node3_17.Text = 'Wildfire';
             app.Node3_17.Tag = 'Wildfire';
-            app.Node3_17.NodeData = nri_county_risk_GT(:, ['Shape','CountyNS',"WFIR_RISKR"]);
+            app.Node3_17.NodeData = nri_county_risk_GT(:, ["Shape","CountyNS","WFIR_RISKR"]);
 
             % Node 4 parent
             app.Node4 = uitreenode(app.Tree);
@@ -310,19 +310,19 @@ classdef MapApp < matlab.apps.AppBase
             app.Node6 = uitreenode(app.Tree);
             app.Node6.Text = 'Social Vulnerability';
             app.Node6.Tag = 'Social Vulnerability';
-            app.Node6.NodeData = nri_county_risk_GT(:, ['Shape','CountyNS',"SOVI_RATNG"]);
+            app.Node6.NodeData = nri_county_risk_GT(:, ["Shape","CountyNS","SOVI_RATNG"]);
             %
             % Node 6 parent
             app.Node7 = uitreenode(app.Tree);
             app.Node7.Text = 'Community Resilience';
             app.Node7.Tag = 'Community Resilience';
-            app.Node7.NodeData = nri_county_risk_GT(:, ['Shape','CountyNS',"RESL_RATNG"]);
+            app.Node7.NodeData = nri_county_risk_GT(:, ["Shape","CountyNS","RESL_RATNG"]);
 
             % Node 8 Parent
             app.Node8 = uitreenode(app.Tree);
             app.Node8.Text = 'Population';
             app.Node8.Tag = 'Population';
-            app.Node8.NodeData = nri_county_risk_GT(:, ['Shape','CountyNS',"POPULATION"]);
+            app.Node8.NodeData = nri_county_risk_GT(:, ["Shape","CountyNS","POPULATION"]);
 
             %             % Node 9 Parent
             app.Node9 = uitreenode(app.Tree);
@@ -336,54 +336,49 @@ classdef MapApp < matlab.apps.AppBase
             % Node 10 parent
             app.Node10 = uitreenode(app.Tree);
             app.Node10.Text = 'Projected Risk (~2050)';
+            load('climrr_county_risk_GT.mat','climrr_county_risk_GT')
 
             % Node 10 children
             app.Node10_1 = uitreenode(app.Node10);
-            app.Node10_1.Text = 'Max Seasonal Temperature';
-            app.Node10_1.Tag = 'Max Seasonal Temperature';
+            app.Node10_1.Text = 'Max Daily Summer Avg Temperature';
+            app.Node10_1.Tag = 'Max Daily Summer Avg Temperature';
 
-            %app.Node10_1_1.NodeData =
             app.Node10_1_1 = uitreenode(app.Node10_1);
-            app.Node10_1_1.Text = 'RCP 4.5';
-            app.Node10_1_1.Tag = 'RCP 4.5';
-            %app.Node10_1_2.NodeData =
-
-            app.Node10_1_2 = uitreenode(app.Node10_1);
-            app.Node10_1_2.Text = 'RCP 8.5';
-            app.Node10_1_2.Tag = 'RCP 8.5';
-            %app.Node10_1.NodeData =
+            app.Node10_1_1.Text = 'RCP 8.5';
+            app.Node10_1_1.Tag = 'RCP 8.5';
+            app.Node10_1_1.NodeData =climrr_county_risk_GT(:,["Shape","T_max_85"]);
 
             app.Node10_2 = uitreenode(app.Node10);
-            app.Node10_2.Text = 'No Precipitation';
-            app.Node10_2.Tag = 'No Precipitation';
+            app.Node10_2.Text = 'Consecutive Days without Precipitation';
+            app.Node10_2.Tag = 'Consecutive Days without Precipitation';
             %app.Node10_2.NodeData =
 
             %app.Node10_1_1.NodeData =
             app.Node10_2_1 = uitreenode(app.Node10_2);
             app.Node10_2_1.Text = 'RCP 4.5';
             app.Node10_2_1.Tag = 'RCP 4.5';
-            %app.Node10_2_2.NodeData =
+            app.Node10_2_1.NodeData =climrr_county_risk_GT(:,["Shape","no_prec_45"]);
 
             app.Node10_2_2 = uitreenode(app.Node10_2);
             app.Node10_2_2.Text = 'RCP 8.5';
             app.Node10_2_2.Tag = 'RCP 8.5';
-            %app.Node10_1.NodeData =
+            app.Node10_2_2.NodeData =climrr_county_risk_GT(:,["Shape","no_prec_85"]);
 
             app.Node10_3 = uitreenode(app.Node10);
-            app.Node10_3.Text = 'Cooling Days';
-            app.Node10_3.Tag = 'Cooling Days';
+            app.Node10_3.Text = 'Total Annual Precipitation [in]';
+            app.Node10_3.Tag = 'Total Annual Precipitation [in]';
             %app.Node10_3.NodeData =
 
             %app.Node10_1_1.NodeData =
             app.Node10_3_1 = uitreenode(app.Node10_3);
             app.Node10_3_1.Text = 'RCP 4.5';
             app.Node10_3_1.Tag = 'RCP 4.5';
-            %app.Node10_3_2.NodeData =
+            app.Node10_3_1.NodeData =climrr_county_risk_GT(:,["Shape","prec_45"]);
 
             app.Node10_3_2 = uitreenode(app.Node10_3);
             app.Node10_3_2.Text = 'RCP 8.5';
             app.Node10_3_2.Tag = 'RCP 8.5';
-            %app.Node10_1.NodeData =
+            app.Node10_3_2.NodeData =climrr_county_risk_GT(:,["Shape","prec_85"]);
 
 
             % Middle panel grid

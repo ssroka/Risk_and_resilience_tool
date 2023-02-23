@@ -4,6 +4,7 @@ create_county_data_flag = true;
 
 addpath('../Data/ClimRR/GridCellsShapefile/')
 addpath('../Data/ClimRR/')
+addpath('../Data/USCensus_small_counties/')
 
 if create_S_mat_flag
 
@@ -65,29 +66,85 @@ end
 
 if create_county_data_flag
 
-load('row_col_ind_ClimRR_S','S')
+load('row_col_ind_ClimRR_S')
 
-S_mean = S./repmat(sum(S,2),1,size(S,2));
+S_mean = S./repmat(max(sum(S,2),1),1,size(S,2)); % need the max in there to prevent div-by-0
 
-% max seasonal temp
-T_max_raw = readtable('AnnualTemperatureMaximum.csv');
+%% max annual temp
+T_max_raw = readtable('SeasonalTemperatureMaximum.csv');
 
-T_correct_order = zeros(size(S,2),1);
-for i = 1:size(T_max_raw,1)
-[~,Loc] = ismember(climrr_county_GT.Crossmodel,T_max_raw.Crossmodel(i,1));
-T_correct_order(Loc,1) = T_max_raw.Crossmodel(i,1);
+% initialize final table
+T_max = T_max_raw;
+T_max.Crossmodel(:) = {''};
+% make precip the same size as the shape file array
+T_max.Crossmodel(size(S,2)) = {''};
+
+% hack it
+for j = 2:length(T_max.Properties.VariableNames)
+    eval(sprintf('T_max.%s(:) = 0;',T_max.Properties.VariableNames{j}))
 end
 
-T_max_45 = S_mean*T_max.rcp45_midc;
-T_max_85 = S_mean*T_max.rcp85_midc;
+for i = 1:size(T_max_raw,1)
+[~,Loc] = ismember(T_max_raw.Crossmodel(i,1),climrr_county_GT.Crossmodel);
+T_max(Loc,:) = T_max_raw(i,:);
+end
 
-% no precip
-no_prec = readtable('ConsecutiveDayswithNoPrecipitation.csv');
+T_max_85 = S_mean*T_max.rcp85_mid_summer;
+
+
+%% no precip
+no_prec_raw = readtable('ConsecutiveDayswithNoPrecipitation.csv');
+
+% initialize final table
+no_prec = no_prec_raw;
+no_prec.Crossmodel(:) = {''};
+% make precip the same size as the shape file array
+no_prec.Crossmodel(size(S,2)) = {''};
+
+% hack it
+for j = 2:length(no_prec.Properties.VariableNames)
+    eval(sprintf('no_prec.%s(:) = 0;',no_prec.Properties.VariableNames{j}))
+end
+
+for i = 1:size(no_prec_raw,1)
+[~,Loc] = ismember(no_prec_raw.Crossmodel(i,1),climrr_county_GT.Crossmodel);
+no_prec(Loc,:) = no_prec_raw(i,:);
+end
+
 
 no_prec_45 = S_mean*no_prec.rcp45_midc;
 no_prec_85 = S_mean*no_prec.rcp85_midc;
 
-save('climrr_data_2_plot')
+
+%% precip [in]
+prec_raw = readtable('Precipitation_inches_AnnualTotal.csv');
+
+% initialize final table
+prec = prec_raw;
+prec.Crossmodel(:) = {''};
+% make precip the same size as the shape file array
+prec.Crossmodel(size(S,2)) = {''};
+
+% hack it
+for j = 2:length(prec.Properties.VariableNames)
+    eval(sprintf('prec.%s(:) = 0;',prec.Properties.VariableNames{j}))
+end
+
+for i = 1:size(prec_raw,1)
+[~,Loc] = ismember(prec_raw.Crossmodel(i,1),climrr_county_GT.Crossmodel);
+prec(Loc,:) = prec_raw(i,:);
+end
+
+
+prec_45 = S_mean*prec.rcp45_midc;
+prec_85 = S_mean*prec.rcp85_midc;
+
+%% total geotable
+
+climrr_county_risk_GT = [small_county_GT table(T_max_85,no_prec_45,no_prec_85,prec_45,prec_85)];
+
+
+save('../Data/ClimRR/climrr_county_risk_GT.mat','climrr_county_risk_GT','S')
 
 % 
 % % max seasonal temp
