@@ -144,7 +144,7 @@ classdef MapApp < matlab.apps.AppBase
             % Create GeoAxes
             gx = geoaxes(app.RightPanel, 'Basemap', 'darkwater', 'NextPlot', 'add');
             gx.Title.FontName = 'Helvetica';
-            gx.Title.String = 'MCSC Geospatial Interactive Mapping Tool'; % display label, come up with better name
+            gx.Title.String = 'MCSC Interactive Geospatial Mapping Tool'; % display label, come up with better name
             gx.Title.FontSize = 18;
             gx.Subtitle.String = sprintf('An interactive map to support better business decisions regarding CCS and resiliency retrofitting');
             gx.Subtitle.FontName = 'Helvetica';
