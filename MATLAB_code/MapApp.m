@@ -310,6 +310,7 @@ classdef MapApp < matlab.apps.AppBase
             app.Node4 = uitreenode(app.Tree);
             app.Node4.Text = 'Grid Carbon Intensity [lbs CO2/ MWh]';
             [nerc_GT] = getGridData();
+            nerc_GT = nerc_GT(1:end-1,:);% removing the Indeterminate section
 
             app.Node4.NodeData = nerc_GT;
 
@@ -322,6 +323,8 @@ classdef MapApp < matlab.apps.AppBase
             app.Node4_2.Text = '2050 projection';
             app.Node4_2.Tag = '2021 projection';
             app.Node4_2.NodeData = nerc_GT(:,{'Shape','CI_2050'});
+
+            clear nerc_GT
 
             % Node 5 parent
             app.Node5 = uitreenode(app.Tree);
@@ -342,20 +345,21 @@ classdef MapApp < matlab.apps.AppBase
             app.Node7.Tag = 'Community Resilience';
             app.Node7.NodeData = nri_county_risk_GT(:, ["Shape","CountyNS","RESL_RATNG"]);
 
+
             % Node 8 Parent
             app.Node8 = uitreenode(app.Tree);
             app.Node8.Text = 'Population';
             app.Node8.Tag = 'Population';
             app.Node8.NodeData = nri_county_risk_GT(:, ["Shape","CountyNS","POPULATION"]);
 
+            clear nri_county_risk_GT
+
             %             % Node 9 Parent
             app.Node9 = uitreenode(app.Tree);
             app.Node9.Text = 'Interstates';
             app.Node9.Tag = 'Interstates';
-            tmp_struct = load('roads_GT_I.mat','roads_GT_I');
-            roads_GT = tmp_struct.roads_GT_I;
-            clear tmp_struct
-            app.Node9.NodeData = roads_GT;
+            load('roads_GT_I.mat','roads_GT_I');
+            app.Node9.NodeData = roads_GT_I;
 
             % Node 10 parent
             app.Node10 = uitreenode(app.Tree);
@@ -404,6 +408,7 @@ classdef MapApp < matlab.apps.AppBase
             app.Node10_3_2.Tag = 'RCP 8.5';
             app.Node10_3_2.NodeData =climrr_county_risk_GT(:,["Shape","prec_85"]);
 
+            clear climrr_county_risk_GT
 
             % Middle panel grid
             gl = uigridlayout(app.MiddlePanel, [5 7]);
@@ -781,9 +786,6 @@ classdef MapApp < matlab.apps.AppBase
             end
         end
     end
-
-
-
 
 
 
