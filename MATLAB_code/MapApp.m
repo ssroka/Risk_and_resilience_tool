@@ -44,6 +44,7 @@ classdef MapApp < matlab.apps.AppBase
         RightPanel matlab.ui.container.Panel
         BottomPanel matlab.ui.container.Panel
         MiddlePanel matlab.ui.container.Panel
+        LowestPanel matlab.ui.container.Panel
         Tree      matlab.ui.container.CheckBoxTree
         Node1      matlab.ui.container.TreeNode
         Node1_1      matlab.ui.container.TreeNode
@@ -81,6 +82,8 @@ classdef MapApp < matlab.apps.AppBase
         Node10_3      matlab.ui.container.TreeNode
         Node10_3_1      matlab.ui.container.TreeNode
         Node10_3_2      matlab.ui.container.TreeNode
+        Node11      matlab.ui.container.TreeNode
+        Node12      matlab.ui.container.TreeNode
 
     end
 
@@ -98,6 +101,7 @@ classdef MapApp < matlab.apps.AppBase
             warning('off','map:shapefile:unsupportedType')
             warning('off', 'map:shapefile:missingDBF')
             warning('off', 'MATLAB:table:ModifiedAndSavedVarnames')
+            warning('off', 'MATLAB:handle_graphics:exceptions:SceneNode')
         end
 
     end
@@ -116,7 +120,7 @@ classdef MapApp < matlab.apps.AppBase
 
 
             % Create GridLayout
-            app.GridLayout = uigridlayout(app.UIFigure, [7 12]);
+            app.GridLayout = uigridlayout(app.UIFigure, [12 12]);
             app.GridLayout.ColumnSpacing = 0;
             app.GridLayout.RowSpacing = 0;
             app.GridLayout.Padding = [0 0 0 0];
@@ -127,7 +131,7 @@ classdef MapApp < matlab.apps.AppBase
             app.LeftPanel.FontName = 'Helvetica';
             app.LeftPanel.FontSize = 14;
             app.LeftPanel.Title = 'Layers';
-            app.LeftPanel.Layout.Row = [1 2];
+            app.LeftPanel.Layout.Row = [1 4];
             app.LeftPanel.Layout.Column = [1 3];
             app.LeftPanel.Scrollable = 'on';
 
@@ -136,7 +140,7 @@ classdef MapApp < matlab.apps.AppBase
             app.RightPanel = uipanel(app.GridLayout);
             app.RightPanel.FontName = 'Helvetica';
             app.RightPanel.Title = 'Map';
-            app.RightPanel.Layout.Row = [1 7];
+            app.RightPanel.Layout.Row = [1 12];
             app.RightPanel.Layout.Column = [4 12];
             app.RightPanel.Scrollable = 'on';
 
@@ -149,6 +153,7 @@ classdef MapApp < matlab.apps.AppBase
             gx.Subtitle.String = sprintf('An interactive map to support better business decisions regarding CCS and resiliency retrofitting');
             gx.Subtitle.FontName = 'Helvetica';
             gx.Subtitle.FontSize = 16;
+            gx.FontSize = 16;
             gx.Subtitle.FontAngle = 'italic';
             gx.Scalebar.Visible = 'on'; % display scale bar
             gx.Grid = "off"; % no grid (may be distracting)
@@ -167,7 +172,8 @@ classdef MapApp < matlab.apps.AppBase
             app.BottomPanel = uipanel(app.GridLayout);
             app.BottomPanel.FontName = 'Helvetica';
             app.BottomPanel.Title = 'Filter Vegetation Index...';
-            app.BottomPanel.Layout.Row = [6 7];
+            app.BottomPanel.FontSize = 18;
+            app.BottomPanel.Layout.Row = [9 10];
             app.BottomPanel.Layout.Column = [1 3];
             app.BottomPanel.Scrollable = 'on';
 
@@ -176,9 +182,19 @@ classdef MapApp < matlab.apps.AppBase
             app.MiddlePanel = uipanel(app.GridLayout);
             app.MiddlePanel.FontName = 'Helvetica';
             app.MiddlePanel.Title = 'Filter point sources by ...';
-            app.MiddlePanel.Layout.Row = [3 5];
+            app.MiddlePanel.FontSize = 18;
+            app.MiddlePanel.Layout.Row = [5 8];
             app.MiddlePanel.Layout.Column = [1 3];
             app.MiddlePanel.Scrollable = 'on';
+
+            % Create LowestPanel
+            app.LowestPanel = uipanel(app.GridLayout);
+            app.LowestPanel.FontName = 'Helvetica';
+            app.LowestPanel.Title = 'Check a location ...';
+            app.LowestPanel.FontSize = 18;
+            app.LowestPanel.Layout.Row = [11 12];
+            app.LowestPanel.Layout.Column = [1 3];
+            app.LowestPanel.Scrollable = 'on';
 
             % Create Tree
             app.Tree = uitree(app.LeftPanel, 'checkbox');
@@ -410,6 +426,21 @@ classdef MapApp < matlab.apps.AppBase
 
             clear climrr_county_risk_GT
 
+            % Node 11 Parent
+            app.Node11 = uitreenode(app.Tree);
+            app.Node11.Text = 'Disadvantaged Communities';
+            app.Node11.Tag = 'Disadvantaged Communities';
+            load('DAC.mat','DAC_GT');
+            app.Node11.NodeData = DAC_GT;
+
+            % Node 12 Parent
+            app.Node12 = uitreenode(app.Tree);
+            app.Node12.Text = 'Protected Areas';
+            app.Node12.Tag = 'Protected Areas';
+            load('biodiversity/WDPA_WDOECM_Mar2023_Public_USA_shp/IBAT.mat','PP_GT_V');
+            app.Node12.NodeData = PP_GT_V;
+
+
             % Middle panel grid
             gl = uigridlayout(app.MiddlePanel, [5 7]);
             gl.ColumnSpacing = 5;
@@ -489,7 +520,9 @@ classdef MapApp < matlab.apps.AppBase
             lbl_3_1.Layout.Column = 3;
 
             lbl_3_2 = uilabel(gl);
-            lbl_3_2.Text = 'MT CO2e/year';
+            lbl_3_2.Text = 'MT CO$_2$e/a';
+            lbl_3_2.Interpreter = 'LaTex';
+            lbl_3_2.FontName = 'Helvetica';
             lbl_3_2.FontSize = 18;
             lbl_3_2.Layout.Row = 3;
             lbl_3_2.Layout.Column = [6 7];
@@ -524,26 +557,26 @@ classdef MapApp < matlab.apps.AppBase
             % Update Map button
             b = uibutton(gl);
             b.Text = 'Update point sources';
-            b.FontSize = 14;
+            b.FontSize = 20;
             b.FontName = 'Helvetica';
             b.Layout.Row = 5;
             b.Layout.Column = [1 7];
             b.ButtonPushedFcn =  {@updateMap_point_src, app, gx};
 
             % Bottom grid panel
-            gl_b = uigridlayout(app.BottomPanel, [3 7]);
+            gl_b = uigridlayout(app.BottomPanel, [2 7]);
             gl_b.ColumnSpacing = 5;
             gl_b.RowSpacing = 5;
             gl_b.Padding = [5 5 5 5];
 
             % NRI
-            b_b3 = uibutton(gl_b,'state');
-            b_b3.FontName = 'Helvetica';
-            b_b3.FontSize = 14;
-            b_b3.Text = sprintf('Natural\nHazard Risk','interpreter','Latex');
-            b_b3.Tag = 'nathaz_TF';
-            b_b3.Layout.Row = 1;
-            b_b3.Layout.Column = [1 2];
+            b_b1 = uibutton(gl_b,'state');
+            b_b1.FontName = 'Helvetica';
+            b_b1.FontSize = 14;
+            b_b1.Text = sprintf('Natural\nHazard Risk','interpreter','Latex');
+            b_b1.Tag = 'nathaz_TF';
+            b_b1.Layout.Row = 1;
+            b_b1.Layout.Column = [1 2];
 
             dd_3_1 = uidropdown(gl_b, 'Items', {'None','Earthquake','Drought', 'Hurricane','Riverine Flooding', 'Strong Wind', 'Wildfire'},...
                 'Editable','off', 'Placeholder', 'Enter risk');
@@ -558,14 +591,95 @@ classdef MapApp < matlab.apps.AppBase
             dd_3_2.Layout.Row = 1;
             dd_3_2.Layout.Column = [6 7];
 
-            % Update Map button
-            b_b = uibutton(gl_b);
-            b_b.Text = 'Update NDVI';
-            b_b.FontSize = 14;
-            b_b.FontName = 'Helvetica';
-            b_b.Layout.Row = 3;
-            b_b.Layout.Column = [1 7];
-            b_b.ButtonPushedFcn =  {@updateMap_NDVI, app, gx};
+            % Update Map NDVI button
+            b_b_NDVI = uibutton(gl_b);
+            b_b_NDVI.Text = 'Update NDVI';
+            b_b_NDVI.FontSize = 20;
+            b_b_NDVI.FontName = 'Helvetica';
+            b_b_NDVI.Layout.Row = 2;
+            b_b_NDVI.Layout.Column = [1 7];
+            b_b_NDVI.ButtonPushedFcn =  {@updateMap_NDVI, app, gx};
+
+            % Lowest grid panel
+            gl_B = uigridlayout(app.LowestPanel, [2 7]);
+            gl_B.ColumnSpacing = 5;
+            gl_B.RowSpacing = 5;
+            gl_B.Padding = [5 5 5 5];
+
+            % Check a point
+            b_lat = uieditfield(gl_B, 'numeric', 'Editable', 'on');
+            b_lat.FontSize = 14;
+            b_lat.Tag = 'lat';
+            b_lat.Layout.Row = 1;
+            b_lat.Layout.Column = [1];
+
+            b_lon = uieditfield(gl_B, 'numeric', 'Editable', 'on');
+            b_lon.FontSize = 14;
+            b_lon.Tag = 'lon';
+            b_lon.Layout.Row = 1;
+            b_lon.Layout.Column = [2];
+
+            b_rad = uieditfield(gl_B, 'numeric', 'Editable', 'on');
+            b_rad.FontSize = 14;
+            b_rad.Limits = [0 Inf];
+            b_rad.Tag = 'radius';
+            b_rad.Layout.Row = 1;
+            b_rad.Layout.Column = [3 4];
+
+            dd_3_2 = uidropdown(gl_B, 'Items', {'DAC','Protected Area'}, 'Editable', 'off');
+            dd_3_2.FontSize = 14;
+            dd_3_2.Tag = 'DAC_PP';
+            dd_3_2.Layout.Row = 1;
+            dd_3_2.Layout.Column = [6 7];
+
+            % Update Map Check Loc button
+            b_b_DAC = uibutton(gl_B);
+            b_b_DAC.Text = 'Check Location';
+            b_b_DAC.Tag = 'Check Location';
+            b_b_DAC.FontSize = 14;
+            b_b_DAC.FontName = 'Helvetica';
+            b_b_DAC.Layout.Row = 2;
+            b_b_DAC.Layout.Column = [6 7];
+            b_b_DAC.ButtonPushedFcn =  {@updateMap_checkLoc, app, gx};
+
+            b_b_DAC_clear = uibutton(gl_B);
+            b_b_DAC_clear.Text = 'Clear';
+            b_b_DAC_clear.Tag = 'Clear';
+            b_b_DAC_clear.FontSize = 14;
+            b_b_DAC_clear.FontName = 'Helvetica';
+            b_b_DAC_clear.Layout.Row = 2;
+            b_b_DAC_clear.Layout.Column = [5];
+            b_b_DAC_clear.ButtonPushedFcn =  {@updateMap_checkLoc, app, gx};
+
+
+            b_lbl_lat = uilabel(gl_B);
+            b_lbl_lat.Text = 'lat $^\circ$';
+            b_lbl_lat.Interpreter = 'LaTex';
+            b_lbl_lat.HorizontalAlignment = 'center';
+            b_lbl_lat.VerticalAlignment = 'top';
+            b_lbl_lat.FontName = 'Helvetica';
+            b_lbl_lat.FontSize = 20;
+            b_lbl_lat.Layout.Row = 2;
+            b_lbl_lat.Layout.Column = [1];
+
+            b_lbl_lon = uilabel(gl_B);
+            b_lbl_lon.Text = 'lon $^\circ$';
+            b_lbl_lon.Interpreter = 'LaTex';
+            b_lbl_lon.FontName = 'Helvetica';
+            b_lbl_lon.HorizontalAlignment = 'center';
+            b_lbl_lon.VerticalAlignment = 'top';
+            b_lbl_lon.FontSize = 20;
+            b_lbl_lon.Layout.Row = 2;
+            b_lbl_lon.Layout.Column = [2];
+
+            b_lbl_rad = uilabel(gl_B);
+            b_lbl_rad.Text = 'radius [mi]';
+            b_lbl_rad.HorizontalAlignment = 'center';
+            b_lbl_rad.VerticalAlignment = 'top';
+            b_lbl_rad.FontSize = 20;
+            b_lbl_rad.Layout.Row = 2;
+            b_lbl_rad.Layout.Column = [3 4];
+
 
             % Display figure only when all components have been created
             app.UIFigure.Visible = 'on';
@@ -725,6 +839,74 @@ classdef MapApp < matlab.apps.AppBase
                     polyLayer(ax, cn(cn_idx),states_2_plot)
                 end
             end
+
+            function updateMap_checkLoc(src, event, app, ax)
+                all_layers = get(ax,'Children'); % all plotted data layers
+                % remove previous circle and point if any
+                for ii_data_layers = 1:length(all_layers) % loop thorugh all layers and see which are polygon layers
+                    radius_flag = strcmp(all_layers(ii_data_layers).Tag,'CheckLocRad');
+                    point_flag = strcmp(all_layers(ii_data_layers).Tag,'CheckLocPt');
+                    if radius_flag || point_flag
+                        delete(all_layers(ii_data_layers));
+                    end
+                end
+                if strcmp(src.Tag,'Check Location')
+                    cn = app.LeftPanel.Children(1).CheckedNodes;
+                    DAC_PP_idx = find(strcmp({app.LowestPanel.Children.Children(:).Tag}, 'DAC_PP'));
+                    DAC_PP = app.LowestPanel.Children.Children(DAC_PP_idx);
+                    
+                    if strcmp(DAC_PP.Value,'DAC') % can only be 'DAC','Protected Area'
+                        plt_DAC = true;
+                        plt_PA = false;
+                    else
+                        plt_DAC = false;
+                        plt_PA = true;
+                    end
+
+                    if ~isempty(cn) && plt_DAC
+                        for ii_cn = 1:length(cn)
+                            if strcmp(cn(ii_cn).Text,'Disadvantaged Communities')
+                                plt_DAC = false;
+                                break
+                            end
+                        end
+                    end
+                    if ~isempty(cn) && plt_PA
+                        for ii_cn = 1:length(cn)
+                            if strcmp(cn(ii_cn).Text,'Protected Areas')
+                                plt_PA = false;
+                                break
+                            end
+                        end
+                    end
+                    if plt_DAC
+                        polyLayer(ax,app.LeftPanel.Children(1).Children(11))
+                        app.LeftPanel.Children(1).CheckedNodes = [app.LeftPanel.Children(1).CheckedNodes app.LeftPanel.Children(1).Children(11)];
+                    end
+                    if plt_PA
+                        polyLayer(ax,app.LeftPanel.Children(1).Children(12))
+                        app.LeftPanel.Children(1).CheckedNodes = [app.LeftPanel.Children(1).CheckedNodes app.LeftPanel.Children(1).Children(12)];
+                    end
+
+                    lat_num_idx = find(strcmp({app.LowestPanel.Children.Children(:).Tag}, 'lat'));
+                    lat_num = app.LowestPanel.Children.Children(lat_num_idx);
+                    lon_num_idx = find(strcmp({app.LowestPanel.Children.Children(:).Tag}, 'lon'));
+                    lon_num = app.LowestPanel.Children.Children(lon_num_idx);
+                    rad_num_idx = find(strcmp({app.LowestPanel.Children.Children(:).Tag}, 'radius'));
+                    rad_num = app.LowestPanel.Children.Children(rad_num_idx);
+                    r = rad_num.Value/69.0; % convert miles to degrees
+
+                    % plot new circle and point
+                    th_vec = linspace(0,2*pi);
+                    geoplot(ax,r*sin(th_vec)+lat_num.Value,r*cos(th_vec)+lon_num.Value,...
+                        'r','linewidth',2,'Tag', 'CheckLocRad','displayname','radius')
+                    geoplot(ax,lat_num.Value,lon_num.Value,...
+                        'ro','MarkerFaceColor','r','linewidth',2,'Tag', 'CheckLocPt','displayname','location')
+                    geolimits(ax, [-2 2]*r+lat_num.Value, [-2 2]*r+lon_num.Value)
+
+                end
+            end
+
 
             % Function that plots/deletes when checkbox is
             % selected/deselected

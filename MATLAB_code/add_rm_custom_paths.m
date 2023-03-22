@@ -66,6 +66,11 @@ custom_paths = {
     ['.' filesep 'Data' filesep 'NDVI' filesep ],
 
     ['.' filesep 'Data' filesep 'ClimRR' filesep ],
+
+    ['.' filesep 'Data' filesep 'biodiversity' filesep ],
+    ['.' filesep 'Data' filesep 'biodiversity' filesep 'WDPA_WDOECM_Mar2023_Public_USA_shp' filesep ],
+    
+    ['.' filesep 'Data' filesep 'DAC Shapefiles (v2022c)' filesep ],
     ['.' filesep 'Data' filesep 'ClimRR' filesep 'GridCellsShapefile' filesep ],
     ['.' filesep 'Data' filesep 'Roads' filesep ],
     ['.' filesep 'Data' filesep 'Roads' filesep 'Highways_(2019)' filesep],
