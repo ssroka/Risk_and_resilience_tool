@@ -356,10 +356,14 @@ classdef MapApp < matlab.apps.AppBase
 
             %             % Node 9 Parent
             app.Node9 = uitreenode(app.Tree);
-            app.Node9.Text = 'Interstates';
-            app.Node9.Tag = 'Interstates';
-            load('roads_GT_I.mat','roads_GT_I');
-            app.Node9.NodeData = roads_GT_I;
+            app.Node9.Text = 'Roads';
+            app.Node9.Tag = 'Roads';
+            faf5_GT_1 = load('faf5_GT_1.mat','faf5_GT');
+            faf5_GT_2 = load('faf5_GT_2.mat','faf5_GT');
+            faf5_GT_3 = load('faf5_GT_3.mat','faf5_GT');
+            faf5_GT_4 = load('faf5_GT_4.mat','faf5_GT');
+            faf5_GT_5 = load('faf5_GT_5.mat','faf5_GT');
+            app.Node9.NodeData = [faf5_GT_1.faf5_GT; faf5_GT_2.faf5_GT; faf5_GT_3.faf5_GT; faf5_GT_4.faf5_GT; faf5_GT_5.faf5_GT];
 
             % Node 10 parent
             app.Node10 = uitreenode(app.Tree);

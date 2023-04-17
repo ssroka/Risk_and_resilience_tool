@@ -70,6 +70,8 @@ custom_paths = {
     ['.' filesep 'Data' filesep 'Roads' filesep ],
     ['.' filesep 'Data' filesep 'Roads' filesep 'Highways_(2019)' filesep],
     ['.' filesep 'Data' filesep 'Roads' filesep 'tl_2021_us_primaryroads' filesep],
+    ['.' filesep 'Data' filesep 'Roads' filesep 'texas_network_with_linewidths' filesep],
+    ['.' filesep 'Data' filesep 'Roads' filesep 'FAF5_Shapefiles' filesep],
         
     ['.' filesep 'Data' filesep 'grid_greeness' filesep ],
     ['.' filesep 'Data' filesep 'grid_greeness' filesep 'ISO'],
