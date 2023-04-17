@@ -71,46 +71,46 @@ switch string(nodes.Text)
         if  filter_flag% if there was a filter
             MEC = '#000000';
         else
-            MEC = '#FF513D';
+            MEC = '#8E939E';
         end
         geoplot(ax, nodes.NodeData(ids2plt,:),...
             'Marker', 'o', 'MarkerSize', 10,...
-            'MarkerFaceColor','#FF513D', 'MarkerEdgeColor',MEC,...
-            'Tag', nodes.Text, 'displayname','Power Plants' );
+            'MarkerFaceColor','#8E939E', 'MarkerEdgeColor',MEC,...
+            'Tag', nodes.Text, 'displayname','Power Plants' );% old red color FF513D
     case "Cement Plants"
 
         if filter_flag
             MEC = '#000000';
         else
-            MEC = '#3D6AFF';
+            MEC = '#073090';
         end
         geoplot(ax, nodes.NodeData(ids2plt,:),...
             'Marker', 's', 'MarkerSize', 10,...
-            'MarkerFaceColor','#3D6AFF', 'MarkerEdgeColor',MEC,...
-            'Tag', nodes.Text,'displayname','Cement Plants' );
+            'MarkerFaceColor','#073090', 'MarkerEdgeColor',MEC,...
+            'Tag', nodes.Text,'displayname','Cement Plants' );% old blue color 3D6AFF
 
     case "Ethanol Plants"
 
         if filter_flag
             MEC ='#000000';
         else
-            MEC ='#fc6f03';
+            MEC ='#288B28';
         end
         geoplot(ax, nodes.NodeData(ids2plt,:),...
             'Marker', 'p', 'MarkerSize', 10,...
-            'MarkerFaceColor','#fc6f03', 'MarkerEdgeColor',MEC,...%FAAE17
-            'Tag', nodes.Text, 'displayname','Ethanol Plant' );
+            'MarkerFaceColor','#288B28', 'MarkerEdgeColor',MEC,...%FAAE17
+            'Tag', nodes.Text, 'displayname','Ethanol Plant' );% old yellow color fc6f03
     case "Iron and Steel Plants"
 
         if filter_flag
             MEC = '#000000';
         else
-            MEC = '#00A300';
+            MEC = '#1E6868';
         end
         geoplot(ax, nodes.NodeData(ids2plt,:),...
             'Marker', '^', 'MarkerSize', 10,...
-            'MarkerFaceColor','#00A300', 'MarkerEdgeColor',MEC,...
-            'Tag', nodes.Text,'displayname','Iron and Steel Plants'  );
+            'MarkerFaceColor','#1E6868', 'MarkerEdgeColor',MEC,...
+            'Tag', nodes.Text,'displayname','Iron and Steel Plants'  );% old green color 00A300
     case "Injection Sites"
         geoplot(ax, nodes.NodeData,...
             'Marker', 'o', 'MarkerSize', 7,...
