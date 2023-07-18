@@ -74,7 +74,7 @@ switch data_layer
         source_text = "Source: Department of Transportation";
         source_link = "https://hub.arcgis.com/datasets/NCTCOGGIS::highways-2019/explore?location=32.615783%2C-97.215500%2C10.00";
     case {"Disadvantaged Communities"}
-        source_text = "Source: Department of Energy, Justice40 Initiative" + newline +...
+        source_text = "Source: Climate and Economic Justice Screening Tool, Council on Environmental Quality" + newline +...
             "via Climate and Economic Justice Screening Tool" + newline + "(CEJST)";
         source_link = "https://screeningtool.geoplatform.gov/en/";
     otherwise
