@@ -37,6 +37,83 @@ function app = loadData(app)
 
 % load in the geotable, store the information in the corresponding Node,
 % then clear the geotable to conserve memory
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% hyperlinks
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+app.PointSourcesNode_2.Tag = app.PointSourcesNode_2.Text;
+app.PointSourcesNode_2.NodeData = ["https://ghgdata.epa.gov/ghgp/main.do"; "Environmental Protection Agency"];
+app.PowerPlantsNode_2.Tag = app.PowerPlantsNode_2.Text;
+app.PowerPlantsNode_2.NodeData = ["https://ghgdata.epa.gov/ghgp/main.do"; "Environmental Protection Agency"];
+app.CementPlantsNode_2.Tag = app.CementPlantsNode_2.Text;
+app.CementPlantsNode_2.NodeData = ["https://ghgdata.epa.gov/ghgp/main.do"; "Environmental Protection Agency"];
+app.EthanolPlantsNode_2.Tag = app.EthanolPlantsNode_2.Text;
+app.EthanolPlantsNode_2.NodeData = ["https://ghgdata.epa.gov/ghgp/main.do"; "Environmental Protection Agency"];
+app.IronandSteelPlantsNode_2.Tag = app.IronandSteelPlantsNode_2.Text;
+app.IronandSteelPlantsNode_2.NodeData = ["https://ghgdata.epa.gov/ghgp/main.do"; "Environmental Protection Agency"];
+
+app.InjectionSitesNode.Tag = app.InjectionSitesNode.Text;
+app.InjectionSitesNode.NodeData = ["https://www.netl.doe.gov/coal/carbon-storage/worldwide-ccs-database"; "National Energy Technology Laboratory and Department of Energy"];
+
+app.MaxSummerDailyAvgTemperatureNode.Tag = app.MaxSummerDailyAvgTemperatureNode.Text;
+app.MaxSummerDailyAvgTemperatureNode.NodeData = ["https://www.anl.gov/ccrds/ClimRR"; "Argonne National Laboratory Climate Risk and Resilience Portal Center for Climate Resilience and Decision Science (CCRDS)"];
+app.RCP85Node_4.Tag = app.RCP85Node_4.Text;
+app.RCP85Node_4.NodeData = ["https://www.anl.gov/ccrds/ClimRR"; "Argonne National Laboratory Climate Risk and Resilience Portal Center for Climate Resilience and Decision Science (CCRDS)"];
+app.ConsecutiveDayswithoutPrecipitationNode_2.Tag = app.ConsecutiveDayswithoutPrecipitationNode_2.Text;
+app.ConsecutiveDayswithoutPrecipitationNode_2.NodeData = ["https://www.anl.gov/ccrds/ClimRR"; "Argonne National Laboratory Climate Risk and Resilience Portal Center for Climate Resilience and Decision Science (CCRDS)"];
+app.RCP45Node_3.Tag = app.RCP45Node_3.Text;
+app.RCP45Node_3.NodeData = ["https://www.anl.gov/ccrds/ClimRR"; "Argonne National Laboratory Climate Risk and Resilience Portal Center for Climate Resilience and Decision Science (CCRDS)"];
+app.RCP85Node_5.Tag = app.RCP85Node_5.Text;
+app.RCP85Node_5.NodeData = ["https://www.anl.gov/ccrds/ClimRR"; "Argonne National Laboratory Climate Risk and Resilience Portal Center for Climate Resilience and Decision Science (CCRDS)"];
+app.TotalAnnualPrecipitationNode.Tag = app.TotalAnnualPrecipitationNode.Text;
+app.TotalAnnualPrecipitationNode.NodeData = ["https://www.anl.gov/ccrds/ClimRR"; "Argonne National Laboratory Climate Risk and Resilience Portal Center for Climate Resilience and Decision Science (CCRDS)"];
+app.RCP45Node_4.Tag = app.RCP45Node_4.Text;
+app.RCP45Node_4.NodeData = ["https://www.anl.gov/ccrds/ClimRR"; "Argonne National Laboratory Climate Risk and Resilience Portal Center for Climate Resilience and Decision Science (CCRDS)"];
+app.RCP85Node_6.Tag = app.RCP85Node_6.Text;
+app.RCP85Node_6.NodeData = ["https://www.anl.gov/ccrds/ClimRR"; "Argonne National Laboratory Climate Risk and Resilience Portal Center for Climate Resilience and Decision Science (CCRDS)"];
+
+
+app.EarthquakeNode_2.Tag = app.EarthquakeNode_2.Text;
+app.EarthquakeNode_2.NodeData = ["https://hazards.fema.gov/nri/"; "FEMA National Risk Index"];
+app.DroughtNode_2.Tag = app.DroughtNode_2.Text;
+app.DroughtNode_2.NodeData = ["https://hazards.fema.gov/nri/"; "FEMA National Risk Index (Drought specifically refers to risk to agriculture)"];
+app.HurricaneNode_2.Tag = app.HurricaneNode_2.Text;
+app.HurricaneNode_2.NodeData = ["https://hazards.fema.gov/nri/"; "FEMA National Risk Index"];
+app.RiverineFloodingNode_2.Tag = app.RiverineFloodingNode_2.Text;
+app.RiverineFloodingNode_2.NodeData = ["https://hazards.fema.gov/nri/"; "FEMA National Risk Index"];
+app.StrongWindNode_2.Tag = app.StrongWindNode_2.Text;
+app.StrongWindNode_2.NodeData = ["https://hazards.fema.gov/nri/"; "FEMA National Risk Index"];
+app.WildfireNode_2.Tag = app.WildfireNode_2.Text;
+app.WildfireNode_2.NodeData = ["https://hazards.fema.gov/nri/"; "FEMA National Risk Index"];
+app.SocialVulnerabilityNode_2.Tag = app.SocialVulnerabilityNode_2.Text;
+app.SocialVulnerabilityNode_2.NodeData = ["https://hazards.fema.gov/nri/"; "FEMA National Risk Index"];
+app.CommunityResilienceNode_2.Tag = app.CommunityResilienceNode_2.Text;
+app.CommunityResilienceNode_2.NodeData = ["https://hazards.fema.gov/nri/"; "FEMA National Risk Index"];
+app.PopulationNode_2.Tag = app.PopulationNode_2.Text;
+app.PopulationNode_2.NodeData = ["https://hazards.fema.gov/nri/"; "FEMA National Risk Index"];
+
+app.DisadvantagedCommunitiesNode_2.Tag = app.DisadvantagedCommunitiesNode_2.Text;
+app.DisadvantagedCommunitiesNode_2.NodeData = ["https://screeningtool.geoplatform.gov/en/"; "Council on Environmental Quality Climate and Economic Justice Screening Tool (CEJST)"];
+
+app.NDVINode_2.Tag = app.NDVINode_2.Text;
+app.NDVINode_2.NodeData = ["https://modis.gsfc.nasa.gov/data/dataprod/mod13.php"; "NASA MODIS Normalized Difference Vegetation Index (NDVI) via IBM's GEODN"];
+
+app.PresentNode_3.Tag = app.PresentNode_3.Text;
+app.PresentNode_3.NodeData = ["https://www.eia.gov/outlooks/aeo/supplement/excel/sup_elec.xlsx"; "Energy Information Administration (EIA)"];
+app.Projected2050Node_3.Tag = app.Projected2050Node_3.Text;
+app.Projected2050Node_3.NodeData = ["https://www.eia.gov/outlooks/aeo/supplement/excel/sup_elec.xlsx"; "Energy Information Administration (EIA)"];
+
+app.InterstatesNode_2.Tag = app.InterstatesNode_2.Text;
+app.InterstatesNode_2.NodeData = ["https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html"; "U.S. Department of Commerce, U.S. Census Bureau, Geography Division, Spatial Data Collection and Products Branch"];
+
+app.GeologicalReservoirsNode.Tag = app.GeologicalReservoirsNode.Text;
+app.GeologicalReservoirsNode.NodeData = ["https://pubs.usgs.gov/ds/774/pdf/DS774.pdf"; "US Geological Survey (USGS)"];
+
+app.OperationalNode.Tag = app.OperationalNode.Text;
+app.OperationalNode.NodeData = ["https://www.energy.gov/sites/prod/files/2015/04/f22/QER%20Analysis%20-%20A%20Review%20of%20the%20CO2%20Pipeline%20Infrastructure%20in%20the%20U.S_0.pdf"; "National Energy Technology Laboratory (NETL) and Department of Energy (DOE)"];
+app.PlannedNode.Tag = app.PlannedNode.Text;
+app.PlannedNode.NodeData = ["https://www.energy.gov/sites/prod/files/2015/04/f22/QER%20Analysis%20-%20A%20Review%20of%20the%20CO2%20Pipeline%20Infrastructure%20in%20the%20U.S_0.pdf"; "National Energy Technology Laboratory (NETL) and Department of Energy (DOE)"];
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % point sources
