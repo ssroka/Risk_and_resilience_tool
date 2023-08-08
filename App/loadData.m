@@ -215,11 +215,11 @@ clear nri_county_risk_GT
 % Disadvantaged Communities
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-load('CJEST_DAC_C.mat','CJEST_DAC_C');
-app.DACCEQNode.Tag = app.DACCEQNode.Text;
-app.DACCEQNode.NodeData = CJEST_DAC_C;
-
-clear CJEST_DAC_C
+% load('CJEST_DAC_C.mat','CJEST_DAC_C');
+% app.DACCEQNode.Tag = app.DACCEQNode.Text;
+% app.DACCEQNode.NodeData = CJEST_DAC_C;
+% 
+% clear CJEST_DAC_C
 
 load('CJEST_DAC_T.mat','CJEST_DAC_T');
 app.DACtribaloverlapCEQNode.Tag = app.DACtribaloverlapCEQNode.Text;
