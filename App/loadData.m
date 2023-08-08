@@ -212,14 +212,26 @@ app.PopulationNode.NodeData = nri_county_risk_GT(:, ["Shape","CountyNS","POPULAT
 clear nri_county_risk_GT
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% NRI present climate risk data
+% Disadvantaged Communities
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-load('DAC.mat','DAC_GT');
-app.DisadvantagedCommunitiesNode.Tag = app.DisadvantagedCommunitiesNode.Text;
-app.DisadvantagedCommunitiesNode.NodeData = DAC_GT;
+load('CJEST_DAC_C.mat','CJEST_DAC_C');
+app.DACCEQNode.Tag = app.DACCEQNode.Text;
+app.DACCEQNode.NodeData = CJEST_DAC_C;
 
-clear DAC_GT
+clear CJEST_DAC_C
+
+load('CJEST_DAC_T.mat','CJEST_DAC_T');
+app.DACtribaloverlapCEQNode.Tag = app.DACtribaloverlapCEQNode.Text;
+app.DACtribaloverlapCEQNode.NodeData = CJEST_DAC_T;
+
+clear CJEST_DAC_T
+
+load('DOE_DAC.mat','DOE_DAC');
+app.DACScoreDOENode.Tag = app.DACScoreDOENode.Text;
+app.DACScoreDOENode.NodeData = DOE_DAC;
+
+clear DOE_DAC
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NDVI
