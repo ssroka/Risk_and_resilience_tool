@@ -367,6 +367,15 @@ switch string(nodes.Text)
             'Tag', nodes.Text,...
             'LineWidth',2,'FaceColor','None',...
             EdgeColor = '#2376be');
+
+    case 'TCTAC Regions'
+        c = ["#97C628","#96eefa","#D3B52B","#A42274","#496983","#a88c6d",...
+            "#35288F","#17846F","#B15869","#98B359"];
+        for i = 1:10
+            IDs = nodes.NodeData.Region == i;
+            geoplot(ax, nodes.NodeData(IDs,:),'FaceColor',c(i),...
+                'displayname',sprintf('TCTAC Region %d',i),'Tag',nodes.Text)
+        end
 end
 
 

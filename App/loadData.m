@@ -164,13 +164,25 @@ app.PopulationNode_2.NodeData = ["https://hazards.fema.gov/nri/"; "FEMA National
     'This population dataset comes from the National Risk Index. ' ...
     'Click on the link below for more information.'];
 
-app.DisadvantagedCommunitiesNode_2.Tag = app.DisadvantagedCommunitiesNode_2.Text;
-app.DisadvantagedCommunitiesNode_2.NodeData = ["https://screeningtool.geoplatform.gov/en/"; "Council on Environmental Quality Climate and Economic Justice Screening Tool (CEJST)";
+app.DACCEQNode_2.Tag = app.DACCEQNode_2.Text;
+app.DACCEQNode_2.NodeData = ["https://screeningtool.geoplatform.gov/en/"; "Council on Environmental Quality Climate and Economic Justice Screening Tool (CEJST)";
     'This dataset--provided by CEJST--identifies communities that are economically disadvantaged and overburdened by ' ...
     'pollution and underinvestment in housing, transportation, water and wastewater infrastructure, and health care. '...
     'A community qualifies as disadvantaged if the census tract is above the threshold for one or more environmental or climate indicators and the ' ...
     'tract is above the threshold for the socioeconomic indicators. ' ...
     'Click on the link below for more information.'];
+
+app.DACtribaloverlapCEQNode_2.Tag = app.DACtribaloverlapCEQNode_2.Text;
+app.DACtribaloverlapCEQNode_2.NodeData = ["https://screeningtool.geoplatform.gov/en/"; "Council on Environmental Quality Climate and Economic Justice Screening Tool (CEJST)";
+    'This dataset identifies economically disadvantaged communities with at least some amount of tribal land within their boundaries. ' ...
+    'See the DAC (CEQ) dataset for a discription of economically disadvantaged communities. ' ...
+    'Click on the link below for more information.'];
+
+app.DACScoreDOENode_2.Tag = app.DACScoreDOENode_2.Text;
+app.DACScoreDOENode_2.NodeData  = ["https://energyjustice.egs.anl.gov/"; "DOE Disadvantaged Community Reporter";
+    'This dataset displays information from the DOE Disadvantaged Community Reporter. ' ...
+    'including a cumulative DAC score with a detailed breakdown. '...
+    'Click on the link below for more information.'];              
 
 app.NDVINode_2.Tag = app.NDVINode_2.Text;
 app.NDVINode_2.NodeData = ["https://modis.gsfc.nasa.gov/data/dataprod/mod13.php"; "NASA MODIS Normalized Difference Vegetation Index (NDVI) via IBM's GEODN";
@@ -277,7 +289,7 @@ clear climrr_county_risk_GT
 % NRI present climate risk data
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-load('nri_county_risk.mat','nri_county_risk_GT');
+load('nri_county_risk_GT.mat','nri_county_risk_GT');
 
 app.EarthquakeNode.Tag = app.EarthquakeNode.Text;
 app.EarthquakeNode.NodeData =  nri_county_risk_GT(:, ["Shape","CountyNS","ERQK_RISKR"]);
@@ -312,11 +324,11 @@ clear nri_county_risk_GT
 % Disadvantaged Communities
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% load('CJEST_DAC_C.mat','CJEST_DAC_C');
-% app.DACCEQNode.Tag = app.DACCEQNode.Text;
-% app.DACCEQNode.NodeData = CJEST_DAC_C;
-% 
-% clear CJEST_DAC_C
+load('CJEST_DAC_C.mat','CJEST_DAC_C');
+app.DACCEQNode.Tag = app.DACCEQNode.Text;
+app.DACCEQNode.NodeData = CJEST_DAC_C;
+
+clear CJEST_DAC_C
 
 load('CJEST_DAC_T.mat','CJEST_DAC_T');
 app.DACtribaloverlapCEQNode.Tag = app.DACtribaloverlapCEQNode.Text;
@@ -324,21 +336,21 @@ app.DACtribaloverlapCEQNode.NodeData = CJEST_DAC_T;
 
 clear CJEST_DAC_T
 
-load('DOE_DAC_C.mat','DOE_DAC_C');
+load('DOE_DAC.mat','DOE_DAC');
 app.DACScoreDOENode.Tag = app.DACScoreDOENode.Text;
 app.DACScoreDOENode.NodeData = DOE_DAC;
 
-clear DOE_DAC_C
+clear DOE_DAC
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NDVI
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-load('NDVI_small_county_new.mat','NDVI_mat');
+load('NDVI_GT.mat','NDVI_GT');
 app.NDVINode.Tag = app.NDVINode.Text;
-app.NDVINode.NodeData = NDVI_mat;
+app.NDVINode.NodeData = NDVI_GT;
 
-clear NDVI_mat
+clear NDVI_GT
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NERC grid carbon intensity
@@ -396,5 +408,44 @@ app.PlannedPipelinesNode.NodeData = planned_GT;
 
 clear planned_GT
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TCTACs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+load('TCTAC_GT.mat','TCTAC_GT')
+
+app.TCTACRegionsNode.Tag = app.TCTACRegionsNode.Text;
+app.TCTACRegionsNode.NodeData = TCTAC_GT;
+
+clear TCTAC_GT
+
+load('TCTAC_center_GT.mat','TCTAC_center_GT')
+
+app.TCTACAwardeesNode.Tag = app.TCTACAwardeesNode.Text;
+app.TCTACAwardeesNode.NodeData = TCTAC_center_GT;
+
+clear TCTAC_center_GT
+
+load('TCTAC_partners_GT.mat','TCTAC_partners_GT')
+
+app.TCTACPartnersNode.Tag = app.TCTACPartnersNode.Text;
+app.TCTACPartnersNode.NodeData = TCTAC_partners_GT;
+
+clear TCTAC_partners_GT
+
+app.TCTACRegionsNode_2.Tag = app.TCTACRegionsNode_2.Text;
+app.TCTACRegionsNode_2.NodeData = ["https://www.epa.gov/environmentaljustice/environmental-justice-thriving-communities-technical-assistance-centers";"EPA TCTACs";
+    'This dataset identifies the regions for the Environmental Justice Thriving Communities Technical Assistance Centers Program (TCTACs)' ...
+    '\nClick on the link below for more information.'];
+
+app.TCTACAwardeesNode_2.Tag = app.TCTACAwardeesNode_2.Text;
+app.TCTACAwardeesNode_2.NodeData = ["https://www.epa.gov/environmentaljustice/environmental-justice-thriving-communities-technical-assistance-centers";"EPA TCTACs";
+    'This dataset identifies the awardees for the Environmental Justice Thriving Communities Technical Assistance Centers Program (TCTACs)' ...
+    '\nClick on the link below for more information.'];
+
+app.TCTACPartnersNode_2.Tag = app.TCTACPartnersNode_2.Text;
+app.TCTACPartnersNode_2.NodeData = ["https://www.epa.gov/environmentaljustice/environmental-justice-thriving-communities-technical-assistance-centers";"EPA TCTACs";
+    'This dataset identifies awardee partners for the Environmental Justice Thriving Communities Technical Assistance Centers Program (TCTACs). Note not all current partners may be represented.' ...
+    '\nClick on the link below for more information.'];
 
 end
