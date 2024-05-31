@@ -27,3 +27,6 @@
 *.gdbtablx
 *.spx
 *.gdb
+*.ppt
+*.pptx
+*.ctf
