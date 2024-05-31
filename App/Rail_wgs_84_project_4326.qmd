@@ -1,0 +1,63 @@
+<!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
+<qgis version="3.32.2-Lima">
+  <identifier>railroads_l_v2</identifier>
+  <parentidentifier></parentidentifier>
+  <language>EN</language>
+  <type>dataset</type>
+  <title>railroads_l_v2</title>
+  <abstract>A joint venture involving the National Atlas programs in Canada (Natural Resources Canada), Mexico (Instituto Nacional de Estadística Geografía e Informática), and the United States (U.S. Geological Survey), as well as the North American Commission for Environmental Co-operation, has led to the release (June 2004) of several new products: an updated paper map of North America, and its associated geospatial data sets and their metadata. These data sets are available online from each of the partner countries both for visualization and download. The North American Atlas data are standardized geospatial data sets at 1:10,000,000 scale. A variety of basic data layers (e.g. roads, railroads, populated places, political boundaries, hydrography, bathymetry, sea ice and glaciers) have been integrated so that their relative positions are correct. This collection of data sets forms a base with which other North American thematic data may be integrated. Any data outside of Canada, Mexico, and the United States of America included in the North American Atlas data sets is strictly to complete the context of the data. The North American Atlas - Railroads data set shows the railroads of North America at 1:10,000,000 scale. The railroads selected for this data set are either rail links between major centres of population or major resource railways. There is no classification of rail lines. This data set was produced using digital files supplied by Natural Resources Canada, Instituto Nacional de Estadística Geografía e Informática, and the U.S. Geological Survey. 
+
+The North American Atlas data are intended for geographic display and analysis at the national and continental level. These data should be displayed and analyzed at scales appropriate for 1:10,000,000-scale data. No responsibility is assumed by Natural Resources Canada, Instituto Nacional de Estadística Geografía e Informática, or the U.S. Geological Survey in the use of these data. 
+
+The Commission for Environmental Cooperation (CEC) is an international organization created by Canada, Mexico, and the United States of America under the North American Agreement on Environmental Cooperation (NAAEC). The CEC was established to address regional environmental concerns, help prevent potential trade and environmental conflicts, and to promote the effective enforcement of environmental law. The Agreement complements the environmental provisions of the North American Free Trade Agreement (NAFTA). Further information on the CEC is available from http://www.cec.org/ or from >Commission for Environmental Cooperation >393, rue St-Jacques Ouest >Bureau 200 >Montréal (Québec) >H2Y 1N9 Canada > >Telephone: 514 350 4300 >Facsimile: 514 350 4314 >Electronic mail: info@ccemtl.org > All North American Atlas data sets are available in four data formats: Arc/INFO Export format (e00), ArcView Shapefile, Geography Markup Language (GML) and Spatial Data Transfer Standard (SDTS). Although these data are distributed in geographic coordinates, the North American Atlas Map uses a Lambert Azimuthal Equal Area projection. The following parameters were used for the map: >Longitude_of_Projection_Center: -100.00 >Latitude_of_Projection_Center: 45.00 >False_Easting (metres): 0.0 >False_Northing (metres): 0.0 >Semi-major_Axis: 6370997.0 >Denominator_of_Flattening_Ratio: 1.0 >Ellipsoid_Name: Sphere >Units: metres </abstract>
+  <keywords vocabulary="gmd:topicCategory">
+    <keyword>Infrastructure</keyword>
+  </keywords>
+  <contact>
+    <contactAddress>
+      <type>Mailing address</type>
+      <address>Room 650-615 Booth Street</address>
+      <city>Ottawa</city>
+      <administrativearea>Ontario</administrativearea>
+      <postalcode>K1A 0E9</postalcode>
+      <country>Canada</country>
+    </contactAddress>
+    <name>&#xd;
+Government of Canada, Natural Resources Canada, Canada Centre for&#xd;
+Remote Sensing, The Atlas of Canada&#xd;
+</name>
+    <organization>&#xd;
+Government of Canada, Natural Resources Canada, Canada Centre for&#xd;
+Remote Sensing, The Atlas of Canada&#xd;
+</organization>
+    <position></position>
+    <voice></voice>
+    <fax>+01 613 947 2410</fax>
+    <email>info@atlas.gc.ca</email>
+    <role>Point of contact</role>
+  </contact>
+  <links>
+    <link mimeType="" type="Local Area Network" name="Shapefile" description="" url="file://\\File\Maps\CECGIS\ENGLISH\_in_progress\Basemap_Geodatabase\Shapefiles_of_Basemap_layers\Extracted from updated Geodatabase, May 27 2010\railroads_l_v2.shp" format="" size=""/>
+  </links>
+  <dates/>
+  <fees></fees>
+  <constraints type="Access">None</constraints>
+  <rights>All data for Canada and other areas outside of Mexico and the United States of America are covered by the Geogratis User Agreement for Digital Data; see http://geogratis.cgdi.gc.ca/e_license.html. No use constraints are applied to data for Mexico and the United States of America. Acknowledgment of the North American Atlas, Instituto Nacional de Estadística Geografía e Informática, Natural Resources Canada, and (or) the U.S. Geological Survey would be appreciated in products derived from these data. </rights>
+  <encoding></encoding>
+  <crs>
+    <spatialrefsys nativeFormat="Wkt">
+      <wkt></wkt>
+      <proj4></proj4>
+      <srsid>0</srsid>
+      <srid>0</srid>
+      <authid></authid>
+      <description></description>
+      <projectionacronym></projectionacronym>
+      <ellipsoidacronym></ellipsoidacronym>
+      <geographicflag>false</geographicflag>
+    </spatialrefsys>
+  </crs>
+  <extent>
+    <spatial dimensions="2" maxx="4462879.07180000003427267" maxz="0" minx="-2514019.00730000017210841" minz="0" miny="-3920231.14250000007450581" maxy="4693624.73649999964982271" crs="EPSG:4326"/>
+  </extent>
+</qgis>

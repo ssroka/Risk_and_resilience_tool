@@ -324,11 +324,11 @@ clear nri_county_risk_GT
 % Disadvantaged Communities
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-load('CJEST_DAC_C.mat','CJEST_DAC_C');
-app.DACCEQNode.Tag = app.DACCEQNode.Text;
-app.DACCEQNode.NodeData = CJEST_DAC_C;
-
-clear CJEST_DAC_C
+% load('CJEST_DAC_C.mat','CJEST_DAC_C');
+% app.DACCEQNode.Tag = app.DACCEQNode.Text;
+% app.DACCEQNode.NodeData = CJEST_DAC_C;
+% 
+% clear CJEST_DAC_C
 
 load('CJEST_DAC_T.mat','CJEST_DAC_T');
 app.DACtribaloverlapCEQNode.Tag = app.DACtribaloverlapCEQNode.Text;
@@ -376,6 +376,41 @@ app.InterstatesNode.Tag = app.InterstatesNode.Text;
 app.InterstatesNode.NodeData = roads_GT_I;
 
 clear roads_GT_I
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rail
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+load('rail_GT.mat','rail_GT');
+
+app.RailNode.Tag = app.RailNode.Text;
+app.RailNode.NodeData = rail_GT;
+
+app.RailNode_2.Tag = app.RailNode.Text;
+app.RailNode_2.NodeData = ["https://www.bts.gov/newsroom/rail-network-spatial-dataset";
+    "Bureau of Transportation Statistics (BTS)";
+    'Raiload transport. Click on the link below for more information.'];
+app.PlannedNode.Tag = app.PlannedNode.Text;
+app.PlannedNode.NodeData = ["https://www.energy.gov/sites/prod/files/2015/04/f22/QER%20Analysis%20-%20A%20Review%20of%20the%20CO2%20Pipeline%20Infrastructure%20in%20the%20U.S_0.pdf";
+    "National Energy Technology Laboratory (NETL) and Department of Energy (DOE)";
+    'The "Pipelines" layer includes sub layers corresponding to current operational carbon dioxide pipelines as indicated in "A Review of the CO2 Pipeline Infrastructure in the U.S." by the National Energy Technology Laboratory and U.S. Department of Energy' ...
+    ' Office of Fossil Energy. Click on the link below for more information.'];
+
+
+
+
+clear rail_GT
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Electric transmission lines
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+load('electric_GT.mat','electric_GT');
+
+app.ElectrictransmissionlinesNode.Tag = app.ElectrictransmissionlinesNode.Text;
+app.ElectrictransmissionlinesNode.NodeData = electric_GT;
+
+clear electric_GT
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CO2 reservoirs
