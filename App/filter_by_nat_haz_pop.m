@@ -83,7 +83,7 @@ for i = 1:length(C)
     if ~isempty(ind_county)
         if strcmp(filter_text,"Population")
             county_pop_level = table2array(Filter_node.NodeData(ind_county,3)); % as a cell, 3rd col has pop number
-            if strcmp(app.DropDown_PopGTLT,">")
+            if strcmp(app.DropDown_PopGTLT.Value,">")
                 if county_pop_level > str2double(app.Edit_Population.Value)
                     ids_2_plot(i) = true;
                 end
